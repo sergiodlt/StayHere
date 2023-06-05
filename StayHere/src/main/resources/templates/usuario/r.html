@@ -1,0 +1,160 @@
+<style>
+	.card {
+		border-radius: 10px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	}
+
+	.card-header {
+		background-color: #f8f9fa;
+		padding: 10px;
+		border-bottom: 1px solid #ddd;
+	}
+
+	.card-body {
+		padding: 20px;
+	}
+
+	.card-body h2.lead {
+		font-size: 20px;
+		margin-bottom: 10px;
+	}
+
+	.card-body p.text-muted {
+		margin-bottom: 5px;
+	}
+
+	.card-body ul.ml-4 {
+		margin-top: 15px;
+	}
+
+	.card-body ul.ml-4 li.small {
+		margin-bottom: 5px;
+	}
+
+	.card-body .email-label {
+		display: inline-block;
+		width: 60px;
+	}
+
+	.card-footer {
+		background-color: #f8f9fa;
+		padding: 10px;
+		border-top: 1px solid #ddd;
+	}
+
+	.card-footer .btn {
+		margin-left: 5px;
+	}
+
+	.img-circle {
+		border-radius: 50%;
+	}
+
+
+	.card-header h3 {
+		text-align: center;
+		margin-top: 50px;
+	}
+
+	.altura {
+		margin-top: 50px;
+	}
+
+	.user-avatar {
+		position: relative;
+		display: inline-block;
+	}
+
+	.user-icon {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		transform: translate(50%, 50%);
+		font-size: 30px;
+	}
+
+	.fa-stack {
+		margin-right: 5px;
+		vertical-align: middle;
+	}
+
+	.fa-stack-2x {
+		font-size: 24px;
+	}
+	
+</style>
+
+<div class="altura">
+	<section>
+		<div class="container">
+			<div class="card">
+				<div class="card-header">
+					<h3>LISTA DE USUARIOS</h3>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div th:each="user : ${users}" class="col-12 col-sm-6 col-md-4">
+							<div class="card bg-light mb-4">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-8 align-right">
+											<h2 class="lead">
+												<span class="fa-stack fa-lg">
+													<i class="fas fa-circle fa-stack-2x"></i>
+													<i class="fas fa-user fa-stack-1x fa-inverse"></i>
+												</span>
+												<span th:text="${user.username}"></span>
+											</h2>
+
+											<p class="text-muted text-sm">Nombre: <span
+													th:text="${user.firstName}"></span></p>
+											<p class="text-muted text-sm">Apellido: <span
+													th:text="${user.lastName}"></span></p>
+											<ul class="ml-4 mb-0 fa-ul text-muted">
+												<li class="small">
+													<span class="email-label">Género:</span>
+													<span class="fa-li"><i class="fas fa-venus-mars"></i></span>
+													<span th:text="${user.genero}"></span>
+												</li>
+												<li class="small">
+													<span class="email-label">Email:</span>
+													<span class="fa-li"><i class="fas fa-envelope"></i></span>
+													<span th:text="${user.email}" style="margin-right: 0.5em;"></span>
+												</li>
+												<li class="small">
+													<span class="email-label">Teléfono:</span>
+													<span class="fa-li"><i class="fas fa-phone"></i></span>
+													<span th:text="${user.telefono}"></span>
+												</li>
+												<li class="small" style="white-space: nowrap;">
+													<span class="email-label">Dirección:</span>
+													<span class="fa-li"><i class="fas fa-map-marker-alt"></i></span>
+													<span>&nbsp;</span> <!-- Espacio en blanco adicional -->
+													<span th:text="${user.direccion}"></span>
+												</li>
+
+
+											</ul>
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<div class="card-footer">
+								<div class="text-right">
+									<form action="/usuarios/u" method="post">
+										<input type="hidden" th:value="${ user.id }" name="idUser" />
+										<button class="btn btn-sm btn-primary" onclick="submit()">
+											<i class="fas fa-user"></i>Modificar</button>
+
+									</form>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>

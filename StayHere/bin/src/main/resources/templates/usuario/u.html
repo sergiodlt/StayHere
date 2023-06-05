@@ -1,0 +1,38 @@
+<div class="container">
+	<h1>Actualizar Usuario</h1>
+
+	<form action="/usuario/u" method="post">
+		Nombre
+		<input type="text" name="nombre" required="required" autofocus="autofocus" th:value="${usuario.nombre}" />
+		<br />
+
+		Apellido
+		<input type="text" name="apellido" required="required" th:value="${usuario.apellido}" />
+		<br />
+
+		Correo
+		<input type="text" name="correo" required="required" th:value="${usuario.correo}" />
+		<br />
+
+		Contraseña
+		<input type="password" name="contrasenia" required="required" th:value="${usuario.contrasenia}" />
+		<br />
+
+		Direccion
+		<input type="text" name="direccion" required="required" th:value="${usuario.direccion}" />
+		<br />
+		
+		Telefono
+		<input type="number" name="telefono" required="required" th:value="${usuario.telefono}" />
+		<br />
+
+		<input type="hidden" name="idUsuario" th:value="${usuario.id}" />
+
+		<input type="submit" />
+		<br />
+	</form>
+
+	<form action="/usuario/r">
+		<input type="submit" value="Cancelar" />
+	</form>
+</div>

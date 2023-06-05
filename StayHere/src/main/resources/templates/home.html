@@ -1,0 +1,322 @@
+<section class="jumbotron jumbotron-fluid bg-dark text-center text-white fondo-home">
+	<div class="container">
+		<h1 class="display-4">Bienvenidos a StayHere!</h1>
+		<p class="lead">Aquí Comienza tu viaje!</p>
+		<a class="btn btn-primary btn-lg" href="#busquedaModal" role="button" data-toggle="modal">Buscar Alojamiento</a>
+	</div>
+</section>
+
+<div class="modal fade" id="busquedaModal" role="dialog" aria-labelledby="busquedaModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="busquedaModalLabel">Buscar Alojamiento</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<fieldset>
+					<form action="/home/buscador" method="post">
+						<div class="form-row">
+							<div class="col">
+								<label for="check-in">Check-in:</label>
+								<input type="date" name="checkIn"
+									th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" class="form-control"
+									id="check-in" required>
+							</div>
+							<div class="col">
+								<label for="check-out">Check-out:</label>
+								<input type="date" name="checkOut" class="form-control" id="check-out" required>
+							</div>
+
+						</div>
+						<div class="form-row">
+							<div class="col">
+								<label for="tipo-alojamiento">Tipo de alojamiento:</label>
+								<select name="alojamiento" class="form-control" id="tipo-alojamiento" required>
+									<option value="hotel">Hotel</option>
+									<option value="apartamento">Apartamento</option>
+								</select>
+							</div>
+							<div class="col">
+								<label for="num-huespedes">Número de huéspedes:</label>
+								<input type="number" name="huespedes" class="form-control" id="num-huespedes" required>
+							</div>
+							<div class="col">
+								<label for="ciudad">Ciudad:</label>
+								<select name="IdCiudad" class="form-control" id="ciudad" required>
+									<option th:each="ciudad : ${ciudades}" th:value="${ciudad.id}"
+										th:text="${ciudad.nombre}" />
+								</select>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-primary mt-3">Buscar</button>
+					</form>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<section id="services">
+	<section>
+		<style>
+			.container-form {
+				max-width: 800px;
+				margin: 0 auto;
+			}
+
+			.card {
+				border: 1px solid #ccc;
+				border-radius: 5px;
+				padding: 20px;
+				margin-bottom: 20px;
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			}
+
+			.card-title {
+				font-size: 24px;
+				font-weight: bold;
+			}
+
+			.card-text {
+				margin-bottom: 10px;
+			}
+
+			.btn-submit {
+				background-color: #007bff;
+				color: #fff;
+				padding: 10px 20px;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+			}
+
+			.btn-submit:hover {
+				background-color: #0056b3;
+			}
+		</style>
+		<div class="container-form">
+			<h1 class="mt-4">Reserva de Apartamentos y Habitaciones de Hotel</h1>
+
+			<h2 class="mt-4">Descripción general de servicios</h2>
+			<p>StayHere ofrece una plataforma fácil de usar para reservar apartamentos y habitaciones de hotel en todo
+				el mundo. Ya sea que estés buscando unas vacaciones relajantes o un viaje de negocios, nuestra
+				aplicación te permite encontrar y reservar el alojamiento perfecto para satisfacer tus necesidades.</p>
+
+			<h2 class="mt-4">Listado de servicios</h2>
+
+			<div class="card mt-4">
+				<div class="card-body">
+					<h3 class="card-title">1. Búsqueda y filtrado intuitivo</h3>
+					<p class="card-text">Utiliza nuestra potente función de búsqueda para encontrar alojamientos por
+						ubicación, fechas, número de huéspedes y otras preferencias.</p>
+					<p class="card-text">Filtra los resultados según tus necesidades específicas, como precio,
+						comodidades, tipo de alojamiento y más.</p>
+				</div>
+			</div>
+			<div class="card mt-4">
+				<div class="card-body">
+					<h3 class="card-title">2. Detalles completos de alojamiento</h3>
+					<p class="card-text">Accede a información detallada de cada apartamento y habitación de hotel,
+						incluyendo imágenes, descripción, comodidades disponibles, políticas de cancelación y opiniones
+						de otros huéspedes.</p>
+					<p class="card-text">Visualiza ubicaciones en mapas y obtén indicaciones para llegar al alojamiento
+						deseado.</p>
+				</div>
+			</div>
+			<div class="card mt-4">
+				<div class="card-body">
+					<h3 class="card-title">3. Reservas seguras y sencillas</h3>
+					<p class="card-text">Realiza reservas de forma rápida y segura con unos pocos clics.</p>
+					<p class="card-text">Administra tus reservas existentes, consulta los detalles, realiza cambios o
+						cancelaciones según sea necesario.</p>
+				</div>
+			</div>
+			<div class="card mt-4">
+				<div class="card-body">
+					<h3 class="card-title">4. Atención al cliente dedicada</h3>
+					<p class="card-text">Nuestro equipo de soporte está disponible para ayudarte con cualquier consulta
+						o problema que puedas tener durante el proceso de reserva.</p>
+					<p class="card-text">Contáctanos a través de nuestro formulario de contacto o utilizando la
+						información de contacto proporcionada.</p>
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+
+	<section id="about">
+
+		<div class="bg-light">
+			<div class="container py-5">
+				<div class="row h-100 align-items-center py-5">
+					<div class="col-lg-6">
+						<h1 class="display-4">Sobre nosotros</h1>
+						<p class="lead text-muted mb-0">En StayHere, nos esforzamos por proporcionarte una experiencia
+							de alojamiento excepcional, ofreciéndote una amplia gama de opciones y garantizando tu
+							satisfacción en cada reserva.</p>
+						<p class="lead text-muted">Snippet by <a href="https://bootstrapious.com/snippets"
+								class="text-muted">
+								<u>Bootstrapious</u></a>
+						</p>
+					</div>
+					<div class="col-lg-6 d-none d-lg-block"><img
+							src="https://bootstrapious.com/i/snippets/sn-about/illus.png" alt="" class="img-fluid">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="bg-white py-5">
+			<div class="container py-5">
+				<div class="row align-items-center mb-5">
+					<div class="col-lg-6 order-2 order-lg-1"><i class="fa fa-bar-chart fa-2x mb-3 text-primary"></i>
+						<h2 class="font-weight-light">Nuestra historia</h2>
+						<p class="font-italic text-muted mb-4">StayHere fue fundado en 2023. Desde entonces, nos hemos
+							dedicado a simplificar el proceso de reserva de alojamiento, conectando a los viajeros con
+							propiedades de calidad en toda la Peninsula. Hemos crecido y evolucionado, mejorando
+							continuamente nuestra plataforma para brindarte la mejor experiencia posible.</p>
+					</div>
+					<div class="col-lg-5 px-5 mx-auto order-1 order-lg-2"><img
+							src="https://bootstrapious.com/i/snippets/sn-about/img-1.jpg" alt=""
+							class="img-fluid mb-4 mb-lg-0"></div>
+				</div>
+				<div class="row align-items-center">
+					<div class="col-lg-5 px-5 mx-auto"><img
+							src="https://bootstrapious.com/i/snippets/sn-about/img-2.jpg" alt=""
+							class="img-fluid mb-4 mb-lg-0"></div>
+					<div class="col-lg-6"><i class="fa fa-leaf fa-2x mb-3 text-primary"></i>
+						<h2 class="font-weight-light">Caracteristicas principales</h2>
+						<ul class="font-italic text-muted mb-4">
+							<li>Motor de búsqueda avanzado para encontrar rápidamente el alojamiento ideal.</li>
+							<li>Amplia selección de hoteles y apartamentos en diversos destinos.</li>
+							<li>Sistema de valoración y comentarios de usuarios para ayudarte a tomar decisiones
+								informadas.</li>
+							<li>Opciones de reserva flexibles.</li>
+						</ul>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="bg-light py-5">
+			<div class="container py-5">
+				<div class="row mb-4">
+					<div class="col-lg-5">
+						<h2 class="display-4 font-weight-light">Equipo</h2>
+						<p class="font-italic text-muted">El equipo de StayHere está formado por profesionales
+							apasionados por el sector de la hospitalidad y comprometidos con tu satisfacción. Nuestro
+							equipo incluye expertos en tecnología, desarrollo web, atención al cliente y gestión de
+							alojamientos, quienes trabajan arduamente para garantizar que tengas una experiencia
+							excepcional en cada reserva.</p>
+					</div>
+				</div>
+
+				<section class="row text-center">
+					<!-- Team item-->
+					<div class="col-xl-3 col-sm-6 mb-5">
+						<div class="bg-white rounded shadow-sm py-5 px-2"><img
+								src="https://bootstrapious.com/i/snippets/sn-about/avatar-1.png" alt="" width="100"
+								class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+							<h5 class="mb-0">Sergio de la Torre de Cabo</h5><span
+								class="small text-uppercase text-muted">CEO - Founder</span>
+							<ul class="social mb-0 list-inline mt-2">
+								<li class="list-inline-item"><a href="#" class="social-link"><i
+											class="fa fa-facebook-f"></i></a></li>
+								<li class="list-inline-item"><a href="#" class="social-link"><i
+											class="fa fa-twitter"></i></a></li>
+								<li class="list-inline-item"><a href="#" class="social-link"><i
+											class="fa fa-instagram"></i></a></li>
+								<li class="list-inline-item"><a href="#" class="social-link"><i
+											class="fa fa-linkedin"></i></a></li>
+							</ul>
+						</div>
+					</div>
+					<!-- End-->
+
+					<!-- Team item-->
+					<div class="col-xl-3 col-sm-6 mb-5">
+						<div class="bg-white rounded shadow-sm py-5 px-2"><img
+								src="https://bootstrapious.com/i/snippets/sn-about/avatar-3.png" alt="" width="100"
+								class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+							<h5 class="mb-0">Ivan Flores Rabadan</h5><span class="small text-uppercase text-muted">CEO -
+								Founder</span>
+							<ul class="social mb-0 list-inline mt-2">
+								<li class="list-inline-item"><a href="#" class="social-link"><i
+											class="fa fa-facebook-f"></i></a></li>
+								<li class="list-inline-item"><a href="#" class="social-link"><i
+											class="fa fa-twitter"></i></a></li>
+								<li class="list-inline-item"><a href="#" class="social-link"><i
+											class="fa fa-instagram"></i></a></li>
+								<li class="list-inline-item"><a href="#" class="social-link"><i
+											class="fa fa-linkedin"></i></a></li>
+							</ul>
+						</div>
+					</div>
+					<!-- End-->
+
+					<!-- Team item-->
+					<div class="col-xl-3 col-sm-6 mb-5">
+						<div class="bg-white rounded shadow-sm py-5 px-2"><img
+								src="https://bootstrapious.com/i/snippets/sn-about/avatar-2.png" alt="" width="100"
+								class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+							<h5 class="mb-0">Adrian Garcia Carpio</h5><span class="small text-uppercase text-muted">CEO
+								- Founder</span>
+							<ul class="social mb-0 list-inline mt-2">
+								<li class="list-inline-item"><a href="#" class="social-link"><i
+											class="fa fa-facebook-f"></i></a></li>
+								<li class="list-inline-item"><a href="#" class="social-link"><i
+											class="fa fa-twitter"></i></a></li>
+								<li class="list-inline-item"><a href="#" class="social-link"><i
+											class="fa fa-instagram"></i></a></li>
+								<li class="list-inline-item"><a href="#" class="social-link"><i
+											class="fa fa-linkedin"></i></a></li>
+							</ul>
+						</div>
+					</div>
+					<!-- End-->
+
+
+				</section>
+
+
+
+				<script>
+					var checkInInput = document.getElementById("check-in");
+					var checkOutInput = document.getElementById("check-out");
+
+					// Bloquear fechas anteriores a mañana en Check-in
+					var tomorrow = new Date();
+					tomorrow.setDate(tomorrow.getDate() + 1);
+					var tomorrowFormatted = tomorrow.toISOString().split("T")[0];
+					checkInInput.min = tomorrowFormatted;
+
+					// Actualizar Check-out al cambiar Check-in
+					checkInInput.addEventListener("change", function () {
+						var checkInDate = new Date(this.value);
+						var minCheckOutDate = new Date(checkInDate);
+						minCheckOutDate.setDate(minCheckOutDate.getDate() + 1);
+
+						var minCheckOutFormatted = minCheckOutDate.toISOString().split("T")[0];
+						checkOutInput.min = minCheckOutFormatted;
+					});
+
+					// Bloquear fechas no válidas en Check-out
+					checkOutInput.addEventListener("change", function () {
+						var checkInDate = new Date(checkInInput.value);
+						var checkOutDate = new Date(this.value);
+						var minCheckOutDate = new Date(checkInDate);
+						minCheckOutDate.setDate(minCheckOutDate.getDate() + 1);
+
+						if (checkOutDate <= minCheckOutDate) {
+							checkOutInput.value = "";
+						}
+					});
+				</script>

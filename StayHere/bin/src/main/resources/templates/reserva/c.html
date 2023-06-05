@@ -1,0 +1,47 @@
+<div class="container">
+	<h1>Crear Reserva</h1>
+	<form action="/reserva/c" method="post">
+		Fecha Inicio
+		<input type="date" name="fecha_inicio" required="required" autofocus="autofocus" />
+		<br />
+
+		Fecha Fin
+		<input type="date" name="fecha_fin" />
+		<br />
+
+		Habitaciones
+		<input type="number" name="habitaciones" />
+		<br />
+
+		Huespedes
+		<input type="number" name="huespedes" />
+		<br />
+
+		Precio
+		<input type="number" name="precio" />
+		<br />
+
+		Usuario
+		<select name="idUsuario">
+			<th:block th:each=" usuario : ${usuarios} ">
+				<option th:value="${usuario?.id}" th:text="${usuario?.nombre}" />
+			</th:block>
+		</select>
+		<br />
+
+		Alojamiento
+		<select name="idAlojamiento">
+			<th:block th:each=" alojamiento : ${alojamientos} ">
+				<option th:value="${alojamiento?.id}" th:text="${alojamiento?.ciudad}" />
+			</th:block>
+		</select>
+		<br />
+
+		<input type="submit" />
+		<br />
+	</form>
+
+	<form action="/reserva/r">
+		<input type="submit" value="Cancelar" />
+	</form>
+</div>

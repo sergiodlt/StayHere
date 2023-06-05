@@ -1,0 +1,112 @@
+
+	<div class="altura">
+<section>
+	 <style>
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      margin-top: 20px;
+    }
+
+    .card-header {
+      background-color: #f8f9fa;
+    }
+
+    .card-header p {
+      margin: 0;
+      font-weight: bold;
+    }
+  </style>
+		<div class="container bg-light">
+			<h1>Crear Hotel</h1>
+			<form action="/hoteles/c" method="post" enctype="multipart/form-data">
+				<div class="form-group">
+					<label for="nombre">Nombre</label>
+					<input type="text" class="form-control" id="nombre" name="nombre" required autofocus />
+				</div>
+				<div class="form-group">
+					<label for="direccion">Direccion</label>
+					<input type="text" class="form-control" id="direccion" name="direccion" required />
+				</div>
+				<div class="form-group">
+					<label for="telefono">Telefono</label>
+					<input type="number" class="form-control" id="telefono" name="telefono" required />
+				</div>
+				<div class="form-group">
+					<label for="correo">Correo</label>
+					<input type="email" class="form-control" id="correo" name="correo" required />
+				</div>
+				<div class="form-group">
+					<label for="estrellas">Estrellas</label>
+					<input type="number" class="form-control" id="estrellas" name="estrellas" required />
+				</div>
+				<select name="ciudad" class="form-control" id="ciudad" required>
+          			<option th:each="ciudad : ${ciudades}" th:value="${ciudad.id}" th:text="${ciudad.nombre}" />
+          		</select>
+				<div id="preguntasHabitacion" style="display: none;">
+					<h3>Habitaciones</h3>
+					<div class="form-group">
+						<label for="cantidad">¿Cuantas habitaciones desea crear igual que esta?</label>
+						<input type="number" class="form-control" id="cantidad" name="cantidad" />
+					</div>
+
+					<div class="form-group">
+						<label for="capacidad">Capacidad</label>
+						<input type="number" class="form-control" id="capacidad" name="capacidad" required />
+					</div>
+					<div class="form-group">
+						<label for="precio">Precio</label>
+						<input type="number" class="form-control" id="precio" name="precio" required />
+					</div>
+					<div class="form-group">
+						<label for="descripcion">Descripcion</label>
+						<textarea class="form-control" id="descripcion" name="descripcion" required></textarea>
+					</div>
+					<div class="form-group">
+						<label for="idComodidad">Comodidades</label>
+						<select class="form-control" id="idComodidad" name="idComodidad" multiple>
+							<th:block th:each="comodidad : ${comodidades}">
+								<option th:value="${comodidad?.id}" th:text="${comodidad?.nombre}" />
+							</th:block>
+						</select>
+					</div>
+					<div class="card">
+						<div class="card-header">
+							<p><i class="fa fa-camera"></i> Fotos de las habitaciones</p>
+						</div>
+						<div class="card-body">
+							<div class="form-group">
+								<label for="fotos">Imagenes</label>
+								<input class="form-control-file" type="file" id="fotos" name="fotos" multiple />
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<button class="btn btn-secondary mt-3" id="agregarHabitacionBtn" type="button">Agregar
+					Habitación</button>
+				<button class="btn btn-primary mt-3" type="submit">Enviar</button>
+			</form>
+			<form action="/">
+				<button class="btn btn-secondary mt-3" type="submit">Cancelar</button>
+			</form>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$("#agregarHabitacionBtn").click(function () {
+				$("#preguntasHabitacion").slideToggle();
+			});
+		});
+	</script>
+</section>
+</div>

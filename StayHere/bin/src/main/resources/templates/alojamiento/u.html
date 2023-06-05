@@ -1,0 +1,18 @@
+<div class="container">
+	<h1>Actualizar Alojamiento</h1>
+
+	<form action="/alojamiento/u" method="post">
+		Ciudad
+		<input type="text" name="ciudad" required="required" autofocus="autofocus" th:value="${alojamiento.ciudad}" />
+		<br />
+
+		<input type="hidden" name="idAlojamiento" th:value="${alojamiento.id}" />
+
+		<input type="submit" />
+		<br />
+	</form>
+
+	<form action="/alojamiento/r">
+		<input type="submit" value="Cancelar" />
+	</form>
+</div>

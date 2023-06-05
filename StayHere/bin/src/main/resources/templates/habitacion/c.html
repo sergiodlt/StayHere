@@ -1,0 +1,33 @@
+<div class="container">
+	<h1>Crear Habitacion</h1>
+	<form action="/habitacion/c" method="post">
+		Descripcion
+		<input type="text" name="descripcion" required="required" autofocus="autofocus" />
+		<br />
+		
+		Capacidad
+		<input type="number" name="capacidad" required="required" />
+		<br />
+		
+		Precio
+		<input type="number" name="precio" required="required"  />
+		<br />
+		
+		
+		Hotel
+		<select name="idHotel">
+			<th:block th:each=" hotel : ${hoteles} ">
+				<option th:value="${hotel?.id}" th:text="${hotel?.nombre}" />
+			</th:block>
+		</select>
+		<br />
+		
+
+		<input type="submit" />
+		<br />
+	</form>
+
+	<form action="/habitacion/r">
+		<input type="submit" value="Cancelar" />
+	</form>
+</div>

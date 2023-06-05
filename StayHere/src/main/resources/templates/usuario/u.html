@@ -1,0 +1,43 @@
+<div class="container">
+	<h1>Actualizar Usuario</h1>
+
+	<title>Modificar Usuario</title>
+	<!-- Agrega aquí tus enlaces a archivos CSS y scripts JS -->
+	</head>
+
+	<body>
+		<h1>Modificar Usuario</h1>
+		<form th:object="${user}" th:action="@{/usuarios/uPost}" method="POST">
+			<input type="hidden" th:value="${usuario.id}" name="idUser">
+			<label>Nombre de Usuario:</label>
+			<input type="text" name="username" th:value="${usuario.username}" required>
+			<br>
+			<label>Nombre:</label>
+			<input type="text" name="nombre" th:value="${usuario.firstName}" required>
+			<br>
+			<label>Apellido:</label>
+			<input type="text" name="apellido" th:value="${usuario.lastName}" required>
+			<br>
+			<label>Género:</label>
+			<select name="genero">
+				<option value="Masculino">Masculino</option>
+				<option value="Femenino">Femenino</option>
+				<option value="Otro">Otro</option>
+			</select>
+			<br>
+			<label>Email:</label>
+			<input type="email" name="email" th:value="${usuario.email}" required>
+			<br>
+			<label>Dirección:</label>
+			<input type="text" name="direccion" th:value="${usuario.direccion}">
+			<br>
+			<label>Teléfono:</label>
+			<input type="text" name="telefono" th:value="${usuario.telefono}">
+			<br>
+			<button type="submit">Guardar Cambios</button>
+		</form>
+
+		<form action="/usuarios/r">
+			<input type="submit" value="Cancelar" />
+		</form>
+</div>

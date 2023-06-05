@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Modificar Usuario</title>
+    <!-- Agrega aquí tus enlaces a archivos CSS y scripts JS -->
+</head>
+<body>
+    <h1>Modificar Usuario</h1>
+    <form th:object="${user}" th:action="@{/usuarios/r}" method="POST">
+        <input type="hidden" th:field="*{id}">
+        <label>Nombre de Usuario:</label>
+        <input type="text" th:field="*{username}" required>
+        <br>
+        <label>Nombre:</label>
+        <input type="text" th:field="*{firstName}" required>
+        <br>
+        <label>Apellido:</label>
+        <input type="text" th:field="*{lastName}" required>
+        <br>
+        <label>Género:</label>
+        <select th:field="*{genero}">
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+            <option value="Otro">Otro</option>
+        </select>
+        <br>
+        <label>Email:</label>
+        <input type="email" th:field="*{email}" required>
+        <br>
+        <label>Dirección:</label>
+        <input type="text" th:field="*{direccion}">
+        <br>
+        <label>Teléfono:</label>
+        <input type="text" th:field="*{telefono}">
+        <br>
+        <button type="submit">Guardar Cambios</button>
+    </form>
+</body>
+</html>

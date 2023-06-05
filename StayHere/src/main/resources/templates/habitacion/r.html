@@ -1,0 +1,59 @@
+<div class="container">
+	<h1>Lista de Habitaciones</h1>
+
+	<form action="/habitacion/c">
+		<input type="submit" value="Nueva habitacion" />
+	</form>
+
+
+	<form action="/">
+
+		<input type="submit" value="Menú principal" />
+	</form>
+
+	<table class="table table-striped table-hover">
+		<tr>
+			<th>Acción</th>
+			<th>Descripcion</th>
+			<th>Capacidad</th>
+			<th>Precio</th>
+			<th>Hotel</th>
+			
+		</tr>
+
+		<tr th:each=" habitacion : ${ habitaciones }">
+			<td>
+				<div class="row">
+					<div class="col">
+						<form action="/habitacion/u">
+							<input type="hidden" th:value="${ habitacion.id }" name="id" />
+							<button onclick="submit()">
+								<img src="/img/lapiz.png" width="20" height="20" />
+							</button>
+						</form>
+					</div>
+
+					<div class="col">
+						<form action="/habitacion/d" method="post">
+							<input type="hidden" th:value="${ habitacion.id }" name="id" />
+							<button onclick="submit()">
+								<img src="/img/basura.png" width="20" height="20" />
+							</button>
+						</form>
+					</div>
+				</div>
+			</td>
+
+			<td th:text="${ habitacion.descripcion }" />
+
+			<td th:text="${ habitacion.capacidad }" />
+
+			<td th:text="${ habitacion.precio }" />
+
+			<td th:text="${ habitacion.hotel?.nombre }" />
+			
+
+
+		</tr>
+	</table>
+</div>

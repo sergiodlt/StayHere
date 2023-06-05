@@ -1,0 +1,54 @@
+<div class="container">
+	<h1>Actualizar Reserva</h1>
+
+	<form action="/reserva/u" method="post">
+
+		Fecha Inicio
+		<input type="date" name="fecha_inicio" required="required" th:value="${reserva.fecha_inicio}" />
+		<br />
+
+		Fecha Inicio
+		<input type="date" name="fecha_fin" required="required" th:value="${reserva.fecha_fin}" />
+		<br />
+
+		Habitaciones
+		<input type="number" name="habitaciones" required="required" th:value="${reserva.habitaciones}" />
+		<br />
+
+		Huespedes
+		<input type="number" name="huespedes" required="required" th:value="${reserva.huespedes}" />
+		<br />
+
+		Precio
+		<input type="number" name="precio" required="required" th:value="${reserva.precio}" />
+		<br />
+
+		Usuario
+		<select name="idUsuario">
+			<th:block th:each=" usuario : ${usuarios} ">
+				<option th:value="${usuario.id}" th:text="${usuario.nombre}"
+					th:selected="${usuario.id == reserva.usuario?.id}" />
+			</th:block>
+		</select>
+		<br />
+
+		Alojamiento
+		<select name="idAlojamiento">
+			<th:block th:each=" alojamiento : ${alojamientos} ">
+				<option th:value="${alojamiento.id}" th:text="${alojamiento.ciudad}"
+					th:selected="${alojamiento.id == reserva.alojamiento?.id}" />
+			</th:block>
+		</select>
+		<br />
+
+
+		<input type="hidden" name="idReserva" th:value="${reserva.id}" />
+
+		<input type="submit" />
+		<br />
+	</form>
+
+	<form action="/reserva/r">
+		<input type="submit" value="Cancelar" />
+	</form>
+</div>

@@ -1,0 +1,165 @@
+/* Estilos generales */
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+}
+
+/* Estilos de la sección con imagen de fondo */
+.jumbotron {
+	height: calc(100vh - 56px);
+	/* Altura de la sección, restando la altura del navbar */
+}
+
+.fondo-home {
+	background-image: url('../img/fondo.jpg');
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+
+.jumbotron h1 {
+	font-size: 4rem;
+	font-weight: bold;
+	color: #fff;
+}
+
+.jumbotron p {
+	font-size: 1.5rem;
+	color: #fff;
+}
+
+.jumbotron .btn {
+	margin-top: 2rem;
+	padding: 1rem 3rem;
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+/* Estilos del botón */
+.btn-primary {
+	background-color: #007bff;
+	border-color: #007bff;
+}
+
+.btn-primary:hover {
+	background-color: #0069d9;
+	border-color: #0062cc;
+}
+
+#busqueda {
+
+	background-color: #54ABF0;
+	border: 1px solid #ccc;
+	padding: 40px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 80vh;
+}
+
+.form-control {
+	font-family: "Roboto", sans-serif;
+}
+
+.form-control {
+	background-color: #f8f8f8;
+	border: none;
+	border-radius: 4px;
+	box-shadow: none;
+	color: #4a4a4a;
+	font-size: 16px;
+	height: 50px;
+	margin-bottom: 10px;
+	padding: 14px 20px;
+	transition: box-shadow 0.2s ease-in-out;
+}
+
+.form-control:focus {
+	box-shadow: 0 0 0 2px #0a66c2;
+	outline: none;
+}
+
+.btn-primary {
+	background-color: #0a66c2;
+	border-color: #0a66c2;
+	border-radius: 4px;
+	box-shadow: none;
+	color: #fff;
+	font-size: 16px;
+	font-weight: 500;
+	padding: 14px 30px;
+	transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out,
+		box-shadow 0.2s ease-in-out;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+	background-color: #0a5ca9;
+	border-color: #0a5ca9;
+	box-shadow: none;
+	color: #fff;
+}
+
+fieldset {
+	border-radius: 10px;
+	padding: 10px;
+	background-color: #fff;
+}
+
+.altura {
+	margin-top: 56px;
+	height: fit-content;
+	min-height: 100%;
+}
+
+.alturaBusq {
+	background-image: url('../img/avion.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	display: block;
+}
+
+.filtro {
+	margin-top: 56px;
+	background-color: dodgerblue;
+	border-radius: 5px;
+	margin-bottom: 56px;
+}
+
+.colorLogin {
+	background-color: #54ABF0;
+}
+
+.row-spacing {
+	margin-bottom: 40px;
+	/* Margen inferior de 40 píxeles para la clase "row-spacing" */
+}
+
+.filtro-container {
+	max-height: 100vh;
+	/* Establece la altura máxima al 100% de la altura de la ventana */
+	overflow-y: auto;
+	/* Agrega una barra de desplazamiento vertical si el contenido excede la altura máxima */
+}
+
+.containerBusq {
+	background-color: #F2F2F2;
+	height: 100vh;
+	position: fixed;
+	top: 56px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow: auto;
+}
+
+.alturaBusq {
+	height: 100vh;
+}

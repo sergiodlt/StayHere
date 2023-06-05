@@ -1,0 +1,42 @@
+<section>
+	
+<div class="row">
+	<div class="col-3">
+	Ciudad<br>
+	<input type="text" name="idCiudad" /><br>
+	Fecha de Entrada<br>
+	<input type="text" name="fechaEntrada"  /><br>
+	Fecha de Salida<br>
+	<input type="text" name="fechaSalida"  /><br>
+	<b>Tipo de alojamiento:</b><br/>
+						<label class="form-control-label" for="hotel">Hotel</label>
+						<input type="radio" class="form-control-radio" name="alojamiento" id="hotel" value="hotel">
+						
+						<label class="form-control-label" for="apartamento">Apartamento</label>
+						<input type="radio" class="form-control-radio" name="alojamiento" id="apartamento" value="apartamento">
+	<br/>
+	
+	<b>Comodidades</b><br/>
+	<form action="/hoteles/filtrados">
+			<th:block th:each=" comodidad : ${comodidades} ">
+				<label th:for="${comodidad?.id}" th:text="${comodidad?.nombre}" />
+				<input type="checkbox" name='idComodidades' th:value="${comodidad?.id}" th:id="${comodidad?.id}"/><br/>
+			</th:block>
+						<br><button class="btn btn-primary">Filtrar</button>
+			</form>
+						</div>
+						
+			<div class="col-3">
+				
+				<div id="listaHoteles">
+					  <div th:each="hotel : ${hoteles}">
+					    <h2 th:text="${hotel.nombre}"></h2>
+					    <p th:text="${hotel?.direccion}"></p>
+					    <p th:text="${hotel?.precio}"></p>
+					    <!-- ... -->
+					  </div>
+					</div>
+			</div>
+</div>
+
+</section>

@@ -1,0 +1,34 @@
+<div class="container">
+	<h1>Crear Comodidad</h1>
+	<form action="/comodidades/c" method="post">
+		Nombre
+		<input type="text" name="nombre" required="required" autofocus="autofocus" />
+		<br />
+	<!--	
+		Apartamento
+		<select name="idApartamento">
+			<th:block th:each=" apartamento : ${apartamentos} ">
+				<option th:value="${apartamento?.id}" th:text="${apartamento?.nombre}" />
+			</th:block>
+		</select>
+		<br />
+		
+		
+		Habitacion
+		<select name="idHabitacion">
+			<th:block th:each=" habitacion : ${habitaciones} ">
+				<option th:value="${habitacion?.id}" th:text="${habitacion?.descripcion}" />
+			</th:block>
+		</select>
+		<br />
+		-->
+		
+		
+		<input type="submit" />
+		<br />
+	</form>
+
+	<form action="/">
+		<input type="submit" value="Cancelar" />
+	</form>
+</div>

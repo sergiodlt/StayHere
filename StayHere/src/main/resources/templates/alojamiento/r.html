@@ -1,0 +1,50 @@
+<div class="container">
+	<h1>Lista de Alojamientos</h1>
+
+	<form action="/alojamiento/c">
+		<input type="submit" value="Nuevo Alojamiento" />
+	</form>
+
+
+	<form action="/">
+
+		<input type="submit" value="Menú principal" />
+	</form>
+
+	<table class="table table-striped table-hover">
+		<tr>
+			<th>Acción</th>
+			<th>Ciudad</th>
+			
+		</tr>
+
+		<tr th:each=" alojamiento : ${ alojamientos }">
+			<td>
+				<div class="row">
+					<div class="col">
+						<form action="/alojamiento/u">
+							<input type="hidden" th:value="${ alojamiento.id }" name="id" />
+							<button onclick="submit()">
+								<img src="/img/lapiz.png" width="20" height="20" />
+							</button>
+						</form>
+					</div>
+
+					<div class="col">
+						<form action="/alojamiento/d" method="post">
+							<input type="hidden" th:value="${ alojamiento.id }" name="id" />
+							<button onclick="submit()">
+								<img src="/img/basura.png" width="20" height="20" />
+							</button>
+						</form>
+					</div>
+				</div>
+			</td>
+
+			<td th:text="${ alojamiento.ciudad }" />
+
+			
+
+		</tr>
+	</table>
+</div>

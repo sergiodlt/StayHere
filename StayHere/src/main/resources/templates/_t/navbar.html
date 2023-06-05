@@ -1,0 +1,92 @@
+<nav sec:authorize="isAuthenticated()" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+	<div class="container">
+		<a class="navbar-brand" href="#">Logo</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+			aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="/">Inicio</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/#services">Servicios</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/#about">Acerca de</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/contacto">Contacto</a>
+				</li>
+				<li class="nav-item" sec:authorize="!isAuthenticated()">
+					<a class="nav-link" href="/login">Iniciar sesión</a>
+				</li>
+				<li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+					<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">
+						<span sec:authentication="name"></span>
+					</a>
+					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+						<!-- Opciones adicionales del menú desplegable -->
+						<!--        <a class="dropdown-item" href="#">Perfil</a>-->
+						<!--        <a class="dropdown-item" href="#">Configuración</a>-->
+
+						<a class="dropdown-item" sec:authorize="hasRole('ROLE_USER')" href="/reserva/r">Reservas</a>
+						<a class="dropdown-item" sec:authorize="hasRole('ROLE_ADMIN')" href="/usuarios/r">Gestion de Usuarios</a>
+						<a class="dropdown-item" sec:authorize="hasRole('ROLE_ADMIN')" href="/reservasAdmin/r">Gestion de Reservas</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="/logout">Cerrar sesión</a>
+					</div>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+<nav sec:authorize="!isAuthenticated()" class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+	<div class="container">
+		<a class="navbar-brand" href="#">Logo</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+			aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="/">Inicio</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/#services">Servicios</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/#about">Acerca de</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/contacto">Contacto</a>
+				</li>
+				<li class="nav-item" sec:authorize="!isAuthenticated()">
+					<a class="nav-link" href="/login">Iniciar sesión</a>
+				</li>
+				<li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+					<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">
+						<span sec:authentication="name"></span>
+					</a>
+					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+						<!-- Opciones adicionales del menú desplegable -->
+						<!--        <a class="dropdown-item" href="#">Perfil</a>-->
+						<!--        <a class="dropdown-item" href="#">Configuración</a>-->
+
+						<a class="dropdown-item" sec:authorize="hasRole('ROLE_USER')" href="/reservasShow">Reservas</a>
+						<a class="dropdown-item" sec:authorize="hasRole('ROLE_ADMIN')" href="/usuarios/r">Gestion de Usuarios</a>
+						<a class="dropdown-item" sec:authorize="hasRole('ROLE_ADMIN')" href="/reservasAdmin/r">Gestion de Reservas</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="/logout">Cerrar sesión</a>
+					</div>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+</nav>

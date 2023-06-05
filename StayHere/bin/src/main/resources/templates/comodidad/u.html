@@ -1,0 +1,50 @@
+<div class="container">
+	<h1>Actualizar Comodidad</h1>
+
+	<form action="/comodidad/u" method="post">
+
+		Nombre
+		<input type="text" name="nombre" required="required" th:value="${comodidad.nombre}" />
+		<br />
+
+		Apartamento
+		<select name="idApartamento">
+			<th:block th:each=" apartamento : ${apartamentos} ">
+				<option th:value="${apartamento.id}" th:text="${apartamento.nombre}"
+					th:selected="${apartamento.id == comodidad.apartamento?.id}" />
+			</th:block>
+		</select>
+		<br />
+
+
+		Hotel
+		<select name="idHotel">
+			<th:block th:each=" hotel : ${hoteles} ">
+				<option th:value="${hotel.id}" th:text="${hotel.nombre}"
+					th:selected="${hotel.id == comodidad.hotel?.id}" />
+			</th:block>
+		</select>
+		<br />
+
+
+		Habitacion
+		<select name="idHabitacion">
+			<th:block th:each=" habitacion : ${habitaciones} ">
+				<option th:value="${habitacion.id}" th:text="${habitacion.descripcion}"
+					th:selected="${habitacion.id == comodidad.habitacion?.id}" />
+			</th:block>
+		</select>
+		<br />
+
+
+
+		<input type="hidden" name="idComodidad" th:value="${comodidad.id}" />
+
+		<input type="submit" />
+		<br />
+	</form>
+
+	<form action="/comodidad/r">
+		<input type="submit" value="Cancelar" />
+	</form>
+</div>

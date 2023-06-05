@@ -1,0 +1,48 @@
+<div class="container">
+	<h1>Actualizar Apartamento</h1>
+
+	<form action="/apartamento/u" method="post">
+		Nombre
+		<input type="text" name="nombre" required="required" th:value="${apartamento.nombre}" />
+		<br />
+
+		Direccion
+		<input type="text" name="direccion" required="required" th:value="${apartamento.direccion}" />
+		<br />
+
+		Correo
+		<input type="text" name="correo" required="required" th:value="${apartamento.correo}" />
+		<br />
+		
+		Telefono
+		<input type="number" name="telefono" required="required" th:value="${apartamento.telefono}" />
+		<br />
+		
+		Descripcion
+		<input type="text" name="descripcion" required="required" th:value="${apartamento.descripcion}" />
+		<br />
+		
+		Precio
+		<input type="number" name="precio" required="required" th:value="${apartamento.precio}" />
+		<br />
+
+		Alojamiento
+		<select name="idAlojamiento">
+			<th:block th:each=" alojamiento : ${alojamientos} ">
+				<option th:value="${alojamiento.id}" th:text="${alojamiento.ciudad}"
+					th:selected="${alojamiento.id == apartamento.alojamiento?.id}" />
+			</th:block>
+		</select>
+		<br />
+
+
+		<input type="hidden" name="idApartamento" th:value="${apartamento.id}" />
+
+		<input type="submit" />
+		<br />
+	</form>
+
+	<form action="/apartamento/r">
+		<input type="submit" value="Cancelar" />
+	</form>
+</div>

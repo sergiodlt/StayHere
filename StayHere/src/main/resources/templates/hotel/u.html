@@ -1,0 +1,54 @@
+<div class="container">
+	<h1>Actualizar Hotel</h1>
+
+	<form action="/hotel/u" method="post">
+		Nombre
+		<input type="text" name="nombre" required="required" autofocus="autofocus" th:value="${hotel.nombre}" />
+		<br />
+
+		Direccion
+		<input type="text" name="direccion" required="required" th:value="${hotel.direccion}" />
+		<br />
+
+		Telefono
+		<input type="number" name="telefono" required="required" th:value="${hotel.telefono}" />
+		<br />
+
+		Correo
+		<input type="text" name="correo" required="required" th:value="${hotel.correo}" />
+		<br />
+
+		Descripcion
+		<input type="text" name="descripcion" required="required" th:value="${hotel.descripcion}" />
+		<br />
+		
+		Estrellas
+		<input type="number" name="estrellas" required="required" th:value="${hotel.estrellas}" />
+		<br />
+		
+		Precio
+		<input type="number" name="precio" required="required" th:value="${hotel.precio}" />
+		<br />
+
+		
+		Alojamiento
+		<select name="idAlojamiento">
+			<th:block th:each=" alojamiento : ${alojamientos} ">
+				<option th:value="${alojamiento.id}" th:text="${alojamiento.ciudad}"
+					th:selected="${alojamiento.id == hotel.alojamiento?.id}" />
+			</th:block>
+		</select>
+		<br />
+		
+
+
+		<input type="hidden" name="idHotel" th:value="${hotel.id}" />
+
+		<input type="submit" />
+		<br />
+	</form>
+
+	<form action="/hotel/r">
+		<input type="submit" value="Cancelar" />
+	</form>
+</div>

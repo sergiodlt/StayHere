@@ -1,0 +1,37 @@
+<div class="container">
+	<h1>Actualizar Habitacion</h1>
+
+	<form action="/habitacion/u" method="post">
+		Descripcion
+		<input type="text" name="descripcion" required="required" autofocus="autofocus" th:value="${habitacion.descripcion}" />
+		<br />
+
+		Capacidad
+		<input type="number" name="capacidad" required="required" th:value="${habitacion.capacidad}" />
+		<br />
+		
+		Precio
+		<input type="number" name="precio" required="required" th:value="${habitacion.precio}" />
+		<br />
+		
+		Hotel
+		<select name="idHotel">
+			<th:block th:each=" hotel : ${hoteles} ">
+				<option th:value="${hotel?.id}" th:text="${hotel?.nombre}"
+					th:selected="${hotel.id == habitacion.hotel?.id}" />
+			</th:block>
+		</select>
+		<br />
+		
+		
+
+		<input type="hidden" name="idHabitacion" th:value="${habitacion.id}" />
+
+		<input type="submit" />
+		<br />
+	</form>
+
+	<form action="/habitacion/r">
+		<input type="submit" value="Cancelar" />
+	</form>
+</div>

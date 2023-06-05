@@ -1,0 +1,54 @@
+<div class="container">
+	<h1>Crear Apartamento</h1>
+	<form action="/apartamento/c" method="post">
+
+		Nombre
+		<input type="text" name="nombre" required="required" autofocus="autofocus" />
+		<br />
+
+		Direccion
+		<input type="text" name="direccion" required="required" />
+		<br />
+
+		Correo
+		<input type="text" name="correo" required="required" />
+		<br />
+
+		Telefono
+		<input type="number" name="telefono" required="required" />
+		<br />
+		
+		Capacidad
+		<input type="number" name="capacidad" required="required" />
+		<br />
+		
+		Precio
+		<input type="number" name="precio" required="required" />
+		<br />
+		<div class="form-group">
+			<label for="idComodidad">Comodidades</label>
+			<select class="form-control" id="idComodidad" name="idComodidad" multiple>
+				<th:block th:each="comodidad : ${comodidades}">
+					<option th:value="${comodidad?.id}" th:text="${comodidad?.nombre}" />
+				</th:block>
+			</select>
+		</div>
+		Ciudad
+		<select name="idCiudad">
+			<th:block th:each=" ciudad : ${ciudades} ">
+				<option th:value="${ciudad?.id}" th:text="${ciudad?.nombre}" />
+			</th:block>
+		</select>
+		<br />
+		Descripcion
+		<textarea name="descripcion" required="required"></textarea>
+		<br />
+
+		<input type="submit" />
+		<br />
+	</form>
+
+	<form action="/apartamento/r">
+		<input type="submit" value="Cancelar" />
+	</form>
+</div>
