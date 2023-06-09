@@ -134,6 +134,13 @@ public class ReservaController {
 
 		return "_t/frame";
 	}
+	@PostMapping("reserva/d")
+	public String delete(
+			@RequestParam("id") Long idReserva, ModelMap m) {
+		reservaService.deleteReserva(idReserva);
+		
+		return "redirect:/reserva/r";
+	}
 
 	/*@PostMapping("u")
 	public String uPost(
