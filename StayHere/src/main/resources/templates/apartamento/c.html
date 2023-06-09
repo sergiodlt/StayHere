@@ -1,54 +1,138 @@
-<div class="container">
-	<h1>Crear Apartamento</h1>
-	<form action="/apartamento/c" method="post">
+<div class="altura">
+  <section>
+    <style>
 
-		Nombre
-		<input type="text" name="nombre" required="required" autofocus="autofocus" />
-		<br />
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
+      }
 
-		Direccion
-		<input type="text" name="direccion" required="required" />
-		<br />
+      .card {
+        margin-top: 20px;
+      }
 
-		Correo
-		<input type="text" name="correo" required="required" />
-		<br />
+      .card-header {
+        background-color: #f8f9fa;
+      }
 
-		Telefono
-		<input type="number" name="telefono" required="required" />
-		<br />
-		
-		Capacidad
-		<input type="number" name="capacidad" required="required" />
-		<br />
-		
-		Precio
-		<input type="number" name="precio" required="required" />
-		<br />
-		<div class="form-group">
-			<label for="idComodidad">Comodidades</label>
-			<select class="form-control" id="idComodidad" name="idComodidad" multiple>
-				<th:block th:each="comodidad : ${comodidades}">
-					<option th:value="${comodidad?.id}" th:text="${comodidad?.nombre}" />
-				</th:block>
-			</select>
-		</div>
-		Ciudad
-		<select name="idCiudad">
-			<th:block th:each=" ciudad : ${ciudades} ">
-				<option th:value="${ciudad?.id}" th:text="${ciudad?.nombre}" />
-			</th:block>
-		</select>
-		<br />
-		Descripcion
-		<textarea name="descripcion" required="required"></textarea>
-		<br />
+      .card-header p {
+        margin: 0;
+        font-weight: bold;
+      }
 
-		<input type="submit" />
-		<br />
-	</form>
+      .button-container {
+        text-align: center;
+        margin-top: 20px;
+      }
 
-	<form action="/apartamento/r">
-		<input type="submit" value="Cancelar" />
-	</form>
+      /* Estilos adicionales */
+      .form-group label {
+        color: #333;
+        font-weight: bold;
+      }
+
+      .form-control {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 8px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      select.form-control {
+        height: 38px;
+      }
+
+      textarea.form-control {
+        height: 120px;
+      }
+
+      .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+      }
+
+      .btn-secondary {
+        background-color: #6c757d;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+      }
+
+      .btn-primary:hover,
+      .btn-secondary:hover {
+        opacity: 0.8;
+      }
+    </style>
+
+    <div class="container bg-light">
+      <h1>Crear Apartamento</h1>
+      <form action="/apartamento/c" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" class="form-control" id="nombre" name="nombre" required autofocus />
+        </div>
+        <div class="form-group">
+          <label for="direccion">Direccion</label>
+          <input type="text" class="form-control" id="direccion" name="direccion" required />
+        </div>
+        <div class="form-group">
+          <label for="telefono">Telefono</label>
+          <input type="number" class="form-control" id="telefono" name="telefono" required />
+        </div>
+        <div class="form-group">
+          <label for="correo">Correo</label>
+          <input type="email" class="form-control" id="correo" name="correo" required />
+        </div>
+        <div class="form-group">
+          <label for="estrellas">Estrellas</label>
+          <input type="number" class="form-control" id="estrellas" name="estrellas" required />
+        </div>
+        <label for="idCiudades">Ciudad</label>
+        <select name="ciudad" class="form-control" id="ciudad" required>
+          <option th:each="ciudad : ${ciudades}" th:value="${ciudad.id}" th:text="${ciudad.nombre}" />
+        </select>
+        <div class="form-group">
+          <label for="capacidad">Capacidad</label>
+          <input type="number" class="form-control" id="capacidad" name="capacidad" required />
+        </div>
+        <div class="form-group">
+          <label for="precio">Precio</label>
+          <input type="number" class="form-control" id="precio" name="precio" required />
+        </div>
+        <div class="form-group">
+          <label for="descripcion">Descripcion</label>
+          <textarea class="form-control" id="descripcion" name="descripcion" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="idComodidad">Comodidades</label>
+          <select class="form-control" id="idComodidad" name="idComodidad" multiple>
+            <th:block th:each="comodidad : ${comodidades}">
+              <option th:value="${comodidad?.id}" th:text="${comodidad?.nombre}" />
+            </th:block>
+          </select>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <p><i class="fa fa-camera"></i> Fotos del apartamento</p>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="fotos">Imagenes</label>
+              <input class="form-control-file" type="file" id="fotos" name="fotos" multiple />
+            </div>
+          </div>
+        </div>
+        <div class="button-container">
+          <button class="btn btn-primary mt-3" type="submit">Enviar</button>
+          <button class="btn btn-secondary mt-3" type="submit">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </section>
 </div>

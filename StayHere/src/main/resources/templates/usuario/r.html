@@ -11,7 +11,7 @@
 	}
 
 	.card-body {
-		padding: 20px;
+		padding: 15px;
 	}
 
 	.card-body h2.lead {
@@ -97,7 +97,7 @@
 							<div class="card bg-light mb-4">
 								<div class="card-body">
 									<div class="row">
-										<div class="col-8 align-right">
+										<div class="col-12 align-right">
 											<h2 class="lead">
 												<span class="fa-stack fa-lg">
 													<i class="fas fa-circle fa-stack-2x"></i>
@@ -112,25 +112,24 @@
 													th:text="${user.lastName}"></span></p>
 											<ul class="ml-4 mb-0 fa-ul text-muted">
 												<li class="small">
-													<span class="email-label">Género:</span>
+													<p>
 													<span class="fa-li"><i class="fas fa-venus-mars"></i></span>
-													<span th:text="${user.genero}"></span>
+													<span th:text="|Género: ${user.genero}|"></span>
+													</p>
 												</li>
 												<li class="small">
-													<span class="email-label">Email:</span>
+													<p>
 													<span class="fa-li"><i class="fas fa-envelope"></i></span>
-													<span th:text="${user.email}" style="margin-right: 0.5em;"></span>
+													<span th:text="|Email: ${user.email}| " style="margin-right: 0.5em;"></span>
+													</p>
 												</li>
 												<li class="small">
-													<span class="email-label">Teléfono:</span>
 													<span class="fa-li"><i class="fas fa-phone"></i></span>
-													<span th:text="${user.telefono}"></span>
+													<span th:text="|Teléfono: ${user.telefono}|"></span>
 												</li>
 												<li class="small" style="white-space: nowrap;">
-													<span class="email-label">Dirección:</span>
 													<span class="fa-li"><i class="fas fa-map-marker-alt"></i></span>
-													<span>&nbsp;</span> <!-- Espacio en blanco adicional -->
-													<span th:text="${user.direccion}"></span>
+													<span th:text="|Dirección: ${user.direccion}|"></span>
 												</li>
 
 
