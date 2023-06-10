@@ -86,6 +86,7 @@ public class HabitacionController {
 		m.put("view", "buscador");
 		return "_t/frame";
 	}
+	
 	@GetMapping("/buscador")
 	public String buscador(ModelMap m) {
 		List<Ciudad> ciudades = ciudadService.getCiudades();
@@ -101,6 +102,7 @@ public class HabitacionController {
 		return "_t/frame";
 
 	}
+	
 	@GetMapping("r")
 	public String rGet(ModelMap m) {
 		List<Habitacion> habitaciones = habitacionService.getHabitaciones();

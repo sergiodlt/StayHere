@@ -87,10 +87,10 @@ public class HotelController {
 							String nombreArchivo = foto.getOriginalFilename();
 
 							// Guardar la imagen en la carpeta resources/static/img/
-							Path rutaArchivo = Paths.get("src/main/resources/static/img/" + nombreArchivo);
+							Path rutaArchivo = Paths.get("/StayHere/src/main/resources/static/img" + nombreArchivo);
 							Files.write(rutaArchivo, foto.getBytes());
 							Foto fotoBDD = new Foto();
-							fotoBDD.setRuta("/img/" + nombreArchivo);
+							fotoBDD.setRuta("img/" + nombreArchivo);
 							fotoBDD.setHabitacion(habitacionService.obtenerUltimaHabitacionAgregada());
 							fotoRepository.save(fotoBDD);
 
