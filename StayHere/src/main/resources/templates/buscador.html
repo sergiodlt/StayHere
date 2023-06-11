@@ -3,7 +3,7 @@
 		<div class="container containerBusq">
 			<div class="row">
 				<div class="col-3 mt-md-0 mt-3 filtro filtro-container">
-					<form action="/habitacion/filtrados" method="POST">
+					<form action="/habitacion/filtrados" method="POST" enctype="multipart/form-data">
 						Ciudad<br>
 						<select class="form-control" name="idCiudad">
 							<option th:each="ciud : ${ciudades}" th:value="${ciud.id}" th:text="${ciud.nombre}"
@@ -58,7 +58,6 @@
 														class="carousel slide" data-ride="carousel">
 														<div class="carousel-inner">
 															<th:block th:each="foto, status : ${alojamiento.fotos}">
-																							<img height="225px" class="img-fluid" th:src="${foto.ruta}">
 
 																<div
 																	th:class="${status.index == 0 ? 'carousel-item active' : 'carousel-item'}">
