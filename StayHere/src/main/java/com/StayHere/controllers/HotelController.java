@@ -82,24 +82,24 @@ public class HotelController {
 				habitacionService.saveHabitacion(descripcion, capacidad, precio, hotel.getId(), idComodidades);
 
 				for (MultipartFile foto : fotos) {
-					if (!foto.isEmpty()) {
-						try {
-							String nombreArchivo = foto.getOriginalFilename();
+				    if (!foto.isEmpty()) {
+				        try {
+				            String nombreArchivo = foto.getOriginalFilename();
 
-							// Guardar la imagen en la carpeta resources/static/img/
-							Path rutaArchivo = Paths.get("img/" + nombreArchivo);
-							Files.write(rutaArchivo, foto.getBytes());
-							Foto fotoBDD = new Foto();
-							fotoBDD.setRuta("img/" + nombreArchivo);
-							fotoBDD.setHabitacion(habitacionService.obtenerUltimaHabitacionAgregada());
-							fotoRepository.save(fotoBDD);
+				            // Guardar la imagen en la carpeta resources/static/img/
+				            Path rutaArchivo = Paths.get("/img/" + nombreArchivo);
+				            Files.write(rutaArchivo, foto.getBytes());
+				            Foto fotoBDD = new Foto();
+				            fotoBDD.setRuta("/img/" + nombreArchivo);
+				            fotoBDD.setHabitacion(habitacionService.obtenerUltimaHabitacionAgregada());
+				            fotoRepository.save(fotoBDD);
 
-						} catch (IOException e) {
-							e.printStackTrace();
-
-						}
-					}
+				        } catch (IOException e) {
+				            e.printStackTrace();
+				        }
+				    }
 				}
+
 			}
 		} catch (Exception e) {
 			PRG.error(e.getMessage(), "/hotel/error");
