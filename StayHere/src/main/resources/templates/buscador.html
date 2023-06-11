@@ -47,6 +47,7 @@
 					<div id="listaAlojamiento">
 						<div th:each="alojamiento, alojamientoIndex : ${alojamientos}" id="lista"
 							class="row row-spacing">
+							<img height="225px" class="img-fluid" th:src="${foto.ruta}" alt="Imagen 1">
 							<div class="col-md-12">
 								<a class="text-decoration-none text-dark"
 									th:href="@{/reserva/{id}(id=${alojamiento.id}, alojamiento=${alojamient},checkin=${checkin}, checkout=${checkout}, capacidad=${capacidad})}">
