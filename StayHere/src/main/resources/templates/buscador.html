@@ -58,7 +58,7 @@
 														class="carousel slide" data-ride="carousel">
 														<div class="carousel-inner">
 															<th:block th:each="foto, status : ${alojamiento.fotos}">
-																							<img height="225px" class="img-fluid" th:src="${foto.ruta}" alt="Imagen 1">
+																							<img height="225px" class="img-fluid" th:src="${foto.ruta}">
 
 																<div
 																	th:class="${status.index == 0 ? 'carousel-item active' : 'carousel-item'}">
