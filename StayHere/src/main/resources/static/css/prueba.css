@@ -11,7 +11,7 @@ body {
 }
 
 .fondo-home {
-	background-image: url('../img/fondo.jpg');
+	background-image: url("/images/background.jpg");
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -119,7 +119,7 @@ fieldset {
 }
 
 .alturaBusq {
-	background-image: url('../img/avion.jpg');
+	background-image: url('/images/avion.jpg');
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
