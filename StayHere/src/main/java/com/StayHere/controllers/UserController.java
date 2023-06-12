@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.StayHere.entities.Role;
 import com.StayHere.entities.User;
@@ -101,6 +102,13 @@ public class UserController {
 		m.put("view", "/home");
 		return "_t/frame"; 
 		 }
+    
+    @PostMapping("/verificar-email")
+    public @ResponseBody boolean verificarEmailExistente(@RequestParam("email") String email) {
+        User user = userRepository.findByEmail(email).orElse(null);
+        return user != null;
+    }
+
     
     
    

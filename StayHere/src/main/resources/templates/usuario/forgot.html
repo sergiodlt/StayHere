@@ -2,13 +2,58 @@
 <html>
 <head>
     <title>Olvidé mi contraseña</title>
+    <style>
+        #error-message {
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <h1>Olvidé mi contraseña</h1>
-    <form action="/reset-password" method="post">
+    <form id="formu" action="/reset-password" method="post" >
         <label for="email">Correo electrónico:</label>
         <input type="email" id="email" name="email" required>
         <button type="submit">Enviar solicitud</button>
     </form>
+    
+    <p id="error-message"></p>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+$(document).ready(function() {
+  // Escucha el evento de envío del formulario
+  $('#formu').submit(function(event) {
+    event.preventDefault(); // Evita el envío del formulario por defecto
+
+    // Obtén el valor del correo electrónico ingresado
+    var email = $('#email').val();
+
+    // Realiza la petición AJAX
+    $.ajax({
+      url: '/verificar-email', // Ruta a tu script de verificación del correo
+      type: 'POST',
+      data: { email: email }, // Envía el correo electrónico como datos POST
+      success: function(response) {
+        if (response == true) {
+			            $("#error-message").text("");
+
+          // El correo existe, puedes enviar el formulario
+          $('#formu')[0].submit(); // Envía el formulario
+        } else {
+          // El correo no existe, muestra un mensaje de error o realiza alguna acción adicional
+    $("#error-message").text("El correo electrónico no está registrado.");
+        }
+      },
+      error: function() {
+        // Maneja los errores de la petición AJAX si es necesario
+            $("#error-message").text("Error al verificar el correo");
+
+      }
+    });
+  });
+});
+
+
+    </script>
 </body>
 </html>
