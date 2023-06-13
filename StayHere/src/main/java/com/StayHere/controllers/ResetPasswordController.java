@@ -87,10 +87,10 @@ public class ResetPasswordController {
     @Async
     private void sendResetPasswordEmail(User user, String resetToken) {
         // Envía un correo electrónico al usuario con un enlace para restablecer la contraseña
-        String resetLink = "https://stayhere-tfg-production.up.railway.app/reset-password/confirm?token=" + resetToken;
+        String resetLink = "https://stayhere-production.up.railway.app/reset-password/confirm?token=" + resetToken;
         String emailBody = "Hola " + user.getUsername() + ",\n\n"
                 + "Recibimos una solicitud para restablecer tu contraseña. Si no realizaste esta solicitud, puedes ignorar este correo electrónico.\n\n"
-                + "Para restablecer tu contraseña, haz clic en el siguiente enlace:\n\n"
+                + "Para restablecer tu contraseña,  haz clic en el siguiente enlace:\n\n"
                 + resetLink + "\n\n"
                 + "Gracias,\n"
                 + "Tu aplicación";

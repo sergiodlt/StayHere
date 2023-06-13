@@ -88,7 +88,7 @@ public class UserController {
   
     
     @PostMapping("/usuario/uPost")
-    public String u (@RequestParam ("idUser") Long idUser,
+    public String uPost (@RequestParam ("idUser") Long idUser,
             @RequestParam("username") String username,
             @RequestParam(required=false,name="password") String password,
             @RequestParam("nombre") String nombre,
