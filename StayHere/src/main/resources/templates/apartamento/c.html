@@ -1,138 +1,297 @@
+
 <div class="altura">
-  <section>
-    <style>
+	<section>
+		<style>
+			h1 {
+				text-align: center;
+				margin-bottom: 30px;
+				color: #333;
+			}
 
-      h1 {
-        text-align: center;
-        margin-bottom: 30px;
-        color: #333;
-      }
+			.card {
+				margin-top: 20px;
+			}
 
-      .card {
-        margin-top: 20px;
-      }
+			.card-header {
+				background-color: #f8f9fa;
+			}
 
-      .card-header {
-        background-color: #f8f9fa;
-      }
+			.card-header p {
+				margin: 0;
+				font-weight: bold;
+			}
 
-      .card-header p {
-        margin: 0;
-        font-weight: bold;
-      }
+			.button-container {
+				text-align: center;
+				margin-top: 20px;
+			}
 
-      .button-container {
-        text-align: center;
-        margin-top: 20px;
-      }
+			/* Estilos adicionales */
+			.form-group label {
+				color: #333;
+				font-weight: bold;
+			}
 
-      /* Estilos adicionales */
-      .form-group label {
-        color: #333;
-        font-weight: bold;
-      }
+			.form-control {
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				padding: 8px;
+				width: 100%;
+				box-sizing: border-box;
+			}
 
-      .form-control {
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        padding: 8px;
-        width: 100%;
-        box-sizing: border-box;
-      }
+			select.form-control {
+				height: 38px;
+			}
 
-      select.form-control {
-        height: 38px;
-      }
+			textarea.form-control {
+				height: 120px;
+			}
 
-      textarea.form-control {
-        height: 120px;
-      }
+			.btn-primary {
+				background-color: #007bff;
+				color: #fff;
+				border: none;
+				padding: 10px 20px;
+				border-radius: 4px;
+			}
 
-      .btn-primary {
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 4px;
-      }
+			.btn-secondary {
+				background-color: #6c757d;
+				color: #fff;
+				border: none;
+				padding: 10px 20px;
+				border-radius: 4px;
+			}
 
-      .btn-secondary {
-        background-color: #6c757d;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 4px;
-      }
+			.btn-primary:hover,
+			.btn-secondary:hover {
+				opacity: 0.8;
+			}
 
-      .btn-primary:hover,
-      .btn-secondary:hover {
-        opacity: 0.8;
-      }
-    </style>
+			.buttons-container {
+				margin-bottom: 20px;
+			}
+		</style>
 
-    <div class="container bg-light">
-      <h1>Crear Apartamento</h1>
-      <form action="/apartamento/c" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-          <label for="nombre">Nombre</label>
-          <input type="text" class="form-control" id="nombre" name="nombre" required autofocus />
-        </div>
-        <div class="form-group">
-          <label for="direccion">Direccion</label>
-          <input type="text" class="form-control" id="direccion" name="direccion" required />
-        </div>
-        <div class="form-group">
-          <label for="telefono">Telefono</label>
-          <input type="number" class="form-control" id="telefono" name="telefono" required />
-        </div>
-        <div class="form-group">
-          <label for="correo">Correo</label>
-          <input type="email" class="form-control" id="correo" name="correo" required />
-        </div>
-        <div class="form-group">
-          <label for="estrellas">Estrellas</label>
-          <input type="number" class="form-control" id="estrellas" name="estrellas" required />
-        </div>
-        <label for="idCiudades">Ciudad</label>
-        <select name="ciudad" class="form-control" id="ciudad" required>
-          <option th:each="ciudad : ${ciudades}" th:value="${ciudad.id}" th:text="${ciudad.nombre}" />
-        </select>
-        <div class="form-group">
-          <label for="capacidad">Capacidad</label>
-          <input type="number" class="form-control" id="capacidad" name="capacidad" required />
-        </div>
-        <div class="form-group">
-          <label for="precio">Precio</label>
-          <input type="number" class="form-control" id="precio" name="precio" required />
-        </div>
-        <div class="form-group">
-          <label for="descripcion">Descripcion</label>
-          <textarea class="form-control" id="descripcion" name="descripcion" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="idComodidad">Comodidades</label>
-          <select class="form-control" id="idComodidad" name="idComodidad" multiple>
-            <th:block th:each="comodidad : ${comodidades}">
-              <option th:value="${comodidad?.id}" th:text="${comodidad?.nombre}" />
-            </th:block>
-          </select>
-        </div>
-        <div class="card">
-          <div class="card-header">
-            <p><i class="fa fa-camera"></i> Fotos del apartamento</p>
-          </div>
-          <div class="card-body">
-            <div class="form-group">
-              <label for="fotos">Imagenes</label>
-              <input class="form-control-file" type="file" id="fotos" name="fotos" multiple />
-            </div>
-          </div>
-        </div>
-        <div class="button-container">
-          <button class="btn btn-primary mt-3" type="submit">Enviar</button>
-          <button class="btn btn-secondary mt-3" type="submit">Cancelar</button>
-        </div>
-      </form>
-    </div>
-  </section>
+		<div class="container bg-light">
+			<h1>Crear Apartamento</h1>
+			<form action="/apartamento/c" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="nombre">Nombre</label>
+						<input type="text" class="form-control" id="nombre" name="nombre" required autofocus onkeyup="validateName()" />
+						<small id="nombreError" class="form-text text-danger"></small>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="direccion">Direccion</label>
+						<input type="text" class="form-control" id="direccion" name="direccion" required  onkeyup="validateDireccion()" />
+						<small id="direccionError" class="form-text text-danger"></small>
+					</div>
+				</div>
+
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="telefono">Telefono</label>
+						<input type="number" class="form-control" id="telefono" name="telefono" required onkeyup="validateTelefono()"/>
+						<small id="telefonoError" class="form-text text-danger"></small>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="correo">Correo</label>
+						<input type="email" class="form-control" id="correo" name="correo" required onkeyup="validateCorreo()" />
+						<small id="correoError" class="form-text text-danger"></small>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="precio">Precio</label>
+						<input type="number" class="form-control" id="precio" name="precio" required onkeyup="validatePrecio()"/>
+						<small id="precioError" class="form-text text-danger"></small>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="idCiudad">Ciudad</label>
+						<select name="idCiudad" class="form-control" id="ciudad" required>
+							<option th:each="ciudad : ${ciudades}" th:value="${ciudad.id}" th:text="${ciudad.nombre}" />
+						</select>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="capacidad">Capacidad</label>
+						<input type="number" class="form-control" id="capacidad" name="capacidad" required onkeyup="validateCapacidad()" />
+						<small id="capacidadError" class="form-text text-danger"></small>
+					</div>
+				
+					<div class="form-group col-md-6">
+						<div class="form-group">
+							<label for="idComodidad">Comodidades</label>
+							<select type="checkbox" class="form-control" name="idComodidad" th:value="${comodidad?.id}"
+								id="comodidades" multiple>
+								<option th:each=" comodidad : ${comodidades} " th:value="${comodidad.id}"
+									th:text="${comodidad.nombre}">
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="descripcion">Descripcion</label>
+					<textarea class="form-control" id="descripcion" name="descripcion" required oninput="validateDescripcion()"></textarea>
+					<small id="descripcionError" class="form-text text-danger"></small>
+				</div>
+
+				<div class="card">
+					<div class="card-header">
+						<p><i class="fa fa-camera"></i> Fotos del apartamento</p>
+					</div>
+					<div class="card-body">
+						<div class="form-group">
+							<label for="fotos">Imagenes</label>
+							<input class="form-control-file" type="file" id="fotos" name="fotos" multiple />
+						</div>
+					</div>
+				</div>
+
+				<div class="text-left mt-3 buttons-container">
+					<a class="btn btn-secondary" href="/">Cancelar</a>
+					<button class="btn btn-primary" sec:authorize="isAuthenticated()" >Crear</button>
+					
+
+				</div>
+			</form>
+			<form th:action="@{/login}">
+						<button class="btn btn-primary" sec:authorize="!isAuthenticated()">Crear</button>
+					</form>
+				</div>
+				
+		</div>
+	</section>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script>
+	$(document).ready(function () {
+		// Inicializar Select2
+		$('#comodidades').select2();
+	});
+</script>
+ <script>
+  function validateForm() {
+    // Validar campos requeridos
+    var requiredFields = document.querySelectorAll('input[required], select[required], textarea[required]');
+    for (var i = 0; i < requiredFields.length; i++) {
+      if (!requiredFields[i].value) {
+        alert('Por favor, complete todos los campos requeridos.');
+        return false; // Evitar el envío del formulario
+      }
+    }
+
+    // Agregar aquí más validaciones según tus necesidades
+
+    return true; // Permitir el envío del formulario
+  }
+
+  function validateName() {
+    var nameInput = document.getElementById('nombre');
+    var nameError = document.getElementById('nombreError');
+
+    var nameRegex = /^[a-zA-ZÁÉÍÓÚáéíóú]+( [a-zA-ZÁÉÍÓÚáéíóú]+)*$/; // Expresión regular para letras y un único espacio
+
+    if (!nameInput.value.trim() || !nameRegex.test(nameInput.value.trim()) || nameInput.value.trim().length !== nameInput.value.trim().replace(/ +(?= )/g, '').length) {
+      nameInput.classList.add('is-invalid');
+      nameError.textContent = 'Ingrese solo letras y un único espacio.';
+    } else {
+      nameInput.classList.remove('is-invalid');
+      nameError.textContent = '';
+    }
+  }
+
+  function validateDireccion() {
+    var direccionInput = document.getElementById('direccion');
+    var direccionError = document.getElementById('direccionError');
+
+    var direccionRegex = /^[a-zA-ZÁÉÍÓÚáéíóú][a-zA-ZÁÉÍÓÚáéíóú0-9]*( [a-zA-ZÁÉÍÓÚáéíóú0-9]+)*$/; // Expresión regular para letras, números y un único espacio
+
+    if (!direccionInput.value.trim() || !direccionRegex.test(direccionInput.value.trim()) || direccionInput.value.trim().length !== direccionInput.value.trim().replace(/ +(?= )/g, '').length || !/^[a-zA-Z]/.test(direccionInput.value.trim())) {
+      direccionInput.classList.add('is-invalid');
+      direccionError.textContent = 'Ingrese una dirección válida que empiece con una letra y contenga solo letras, números y un único espacio.';
+    } else {
+      direccionInput.classList.remove('is-invalid');
+      direccionError.textContent = '';
+    }
+  }
+  
+  function validateTelefono() {
+    var telefonoInput = document.getElementById('telefono');
+    var telefonoError = document.getElementById('telefonoError');
+
+    var telefonoRegex = /^[6-9]\d{8}$/; // Expresión regular para números de teléfono de 9 dígitos que empiezan con 6, 7, 8 o 9
+
+    if (!telefonoInput.value.trim() || !telefonoRegex.test(telefonoInput.value.trim())) {
+      telefonoInput.classList.add('is-invalid');
+      telefonoError.textContent = 'Ingrese un número de teléfono válido.';
+    } else {
+      telefonoInput.classList.remove('is-invalid');
+      telefonoError.textContent = '';
+    }
+  }
+  
+    function validateCorreo() {
+    var correoInput = document.getElementById('correo');
+    var correoError = document.getElementById('correoError');
+
+    var correoRegex = /^[a-zA-Z0-9][a-zA-Z0-9._-]*@[a-zA-Z0-9]+(\.[a-zA-Z]{2,4})$/; // Expresión regular para correo electrónico
+
+    if (!correoInput.value.trim() || !correoRegex.test(correoInput.value.trim())) {
+      correoInput.classList.add('is-invalid');
+      correoError.textContent = 'Ingrese un correo electrónico válido.';
+    } else {
+      correoInput.classList.remove('is-invalid');
+      correoError.textContent = '';
+    }
+  }
+  
+ function validateDescripcion() {
+  var descripcionInput = document.getElementById('descripcion');
+  var descripcionError = document.getElementById('descripcionError');
+
+  var descripcionRegex = /^[a-zA-ZÁÉÍÓÚáéíóú][a-zA-ZÁÉÍÓÚáéíóú0-9]*(?: [a-zA-ZÁÉÍÓÚáéíóú0-9]+)*$/; // Expresión regular para descripción: letra seguida de letras, números y espacios, con máximo un espacio seguido
+
+  if (!descripcionInput.value.trim() || !descripcionRegex.test(descripcionInput.value.trim())) {
+    descripcionInput.classList.add('is-invalid');
+    descripcionError.textContent = 'Ingrese una descripción válida.';
+  } else {
+    descripcionInput.classList.remove('is-invalid');
+    descripcionError.textContent = '';
+  }
+}
+    function validateCapacidad() {
+    var capacidadInput = document.getElementById('capacidad');
+    var capacidadError = document.getElementById('capacidadError');
+
+    if (capacidadInput.value < 1) {
+      capacidadInput.classList.add('is-invalid');
+      capacidadError.textContent = 'La capacidad mínima es de 1 persona.';
+    } else {
+      capacidadInput.classList.remove('is-invalid');
+      capacidadError.textContent = '';
+    }
+  }
+  
+   function validatePrecio() {
+    var precioInput = document.getElementById('precio');
+    var precioError = document.getElementById('precioError');
+
+    if (precioInput.value < 1) {
+      precioInput.classList.add('is-invalid');
+      precioError.textContent = 'El precio mínimo es de 1.';
+    } else {
+      precioInput.classList.remove('is-invalid');
+      precioError.textContent = '';
+    }
+  }
+
+  </script>

@@ -2,46 +2,71 @@
 	<div class="alturaBusq">
 		<div class="container containerBusq">
 			<div class="row">
-				<div class="col-3 mt-md-0 mt-3 filtro filtro-container">
-					<form action="/habitacion/filtrados" method="POST" enctype="multipart/form-data">
-						Ciudad<br>
-						<select class="form-control" name="idCiudad">
-							<option th:each="ciud : ${ciudades}" th:value="${ciud.id}" th:text="${ciud.nombre}"
-								th:selected="${ciudad?.id == ciud.id}" />
-						</select>
-
-						<br>
-						Check-in<br>
-						<input type="date" class="form-control"
-							th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" name="fechaEntrada"
-							th:value="${checkin}" /><br>
-						Check-out<br>
-						<input type="date" class="form-control" name="fechaSalida" th:value="${checkout}" /><br>
-						<b>Tipo de alojamiento:</b><br />
-						<label class="form-control-label" for="hotel">Hotel</label>
-						<input type="radio" class="form-control-radio" th:checked="${alojamient == 'hotel'}"
-							name="alojamiento" id="hotel" value="hotel">
-
-						<label class="form-control-label" for="apartamento">Apartamento</label>
-						<input type="radio" class="form-control-radio" name="alojamiento" id="apartamento"
-							value="apartamento" th:checked="${alojamient == 'apartamento'}">
-						<br />
-
-						<b>Comodidades</b><br />
-						<label th:for="${comodidad?.id}" th:text="${comodidad?.nombre}" />
-						<select class="form-control" type="checkbox" name='idComodidades' th:value="${comodidad?.id}"
-							id="comodidades" multiple>
-							<option th:each=" comodidad : ${comodidades} " th:value="${comodidad.id}"
-								th:text="${comodidad.nombre}">
-						</select>
-						<br />
-						<br />
-						<input type="submit" class="btn btn-secondary" id="btn-filtrar" value="Filtrar" />
-						<br />
+				<div class="col-12 filtro">
+					<form action="/home/buscador/filtro" method="POST" enctype="multipart/form-data">
+						<div class="row">
+							<div class="col-md-3 col-12">
+								<label for="idCiudad">Ciudad</label>
+								<select class="form-control" name="IdCiudad" id="idCiudad" required>
+									<option th:each="ciud : ${ciudades}" th:value="${ciud.id}" th:text="${ciud.nombre}"
+										th:selected="${ciudad?.id == ciud.id}" />
+								</select>
+							</div>
+							<div class="form-group col-md-3">
+								<label for="fechaEntrada">Check-in</label>
+								<input type="date" class="form-control" name="checkIn"
+									th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" id="check-in"
+									th:value="${checkin}" required />
+							</div>
+							<div class="form-group col-md-3">
+								<label for="fechaSalida">Check-out</label>
+								<input type="date" class="form-control" name="checkOut" id="check-out"
+									th:value="${checkout}" />
+							</div>
+							<div class="form-group col-md-3">
+								<label for="alojamiento">Tipo de alojamiento:</label>
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="alojamiento" id="hotel"
+										value="hotel" th:checked="${alojamient == 'hotel'}" required>
+									<label class="form-check-label" for="hotel">Hotel</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="alojamiento" id="apartamento"
+										value="apartamento" th:checked="${alojamient == 'apartamento'}" required>
+									<label class="form-check-label" for="apartamento">Apartamento</label>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-5">
+								<label for="num-huespedes">Número de huéspedes:</label>
+								<input type="number" th:value="${capacidad}" name="huespedes" class="form-control"
+									id="num-huespedes" required>
+							</div>
+							<div class="col-md-5">
+								<div class="form-group">
+									<label for="idComodidad">Comodidades</label>
+									<select class="form-control" type="checkbox" name='idComodidades'
+										th:value="${comodidad?.id}" id="comodidades" multiple required>
+										<option th:each=" comodidad : ${comodidades} " th:value="${comodidad.id}"
+											th:text="${comodidad.nombre}"
+											th:selected="${comodidadesSelect.contains(comodidad)}">
+									</select>
+								</div>
+							</div>
+							<div class="col-md-2 align-self-end">
+								<div class="form-group">
+									<label class="invisible">Botón de filtrar</label>
+									<input type="submit" class="btn btn-secondary float-right" id="btn-filtrar"
+										value="Filtrar" />
+								</div>
+							</div>
+						</div>
 					</form>
 				</div>
-				<div class="col-9">
-															
+			</div>
+			<div class="row">
+				<div class="col-12">
 					<div id="hoteles-container"></div>
 
 					<div id="listaAlojamiento">
@@ -58,7 +83,6 @@
 														class="carousel slide" data-ride="carousel">
 														<div class="carousel-inner">
 															<th:block th:each="foto, status : ${alojamiento.fotos}">
-
 																<div
 																	th:class="${status.index == 0 ? 'carousel-item active' : 'carousel-item'}">
 																	<img height="225px" class="img-fluid"
@@ -86,13 +110,27 @@
 												</div>
 												<div class="col-md-6">
 													<div class="card-body">
-														<h3 th:if="${alojamient == 'hotel'}"
-															th:text="${alojamiento.hotel?.nombre}" />
+														<b>
+															<h3 th:if="${alojamient == 'hotel'}"
+																th:text="${alojamiento.hotel?.nombre}" />
+														</b>
 														<h5 th:if="${alojamient == 'hotel'}"
 															th:text="|Habitacion número ${alojamiento?.id}|" />
+														<b>
+															<h3 th:if="${alojamient == 'apartamento'}"
+																th:text="${alojamiento?.nombre}" />
+														</b>
 														<h5 th:if="${alojamient == 'apartamento'}"
-															th:text="${alojamiento?.nombre}" />
+															th:text="|${alojamiento?.direccion}, ${alojamiento?.ciudad?.nombre}|" />
 														<p th:text="${alojamiento?.descripcion}" />
+
+														<p th:if="${alojamient == 'hotel'}">
+															<span
+																th:each="i : ${#numbers.sequence(1, alojamiento.hotel?.estrellas)}">
+																<i class="fas fa-star"></i>
+															</span>
+														</p>
+														<p th:text="|${alojamiento?.precio}€ /Noche|" />
 													</div>
 												</div>
 											</div>
@@ -105,8 +143,9 @@
 				</div>
 			</div>
 		</div>
+	</div>
 </section>
-<!-- Incluye Select2 JS -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script>
 	$(document).ready(function () {
@@ -115,50 +154,40 @@
 	});
 </script>
 
-
-<!--<script>-->
-<!--	$(document).ready(function () {-->
-<!--		// Asignar un controlador de eventos al botón "Filtrar"-->
-
-
-<!--		$("#btn-filtrar").click(function () {-->
-<!--			var comodidadesSeleccionadas = $('input[name="idComodidades"]:checked').map(function () {-->
-<!--				return $(this).val();-->
-<!--			}).get();-->
-<!--			// Enviar la solicitud AJAX con los datos-->
-<!--			$.ajax({-->
-<!--				url: "/filtrar",-->
-<!--				type: "POST",-->
-<!--				data: JSON.stringify(comodidadesSeleccionadas),-->
-<!--				contentType: "application/json",-->
-
-<!--				success: function (data) {-->
-
-<!--					var listaHoteles = $("#listaHoteles");-->
-
-<!--					// Elimina todo el contenido actual del elemento-->
-<!--					listaHoteles.empty();-->
-
-
-<!--				},-->
-<!--				error: function (error) {-->
-<!--					console.log(error);-->
-<!--				}-->
-<!--			});-->
-<!--		});-->
-<!--	});-->
-
-<!--</script>-->
+<!-- Incluye Select2 JS -->
 <script>
-	// Obtener los elementos de fecha de check-in y check-out
 	var checkInInput = document.getElementById("check-in");
 	var checkOutInput = document.getElementById("check-out");
 
-	// Obtener la fecha mínima permitida para check-out
-	var today = new Date();
-	var minCheckOutDate = new Date(today);
-	minCheckOutDate.setDate(today.getDate() + 1); // Agregar un día
+	// Bloquear fechas anteriores a mañana en Check-in
+	var tomorrow = new Date();
+	tomorrow.setDate(tomorrow.getDate() + 1);
+	var tomorrowFormatted = tomorrow.toISOString().split("T")[0];
+	checkInInput.min = tomorrowFormatted;
 
-	// Establecer la fecha mínima en el campo de check-out
-	checkOutInput.min = minCheckOutDate.toISOString().split("T")[0];
+	// Actualizar Check-out al cambiar Check-in
+	checkInInput.addEventListener("change", function () {
+		var checkInDate = new Date(this.value);
+		var minCheckOutDate = new Date(checkInDate);
+		minCheckOutDate.setDate(minCheckOutDate.getDate() + 1);
+
+		var minCheckOutFormatted = minCheckOutDate.toISOString().split("T")[0];
+		checkOutInput.min = minCheckOutFormatted;
+
+		if (checkOutInput.value < minCheckOutFormatted) {
+			checkOutInput.value = minCheckOutFormatted;
+		}
+	});
+
+	// Bloquear fechas no válidas en Check-out
+	checkOutInput.addEventListener("change", function () {
+		var checkInDate = new Date(checkInInput.value);
+		var checkOutDate = new Date(this.value);
+		var minCheckOutDate = new Date(checkInDate);
+		minCheckOutDate.setDate(minCheckOutDate.getDate() + 1);
+
+		if (checkOutDate <= minCheckOutDate) {
+			checkOutInput.value = minCheckOutFormatted;
+		}
+	});
 </script>

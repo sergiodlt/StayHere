@@ -82,6 +82,9 @@ public class HomeController {
 			m.put("alojamientos", apartamentosFilt);
 		}
 		List<Comodidad> comodidades = comodidadService.getComodidades();
+		List<Comodidad> comodidadesSelect = new ArrayList<Comodidad>();
+
+		m.put("comodidadesSelect", comodidadesSelect);
 		m.put("alojamient", alojamiento);
 		m.put("ciudades", ciudadService.getCiudades());
 		m.put("checkin", checkIn);
@@ -89,6 +92,57 @@ public class HomeController {
 		m.put("capacidad", numHuespedes);
 		m.put("ciudad", ciudadService.getCiudadById(ciudad));
 		m.put("comodidades", comodidades);
+		m.put("view", "buscador");
+		return "_t/frame";
+	}
+	
+	@PostMapping("/home/buscador/filtro")
+	public String filtroComodidades(@RequestParam("alojamiento") String alojamiento, @RequestParam("checkIn") LocalDate checkIn, @RequestParam("checkOut") LocalDate checkOut,
+			@RequestParam("huespedes") int numHuespedes, @RequestParam("IdCiudad") Long ciudad, @RequestParam("idComodidades") List <Long>idComodiades, ModelMap m) {
+		
+		List<Comodidad> comodidades = new ArrayList<Comodidad>();
+		for(Long idComodidad: idComodiades) {
+			comodidades.add(comodidadService.getComodidadById(idComodidad));
+		}
+		if(alojamiento.equals("hotel")) {
+			List<Habitacion> habitaciones = habitacionRepository.findHabitacionesDisponibles(checkIn, checkOut, numHuespedes);
+			List<Habitacion> habitacionesFilt = new ArrayList<Habitacion>();
+			
+			
+
+			for(Habitacion hab : habitaciones) {
+				if(hab.getHotel().getCiudad().getId() == ciudad) {
+					
+					if(hab.getComodidades().containsAll(comodidades)) {
+						habitacionesFilt.add(hab);	
+					}
+				}
+			}
+			m.put("alojamientos", habitacionesFilt);
+			
+		}
+		if(alojamiento.equals("apartamento")) {
+			List<Apartamento> apartamentos = apartamentoRepository.findApartamentosDisponibles(checkIn, checkOut, numHuespedes);
+			List<Apartamento> apartamentosFilt = new ArrayList<Apartamento>();
+			
+			for(Apartamento apart : apartamentos) {
+				if(apart.getCiudad().getId() == ciudad) {
+					if(apart.getComodidades().containsAll(comodidades)) {
+						apartamentosFilt.add(apart);
+					}
+				}
+			}
+			m.put("alojamientos", apartamentosFilt);
+		}
+		List<Comodidad> comodidadesBBDD = comodidadService.getComodidades();
+		m.put("alojamient", alojamiento);
+		m.put("ciudades", ciudadService.getCiudades());
+		m.put("checkin", checkIn);
+		m.put("checkout", checkOut);
+		m.put("capacidad", numHuespedes);
+		m.put("ciudad", ciudadService.getCiudadById(ciudad));
+		m.put("comodidadesSelect", comodidades);
+		m.put("comodidades", comodidadesBBDD);
 		m.put("view", "buscador");
 		return "_t/frame";
 	}

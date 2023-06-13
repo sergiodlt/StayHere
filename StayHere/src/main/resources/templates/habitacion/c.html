@@ -1,33 +1,58 @@
 <div class="container">
 	<h1>Crear Habitacion</h1>
-	<form action="/habitacion/c" method="post">
-		Descripcion
-		<input type="text" name="descripcion" required="required" autofocus="autofocus" />
-		<br />
-		
-		Capacidad
-		<input type="number" name="capacidad" required="required" />
-		<br />
-		
-		Precio
-		<input type="number" name="precio" required="required"  />
-		<br />
-		
-		
-		Hotel
-		<select name="idHotel">
-			<th:block th:each=" hotel : ${hoteles} ">
-				<option th:value="${hotel?.id}" th:text="${hotel?.nombre}" />
-			</th:block>
-		</select>
-		<br />
-		
+	<form action="/habitacion/cPost" method="post" enctype="multipart/form-data">
+		<h2>Habitaciones</h2>
 
-		<input type="submit" />
-		<br />
-	</form>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="cantidad">¿Cuantas habitaciones desea crear igual que esta?</label>
+						<input type="number" class="form-control" id="cantidad" name="cantidad" />
+					</div>
+					<div class="form-group col-md-6">
+						<label for="capacidad">Capacidad</label>
+						<input type="number" class="form-control" id="capacidad" name="capacidad" required />
+					</div>
+				</div>
 
-	<form action="/habitacion/r">
-		<input type="submit" value="Cancelar" />
-	</form>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="precio">Precio</label>
+						<input type="number" class="form-control" id="precio" name="precio" required />
+					</div>
+					<div class="form-group col-md-6">
+						<label for="idComodidad">Comodidades</label>
+						<select class="form-control" type="checkbox" name='idComodidad' th:value="${comodidad?.id}"
+							id="comodidades" multiple>
+							<option th:each=" comodidad : ${comodidades} " th:value="${comodidad.id}"
+								th:text="${comodidad.nombre}">
+						</select>
+					</div>
+				</div>
+
+
+				<div class="form-group ">
+					<label for="descripcion">Descripción</label>
+					<textarea class="form-control" id="descripcion" name="descripcion" required></textarea>
+				</div>
+
+
+
+				<div class="form-group ">
+					<div class="card">
+						<div class="card-header">
+							<p><i class="fa fa-camera"></i> Fotos de las habitaciones</p>
+						</div>
+						<div class="card-body">
+							<div class="form-group">
+								<label for="fotos">Imágenes</label>
+								<input class="form-control-file" type="file" id="fotos" name="fotos" multiple />
+							</div>
+						</div>
+					</div>
+				</div>
+<input type="hidden" name="id" th:value="${hotel.id}" />
+				<div class="text-left mt-3">
+					<a class="btn btn-secondary" href="/">Cancelar</a>
+	<button class="btn btn-primary" sec:authorize="isAuthenticated()" >Crear</button>
+				</div></form>
 </div>

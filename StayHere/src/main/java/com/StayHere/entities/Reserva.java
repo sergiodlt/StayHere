@@ -38,6 +38,8 @@ public class Reserva {
     private LocalDate fecha_fin;
 	 
 	private int huespedes;
+
+	private int precio;
 	 
 	
 	@ManyToOne

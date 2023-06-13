@@ -1,37 +1,62 @@
 <div class="container">
-	<h1>Actualizar Habitacion</h1>
+	<h1>Crear Habitacion</h1>
+	<form action="/habitacion/u" method="post" enctype="multipart/form-data">
+		<h2>Habitaciones</h2>
 
-	<form action="/habitacion/u" method="post">
-		Descripcion
-		<input type="text" name="descripcion" required="required" autofocus="autofocus" th:value="${habitacion.descripcion}" />
-		<br />
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="capacidad">Capacidad</label>
+				<input type="number" class="form-control" th:value="${habitacion.capacidad}" id="capacidad"
+					name="capacidad" required />
+			</div>
 
-		Capacidad
-		<input type="number" name="capacidad" required="required" th:value="${habitacion.capacidad}" />
-		<br />
-		
-		Precio
-		<input type="number" name="precio" required="required" th:value="${habitacion.precio}" />
-		<br />
-		
-		Hotel
-		<select name="idHotel">
-			<th:block th:each=" hotel : ${hoteles} ">
-				<option th:value="${hotel?.id}" th:text="${hotel?.nombre}"
-					th:selected="${hotel.id == habitacion.hotel?.id}" />
-			</th:block>
-		</select>
-		<br />
-		
-		
+			<div class="form-group col-md-6">
+				<label for="precio">Precio</label>
+				<input type="number" class="form-control" th:value="${habitacion.precio}" id="precio" name="precio"
+					required />
+			</div>
+		</div>
+		<div class="form-row">
 
+			<div class="form-group col-md-6">
+				<label for="idComodidad">Comodidades</label>
+				<select class="form-control" type="checkbox" name='idComodidad' th:value="${comodidad?.id}"
+					id="comodidades" multiple>
+					<option th:each=" comodidad : ${comodidades} " th:value="${comodidad.id}"
+						th:text="${comodidad.nombre}" th:selected="${habitacion.comodidades.contains(comodidad)}">
+				</select>
+			</div>
+
+		</div>
+		<div class="form-row">
+
+			<div class="form-group col-md-12">
+				<label for="descripcion">Descripción</label>
+				<textarea class="form-control" id="descripcion" th:text="${habitacion.descripcion}" name="descripcion"
+					required></textarea>
+			</div>
+
+		</div>
+		<div class="form-row">
+
+			<div class="form-group col-md-12">
+				<div class="card">
+					<div class="card-header">
+						<p><i class="fa fa-camera"></i> Fotos de las habitaciones</p>
+					</div>
+					<div class="card-body">
+						<div class="form-group">
+							<label for="fotos">Imágenes</label>
+							<input class="form-control-file" type="file" id="fotos" name="fotos" multiple />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<input type="hidden" name="idHabitacion" th:value="${habitacion.id}" />
-
-		<input type="submit" />
-		<br />
-	</form>
-
-	<form action="/habitacion/r">
-		<input type="submit" value="Cancelar" />
+		<div class="text-left mt-3">
+			<a class="btn btn-secondary" href="/">Cancelar</a>
+			<button class="btn btn-primary" sec:authorize="isAuthenticated()">Modificar</button>
+		</div>
 	</form>
 </div>

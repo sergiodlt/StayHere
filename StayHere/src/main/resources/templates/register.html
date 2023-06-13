@@ -34,26 +34,33 @@
 											<div class="col-md-6">
 												<div class="form-floating mb-3 mb-md-0">
 													<input class="form-control" id="inputFirstName" type="text"
-														th:field="*{firstName}" placeholder="Introduce tu nombre" />
+														th:field="*{firstName}" placeholder="Introduce tu nombre"
+														onkeyup="validateNombre()" required />
 													<label for="inputFirstName">Nombre</label>
+													<div id="nombreError" class="invalid-feedback"></div>
+
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-floating">
 													<input class="form-control" id="inputLastName" type="text"
-														th:field="*{lastName}"
-														placeholder="Introduce tu segundo apellido" />
-													<label for="inputLastName">Segundo Apellido</label>
+														th:field="*{lastName}" placeholder="Introduce tus apellidos"
+														onkeyup="validateApellido()" required />
+													<label for="inputLastName">Apellidos</label>
+													<div id="apellidoError" class="invalid-feedback"></div>
+
 												</div>
 											</div>
 										</div>
 										<div class="form-floating mb-3">
 											<input class="form-control" id="inputEmail" type="email" th:field="*{email}"
-												placeholder="name@example.com" />
+												placeholder="name@example.com" onkeyup="validateEmail()" required />
 											<label for="inputEmail">Correo Electrónico</label>
+											<div id="emailError" class="invalid-feedback"></div>
+
 										</div>
 										<div class="form-floating mb-3">
-											<select class="form-select" id="inputGenero" th:field="*{genero}">
+											<select class="form-select" id="inputGenero" th:field="*{genero}" required>
 												<option value="Masculino">Masculino</option>
 												<option value="Femenino">Femenino</option>
 												<option value="Otro">Otro</option>
@@ -63,24 +70,31 @@
 
 										<div class="form-floating mb-3">
 											<input class="form-control" id="inputDireccion" type="text"
-												th:field="*{direccion}" placeholder="Introduce tu direccion" />
+												th:field="*{direccion}" placeholder="Introduce tu direccion"
+												onkeyup="validateDireccion()" required />
 											<label for="inputDireccion">Direccion</label>
+											<div id="direccionError" class="invalid-feedback"></div>
+
 										</div>
 
 										<div class="row mb-3">
 											<div class="col-md-6">
 												<div class="form-floating mb-3">
 													<input class="form-control" id="inputTelefono" type="text"
-														th:field="*{telefono}" placeholder="Introduce tu teléfono" />
+														th:field="*{telefono}" placeholder="Introduce tu teléfono"
+														onkeyup="validateTelefono()" required />
 													<label for="inputTelefono">Teléfono</label>
+													<div id="telefonoError" class="invalid-feedback"></div>
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-floating mb-3 mb-md-0">
 													<input class="form-control" id="username" type="text"
 														th:field="*{username}"
-														placeholder="Introduce tu nombre de usuario" />
+														placeholder="Introduce tu nombre de usuario"
+														onkeyup="validateUsername()" required />
 													<label for="username">Nombre de Usuario</label>
+													<div id="usernameError" class="invalid-feedback"></div>
 												</div>
 											</div>
 										</div>
@@ -88,26 +102,52 @@
 											<div class="col-md-6">
 												<div class="form-floating mb-3 mb-md-0">
 													<div class="input-group">
-														<input class="form-control" id="txtPassword" type="password"
-															th:field="*{password}" placeholder="Create a password"
-															required />
+														<div class="form-floating mb-3 mb-md-0">
+															<input class="form-control" id="txtPassword" type="password"
+																th:field="*{password}" placeholder="Crear contraseña" onkeyup="validatePassword()"
+																required />
+															<label for="txtPassword">Contraseña</label>
+															<div id="passwordError" class="invalid-feedback"></div>
+														</div>
+
 														<div class="input-group-append">
-															<button id="show_password" class="btn "
-																type="button" onclick="mostrarPassword()">
-																<span class="fa fa-eye-slash icon"></span>
+															<button id="show_password" class="btn " type="button"
+																onclick="mostrarPassword()">
+																<span id="icon_password"
+																	class="fa fa-eye-slash icon"></span>
 															</button>
 														</div>
+
 													</div>
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-floating mb-3 mb-md-0">
-													<input class="form-control" id="txtPasswordConfirm" type="password"
-														placeholder="Confirm password" />
-													<label for="inputPasswordConfirm">Confirmar Password</label>
+													<div class="input-group">
+														<div class="form-floating mb-3 mb-md-0">
+															<input class="form-control" id="txtConfirmPassword"
+																type="password" placeholder="Confirmar contraseña"
+																required />
+															<label for="txtConfirmPassword">Confirmar Contraseña</label>
+														</div>
+
+														<div class="input-group-append">
+															<button id="show_confirm_password" class="btn "
+																type="button" onclick="mostrarConfirmPassword()">
+																<span id="icon_confirm_password"
+																	class="fa fa-eye-slash icon"></span>
+															</button>
+														</div>
+
+													</div>
 												</div>
 											</div>
+
+
 										</div>
+										<div id="mensajeError" style="display: none; color: red;">Las contraseñas no
+											coinciden</div>
+
 										<div class="mt-4 mb-0">
 											<button class="btn btn-primary btn-block">Crear Cuenta</button>
 										</div>
@@ -141,47 +181,242 @@
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 	<script src="js/scripts.js"></script>
+
 	<script type="text/javascript">
 		function mostrarPassword() {
 			var cambio = document.getElementById("txtPassword");
-			if (cambio.type == "password") {
+			var icon = document.getElementById("icon_password");
+
+			if (cambio.type === "password") {
 				cambio.type = "text";
-				$('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+				icon.classList.remove('fa-eye-slash');
+				icon.classList.add('fa-eye');
 			} else {
 				cambio.type = "password";
-				$('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
-			}
-		};
-
-		function mostrarPasswordConfirm() {
-			var cambio = document.getElementById("txtConfirmPassword");
-			if (cambio.type == "password") {
-				cambio.type = "text";
-				$('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
-			} else {
-				cambio.type = "password";
-				$('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
-			}
-		};
-
-	</script>
-	<script>
-		function validarContraseñas() {
-			/*Recogemos la password por el id y el confirmPassword*/
-			var password = document.getElementById("txtPassword").value;
-			var confirmPassword = document.getElementById("txtConfirmPassword").value;
-
-			/*si no son iguales saldra el error si lo son se ejecutara el formulario se enviara a la ruta del action*/
-			if (password !== confirmPassword) {
-				document.getElementById("mensajeError").style.display = "block";
-			} else {
-				document.getElementById("mensajeError").style.display = "none";
-				document.getElementById("myForm").submit();
+				icon.classList.remove('fa-eye');
+				icon.classList.add('fa-eye-slash');
 			}
 		}
 
+
+		function mostrarConfirmPassword() {
+			var cambio = document.getElementById("txtConfirmPassword");
+			var icon = document.getElementById("icon_confirm_password");
+
+			if (cambio.type === "password") {
+				cambio.type = "text";
+				icon.classList.remove('fa-eye-slash');
+				icon.classList.add('fa-eye');
+			} else {
+				cambio.type = "password";
+				icon.classList.remove('fa-eye');
+				icon.classList.add('fa-eye-slash');
+			}
+		}
+
+		function validarContraseñas() {
+			var password = document.getElementById("txtPassword").value;
+			var confirmPassword = document.getElementById("txtConfirmPassword").value;
+
+			if (password !== confirmPassword) {
+				document.getElementById("mensajeError").style.display = "block";
+				return false; // Prevent form submission
+			} else {
+				document.getElementById("mensajeError").style.display = "none";
+				return true; // Allow form submission
+			}
+		}
 	</script>
+
+
+	<script>
+
+
+		function validateNombre() {
+			var nombreInput = document.getElementById("inputFirstName");
+			var nombreError = document.getElementById("nombreError");
+			var regex = /^[a-zA-ZÁÉÍÓÚáéíóú][a-zA-ZÁÉÍÓÚáéíóú]*( [a-zA-ZÁÉÍÓÚáéíóú]+)*$/;
+			if (!nombreInput.value.match(regex)) {
+				nombreInput.classList.add("is-invalid");
+				nombreError.textContent = "Nombre inválido";
+				return false;
+			} else {
+				nombreInput.classList.remove("is-invalid");
+				nombreError.textContent = "";
+				return true;
+			}
+		}
+
+		function validateApellido() {
+			var apellidoInput = document.getElementById("inputLastName");
+			var apellidoError = document.getElementById("apellidoError");
+			var regex = /^[a-zA-ZÁÉÍÓÚáéíóú][a-zA-ZÁÉÍÓÚáéíóú]*( [a-zA-ZÁÉÍÓÚáéíóú]+)*$/;
+			if (!apellidoInput.value.match(regex)) {
+				apellidoInput.classList.add("is-invalid");
+				apellidoError.textContent = "Apellidos inválidos";
+				return false;
+			} else {
+				apellidoInput.classList.remove("is-invalid");
+				apellidoError.textContent = "";
+				return true;
+			}
+		}
+
+		function validateEmail() {
+			var emailInput = document.getElementById("inputEmail");
+			var emailError = document.getElementById("emailError");
+			var regex = /^[a-zA-Z0-9][a-zA-Z0-9._-]*@[a-zA-Z0-9]+(\.[a-zA-Z]{2,4})$/;
+			if (!emailInput.value.match(regex)) {
+				emailInput.classList.add("is-invalid");
+				emailError.textContent = "El correo electrónico no es válido";
+				return false;
+			} else {
+				emailInput.classList.remove("is-invalid");
+				emailError.textContent = "";
+				return true;
+			}
+		}
+
+		function validateDireccion() {
+			var direccionInput = document.getElementById("inputDireccion");
+			var direccionError = document.getElementById("direccionError");
+			var regex = /^[a-zA-ZÁÉÍÓÚáéíóú][a-zA-ZÁÉÍÓÚáéíóú0-9]*( [a-zA-ZÁÉÍÓÚáéíóú0-9]+)*$/;
+			if (!direccionInput.value.match(regex)) {
+				direccionInput.classList.add("is-invalid");
+				direccionError.textContent = "La dirección no es válida";
+				return false;
+			} else {
+				direccionInput.classList.remove("is-invalid");
+				direccionError.textContent = "";
+				return true;
+			}
+		}
+
+		function validateTelefono() {
+			var telefonoInput = document.getElementById("inputTelefono");
+			var telefonoError = document.getElementById("telefonoError");
+			var regex = /^[6-9]\d{8}$/;
+			if (!telefonoInput.value.match(regex)) {
+				telefonoInput.classList.add("is-invalid");
+				telefonoError.textContent = "El teléfono no es válido";
+				return false;
+			} else {
+				telefonoInput.classList.remove("is-invalid");
+				telefonoError.textContent = "";
+				return true;
+			}
+		}
+
+		function validateUsername() {
+			var usernameInput = document.getElementById("username");
+			var usernameError = document.getElementById("usernameError");
+			var regex = /^[a-zA-Z0-9._-]+$/;
+			if (!regex.test(usernameInput.value)) {
+				usernameInput.classList.add("is-invalid");
+				usernameError.textContent = "El nombre de usuario no es válido";
+				return false;
+			} else {
+				usernameInput.classList.remove("is-invalid");
+				usernameError.textContent = "";
+				return true;
+			}
+		}
+		function validatePassword() {
+			var password = document.getElementById("txtPassword");
+			var passwordError = document.getElementById("passwordError");
+		  var regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+		  if (!regex.test(password.value)) {
+			  password.classList.add("is-invalid");
+			passwordError.textContent = "La contraseña no es válida";
+			return false;
+			} else {
+				password.classList.remove("is-invalid");
+				passwordError.textContent = "";
+				return true;
+			}
+		}
+
+
+		$(document).ready(function () {
+			$('form').submit(function (event) {
+				event.preventDefault(); // Detiene el envío del formulario
+
+				var password1 = $('#txtPassword').val();
+				var password2 = $('#txtConfirmPassword').val();
+				var email = $('#inputEmail').val();
+				var username = $('#username').val();
+				var tlf = $('#inputTelefono').val();
+
+
+				var emailInput = document.getElementById("inputEmail");
+				var emailError = document.getElementById("emailError");
+				var telefonoInput = document.getElementById("inputTelefono");
+				var telefonoError = document.getElementById("telefonoError");
+				var usernameInput = document.getElementById("username");
+				var usernameError = document.getElementById("usernameError");
+				// Validación de las contraseñas
+				if (password1 !== password2) {
+				$('#mensajeError').show();			
+		return;
+				}
+
+				// Validación de los campos individuales
+				var isValidNombre = validateNombre();
+				var isValidApellido = validateApellido();
+				var isValidEmail = validateEmail();
+				var isValidDireccion = validateDireccion();
+				var isValidTelefono = validateTelefono();
+				var isValidUsername = validateUsername();
+
+				// Si alguna de las validaciones no es válida, no se envía el formulario
+				if (!isValidNombre || !isValidApellido || !isValidEmail || !isValidDireccion || !isValidTelefono || !isValidUsername || !validatePassword) {
+					return;
+				}
+
+				// Validación del correo electrónico y nombre de usuario en la base de datos
+				$.ajax({
+					url: '/verificar-user',
+					type: 'POST',
+					data: {
+						email: email,
+						username: username,
+						tlf: tlf
+					},
+					success: function (response) {
+						console.log(response);
+						if (response.existUsername) {
+							usernameInput.classList.add("is-invalid");
+							usernameError.textContent = "El nombre de usuario ya está registrado";
+						} else if (response.existTlf) {
+							telefonoInput.classList.add("is-invalid");
+							telefonoError.textContent = "El teléfono ya está registrado";
+						} else if (response.existEmail) {
+							emailInput.classList.add("is-invalid");
+							emailError.textContent = "El correo electrónico ya está registrado";
+						} else {
+							emailInput.classList.remove("is-invalid");
+							emailError.textContent = "";
+							telefonoInput.classList.remove("is-invalid");
+							telefonoError.textContent = "";
+							usernameInput.classList.remove("is-invalid");
+							usernameError.textContent = "";
+							$('form').unbind('submit').submit(); // Permite el envío del formulario
+						}
+					},
+					error: function () {
+						alert('Error al verificar el correo electrónico y nombre de usuario');
+					}
+				});
+			});
+		});
+
+
+
+	</script>
+
 </body>
 
 </html>

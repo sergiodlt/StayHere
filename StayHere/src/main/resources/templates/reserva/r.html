@@ -97,12 +97,7 @@
 								<div class="card-body">
 									<div class="row">
 										<div class="col-12 align-right">
-											<h2 class="lead">
-												<span class="fa-stack fa-lg">
-													<i class="fas fa-circle fa-stack-2x"></i>
-													<i class="fas fa-user fa-stack-1x fa-inverse"></i>
-												</span>
-											</h2>
+											
 											<p class="text-muted text-sm">Fecha Inicio: <span
 													th:text="${ reserva.fecha_inicio }"></span></p>
 											<p class="text-muted text-sm">Fecha fin: <span
@@ -113,14 +108,10 @@
 													<span th:text="|Hotel: ${ reserva.habitacion?.hotel?.nombre }|">
 													</span>
 												</li>
-												<li class="small">
-													<span class="fa-li"><i class="fa-regular fa-building"></i></span>
-													<span
-														th:text="|Apartamento: ${ reserva.apartamento?.nombre }|"></span>
-												</li>
+											
 												<li class="small">
 													<span class="fa-li"><i class="fa-solid fa-door-open"></i></span>
-													<span th:text="|Nº de habitación: ${reserva.id}|"></span>
+													<span th:text="|Nº de habitación: ${reserva.habitacion?.id}|"></span>
 												</li>
 												<li class="small">
 													<span class="fa-li"><i class="fa-solid fa-list-ol"></i></span>
@@ -128,7 +119,7 @@
 												</li>
 												<li class="small">
 													<span class="fa-li"><i class="fas fa-dollar-sign"></i></span>
-													<span th:text="|Precio: ${reserva.habitacion?.precio}€|"></span>
+													<span th:text="|Precio: ${reserva.precio}€|"></span>
 												</li>
 												<li class="small">
 													<span class="fa-li"><i class="fas fa-user"></i></span>
@@ -165,12 +156,7 @@
 								<div class="card-body">
 									<div class="row">
 										<div class="col-8 align-right">
-											<h2 class="lead">
-												<span class="fa-stack fa-lg">
-													<i class="fas fa-circle fa-stack-2x"></i>
-													<i class="fas fa-user fa-stack-1x fa-inverse"></i>
-												</span>
-											</h2>
+										
 											<p class="text-muted text-sm">Fecha Inicio: <span
 													th:text="${ reserva.fecha_inicio }"></span></p>
 											<p class="text-muted text-sm">Fecha fin: <span
@@ -187,7 +173,7 @@
 												</li>
 												<li class="small">
 													<span class="fa-li"><i class="fas fa-dollar-sign"></i></span>
-													<span th:text="|Precio: ${reserva.apartamento?.precio}€|"></span>
+													<span th:text="|Precio: ${reserva.precio}€|"></span>
 												</li>
 												<li class="small">
 													<span class="fa-li"><i class="fas fa-user"></i></span>

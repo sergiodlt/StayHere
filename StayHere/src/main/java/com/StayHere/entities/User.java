@@ -14,7 +14,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -39,21 +41,29 @@ public class User implements Serializable {
 
     private String lastName;
 
+    @Column(unique=true)
     private String email;
 
     private String password;
 
+    @Column(unique=true)
     private String username;
     
     private String genero;
     
     private String direccion;
     
+    @Column(unique=true)
     private String telefono;
     
     @Column(name = "reset_token")
     private String resetToken;
 
+    @OneToMany(mappedBy = "user")
+	private Collection<Hotel> hoteles;
+    
+    @OneToMany(mappedBy = "user")
+   	private Collection<Apartamento> apartamentos;
     
     @ManyToMany
 	private Collection<Role> roles;

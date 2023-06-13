@@ -118,26 +118,11 @@
 							<hr>
 
 							<small>Descripcion</small>
-							<p th:text="|${alojamiento.descripcion} adipiscing
-									elit.
-									Morbi vitae condimentum erat. Vestibulum ante ipsum primis in faucibus orci luctus
-									et
-									ultrices
-									posuere cubilia Curae; Sed posuere, purus at efficitur hendrerit, augue elit lacinia
-									arcu, a
-									eleifend sem elit et nunc. Sed rutrum vestibulum est, sit amet cursus dolor
-									fermentum
-									vel.
-									Suspendisse mi nibh, congue et ante et, commodo mattis lacus. Duis varius finibus
-									purus
-									sed
-									venenatis. Vivamus varius metus quam, id dapibus velit mattis eu. Praesent et semper
-									risus.
-									Vestibulum erat erat, condimentum at elit at, bibendum placerat orci. Nullam gravida
-									velit|" />
+							<p th:text="|${alojamiento.descripcion}|" />
 
 							<div class="bg-gray py-2 px-3 mt-4">
-								<h4 th:text="|${alojamiento.precio}€/Noche|" class="mb-0" />
+								<h4 th:text="|${alojamiento.precio}€ /Noche|" class="mb-0" />
+								<h6 th:text="|${precioTotal}€ (Precio total)|" class="mb-0" />
 
 							</div>
 							<div class="mt-4">

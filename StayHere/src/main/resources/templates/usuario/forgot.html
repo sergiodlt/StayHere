@@ -1,59 +1,135 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Olvidé mi contraseña</title>
-    <style>
-        #error-message {
-            color: red;
-        }
-    </style>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<style>
+		body {
+			background-color: #f8f9fa;
+			font-family: Arial, sans-serif;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+		}
+
+		.card {
+			width: 500px;
+			margin: auto;
+			border-radius: 10px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		}
+
+		.card-header {
+			background-color: #007bff;
+			color: #fff;
+			font-size: 24px;
+			font-weight: bold;
+			padding: 12px;
+			border-top-left-radius: 10px;
+			border-top-right-radius: 10px;
+		}
+
+		.card-body {
+			padding: 20px;
+		}
+
+		h1 {
+			font-size: 24px;
+			margin-bottom: 20px;
+			text-align: center;
+		}
+
+		label {
+			font-weight: bold;
+		}
+
+		input.form-control-lg {
+			height: 50px;
+			font-size: 16px;
+		}
+
+		.btn-primary {
+			width: 100%;
+			height: 50px;
+			font-size: 16px;
+			border-radius: 5px;
+		}
+
+		#error-message {
+			color: red;
+			font-size: 14px;
+			margin-top: 10px;
+		}
+	</style>
 </head>
 <body>
-    <h1>Olvidé mi contraseña</h1>
-    <form id="formu" action="/reset-password" method="post" >
-        <label for="email">Correo electrónico:</label>
-        <input type="email" id="email" name="email" required>
-        <button type="submit">Enviar solicitud</button>
-    </form>
-    
-    <p id="error-message"></p>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-10 col-md-8 col-lg-6 mx-auto">
+            <div class="card">
+                <div class="card-header text-center">Olvidé mi contraseña</div>
+                <div class="card-body">
+                    <div class="m-sm-4">
+                        <form id="formu" action="/reset-password" method="post">
+                            <div class="form-group">
+                                <label for="email">Correo electrónico:</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" class="form-control form-control-lg"
+                                    required>
+                            </div>
+                            	<p id="error-message"></p>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-$(document).ready(function() {
-  // Escucha el evento de envío del formulario
-  $('#formu').submit(function(event) {
-    event.preventDefault(); // Evita el envío del formulario por defecto
-
-    // Obtén el valor del correo electrónico ingresado
-    var email = $('#email').val();
-
-    // Realiza la petición AJAX
-    $.ajax({
-      url: '/verificar-email', // Ruta a tu script de verificación del correo
-      type: 'POST',
-      data: { email: email }, // Envía el correo electrónico como datos POST
-      success: function(response) {
-        if (response == true) {
-			            $("#error-message").text("");
-
-          // El correo existe, puedes enviar el formulario
-          $('#formu')[0].submit(); // Envía el formulario
-        } else {
-          // El correo no existe, muestra un mensaje de error o realiza alguna acción adicional
-    $("#error-message").text("El correo electrónico no está registrado.");
-        }
-      },
-      error: function() {
-        // Maneja los errores de la petición AJAX si es necesario
-            $("#error-message").text("Error al verificar el correo");
-
-      }
-    });
-  });
-});
+                            <div class="form-group text-center">
+                                <button type="submit" class="btn btn-lg btn-primary">Enviar solicitud</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-    </script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			// Escucha el evento de envío del formulario
+			$('#formu').submit(function (event) {
+				event.preventDefault(); // Evita el envío del formulario por defecto
+
+				// Obtén el valor del correo electrónico ingresado
+				var email = $('#email').val();
+
+				// Realiza la petición AJAX
+				$.ajax({
+					url: '/verificar-email', // Ruta a tu script de verificación del correo
+					type: 'POST',
+					data: {email: email}, // Envía el correo electrónico como datos POST
+					success: function (response) {
+						if (response == true) {
+							$("#error-message").text("");
+
+							// El correo existe, puedes enviar el formulario
+							$('#formu')[0].submit(); // Envía el formulario
+						} else {
+							// El correo no existe, muestra un mensaje de error o realiza alguna acción adicional
+							$("#error-message").text("El correo electrónico no está registrado.");
+						}
+					},
+					error: function () {
+						// Maneja los errores de la petición AJAX si es necesario
+						$("#error-message").text("Error al verificar el correo");
+					}
+				});
+			});
+		});
+	</script>
+	
 </body>
+
 </html>

@@ -1,48 +1,186 @@
-<div class="container">
-	<h1>Actualizar Apartamento</h1>
+<div class="altura">
+	<section>
+		<style>
+			h1 {
+				text-align: center;
+				margin-bottom: 30px;
+				color: #333;
+			}
 
-	<form action="/apartamento/u" method="post">
-		Nombre
-		<input type="text" name="nombre" required="required" th:value="${apartamento.nombre}" />
-		<br />
+			.card {
+				margin-top: 20px;
+			}
 
-		Direccion
-		<input type="text" name="direccion" required="required" th:value="${apartamento.direccion}" />
-		<br />
+			.card-header {
+				background-color: #f8f9fa;
+			}
 
-		Correo
-		<input type="text" name="correo" required="required" th:value="${apartamento.correo}" />
-		<br />
-		
-		Telefono
-		<input type="number" name="telefono" required="required" th:value="${apartamento.telefono}" />
-		<br />
-		
-		Descripcion
-		<input type="text" name="descripcion" required="required" th:value="${apartamento.descripcion}" />
-		<br />
-		
-		Precio
-		<input type="number" name="precio" required="required" th:value="${apartamento.precio}" />
-		<br />
+			.card-header p {
+				margin: 0;
+				font-weight: bold;
+			}
 
-		Alojamiento
-		<select name="idAlojamiento">
-			<th:block th:each=" alojamiento : ${alojamientos} ">
-				<option th:value="${alojamiento.id}" th:text="${alojamiento.ciudad}"
-					th:selected="${alojamiento.id == apartamento.alojamiento?.id}" />
-			</th:block>
-		</select>
-		<br />
+			.button-container {
+				text-align: center;
+				margin-top: 20px;
+			}
+
+			/* Estilos adicionales */
+			.form-group label {
+				color: #333;
+				font-weight: bold;
+			}
+
+			.form-control {
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				padding: 8px;
+				width: 100%;
+				box-sizing: border-box;
+			}
+
+			select.form-control {
+				height: 38px;
+			}
+
+			textarea.form-control {
+				height: 120px;
+			}
+
+			.btn-primary {
+				background-color: #007bff;
+				color: #fff;
+				border: none;
+				padding: 10px 20px;
+				border-radius: 4px;
+			}
+
+			.btn-secondary {
+				background-color: #6c757d;
+				color: #fff;
+				border: none;
+				padding: 10px 20px;
+				border-radius: 4px;
+			}
+
+			.btn-primary:hover,
+			.btn-secondary:hover {
+				opacity: 0.8;
+			}
+
+			.buttons-container {
+				margin-bottom: 20px;
+			}
+		</style>
+
+		<div class="container bg-light">
+			<h1>Modificar Apartamento</h1>
+			<form action="/apartamento/u" method="post" enctype="multipart/form-data">
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="nombre">Nombre</label>
+						<input type="text" class="form-control" id="nombre" th:value="${apartamento.nombre}"
+							name="nombre" required autofocus />
+					</div>
+					<div class="form-group col-md-6">
+						<label for="direccion">Direccion</label>
+						<input type="text" class="form-control" id="direccion" th:value="${apartamento.direccion}"
+							name="direccion" required />
+					</div>
+				</div>
 
 
-		<input type="hidden" name="idApartamento" th:value="${apartamento.id}" />
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="telefono">Telefono</label>
+						<input type="number" class="form-control" id="telefono" th:value="${apartamento.telefono}"
+							name="telefono" required />
+					</div>
+					<div class="form-group col-md-6">
+						<label for="correo">Correo</label>
+						<input type="email" class="form-control" id="correo" th:value="${apartamento.correo}"
+							name="correo" required />
+					</div>
+				</div>
 
-		<input type="submit" />
-		<br />
-	</form>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="precio">Precio</label>
+						<input type="number" class="form-control" id="precio" th:value="${apartamento.precio}"
+							name="precio" required />
+					</div>
+					<div class="form-group col-md-6">
+						<label for="idCiudad">Ciudad</label>
+						<select name="idCiudad" class="form-control" id="ciudad" required>
+							<option th:each="ciudad : ${ciudades}" th:value="${ciudad.id}"
+								th:selected="${apartamento.ciudad.id == ciudad.id}" th:text="${ciudad.nombre}" />
+						</select>
+					</div>
+				</div>
 
-	<form action="/apartamento/r">
-		<input type="submit" value="Cancelar" />
-	</form>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="capacidad">Capacidad</label>
+						<input type="number" class="form-control" id="capacidad" th:value="${apartamento.capacidad}"
+							name="capacidad" required />
+					</div>
+
+					<div class="form-group col-md-6">
+						<div class="form-group">
+							<label for="idComodidad">Comodidades</label>
+							<select type="checkbox" class="form-control" name="idComodidad" th:value="${comodidad?.id}"
+								id="comodidades" multiple>
+								<option th:each=" comodidad : ${comodidades} "
+									th:selected="${apartamento.comodidades.contains(comodidad)}"
+									th:value="${comodidad.id}" th:text="${comodidad.nombre}">
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="descripcion">Descripcion</label>
+					<textarea class="form-control" id="descripcion" th:text="${apartamento.descripcion}"
+						name="descripcion" required></textarea>
+				</div>
+				<input type="hidden" name="idApartamento" th:value="${apartamento.id}" />
+
+				<div class="card">
+					<div class="card-header">
+						<p><i class="fa fa-camera"></i> Fotos del apartamento</p>
+					</div>
+					<div class="card-body">
+						<div class="form-group">
+							<label for="fotos">Imagenes</label>
+							<input class="form-control-file" type="file" id="fotos" name="fotos" multiple />
+						</div>
+					</div>
+				</div>
+
+				<div class="text-left mt-3 buttons-container">
+				<a th:href="@{/apartamento/rAdmin}" class="btn btn-secondary" sec:authorize="hasRole('ROLE_ADMIN')">Cancelar</a>
+				<a th:href="@{/apartamento/r}" class="btn btn-secondary" sec:authorize="hasRole('ROLE_USER')">Cancelar</a>
+					<button class="btn btn-primary" sec:authorize="isAuthenticated()">Modificar</button>
+				</div>
+			</form>
+			<form th:action="@{/login}">
+				<button class="btn btn-primary" sec:authorize="!isAuthenticated()">Modificar</button>
+			</form>
+		</div>
+
 </div>
+</section>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script>
+	$(document).ready(function () {
+		// Inicializar Select2
+		$('#comodidades').select2();
+	});
+
+	function goBack() {
+		window.history.back();
+	}
+
+</script>

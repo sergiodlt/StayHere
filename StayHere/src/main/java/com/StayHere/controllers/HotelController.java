@@ -12,16 +12,19 @@ import com.StayHere.entities.Comodidad;
 import com.StayHere.entities.Foto;
 import com.StayHere.entities.Habitacion;
 import com.StayHere.entities.Hotel;
+import com.StayHere.entities.User;
 import com.StayHere.exception.DangerException;
 import com.StayHere.helpers.PRG;
 import com.StayHere.repositories.FotoRepository;
 import com.StayHere.repositories.HotelRepository;
+import com.StayHere.repositories.UserRepository;
 import com.StayHere.services.CiudadService;
 import com.StayHere.services.ComodidadService;
 import com.StayHere.services.HabitacionService;
 import com.StayHere.services.HotelService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,12 +53,31 @@ public class HotelController {
 	@Autowired
 	private FotoRepository fotoRepository;
 
+	@Autowired
+	private UserRepository userRepository;
+
 	@GetMapping("c")
 	public String cGet(ModelMap m) {
 		m.put("comodidades", comodidadService.getComodidades());
 		List<Ciudad> ciudades = ciudadService.getCiudades();
 		m.put("ciudades", ciudades);
 		m.put("view", "hotel/c");
+		return "_t/frame";
+	}
+	
+	
+	@GetMapping("r")
+	public String r(ModelMap m) {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username);
+		m.put("hoteles", user.getHoteles());
+		m.put("view", "hotel/r");
+		return "_t/frame";
+	}
+	@GetMapping("rAdmin")
+	public String rAdmin(ModelMap m) {
+		m.put("hoteles", hotelService.getHoteles());
+		m.put("view", "hotel/r");
 		return "_t/frame";
 	}
 
@@ -69,13 +91,15 @@ public class HotelController {
 	public String cPost(@RequestParam("nombre") String nombre, @RequestParam("direccion") String direccion,
 			@RequestParam("telefono") int telefono, @RequestParam("correo") String correo,
 			@RequestParam("estrellas") int estrellas, @RequestParam(required = false, name = "cantidad") int cantidad,
-			/* @RequestParam("numero") int numero, */ @RequestParam("capacidad") int capacidad,
-			@RequestParam("precio") int precio, @RequestParam("descripcion") String descripcion,@RequestParam("ciudad") Long idciudad,
-			@RequestParam("fotos") List<MultipartFile> fotos,
+		    @RequestParam("capacidad") int capacidad, @RequestParam("precio") int precio, @RequestParam("descripcion") String descripcion,
+		    @RequestParam("ciudad") Long idciudad, @RequestParam("fotos") List<MultipartFile> fotos,
 			@RequestParam(required = false, name = "idComodidad") List<Long> idComodidades) throws DangerException {
 		try {
-
-			hotelService.saveHotel(nombre, direccion, telefono, correo, estrellas,idciudad);
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			User user = userRepository.findByUsername(username);
+			hotelService.saveHotel(nombre, direccion, telefono, correo, estrellas,idciudad, user);
+			
+			
 			Hotel hotel = hotelService.obtenerUltimoHotelAgregado();
 
 			for (int i = 1; i <= cantidad; i++) {
@@ -107,6 +131,32 @@ public class HotelController {
 		return "redirect:/";
 	}
 
+	
+	@PostMapping("u")
+	public String uGet(@RequestParam("id") Long idHotel, ModelMap m) throws DangerException {
+		Hotel hotel= hotelService.getHotelById(idHotel);
+		m.put("hotel", hotel);
+		List<Ciudad> ciudades = ciudadService.getCiudades();
+		m.put("ciudades", ciudades);
+		m.put("view", "hotel/u");
+		return "_t/frame";
+	}
+	@PostMapping("uPost")
+	public String uPost(@RequestParam("nombre") String nombre, @RequestParam("direccion") String direccion,
+			@RequestParam("telefono") int telefono, @RequestParam("correo") String correo,
+			@RequestParam("estrellas") int estrellas, @RequestParam("ciudad") Long idCiudad, @RequestParam("id") Long idHotel
+			) throws Exception {
+		Ciudad ciudad=ciudadService.getCiudadById(idCiudad);
+		hotelService.updateHotel(idHotel, nombre, direccion, telefono, correo, correo, estrellas, ciudad);
+		
+		return "redirect:/";
+	}
+	
+	@PostMapping("d") public String d(@RequestParam("id") Long id) {
+		  hotelService.deleteHotel(id); return "redirect:/"; 
+		  }
+		 
+	
 //	@PostMapping("/filtrados")
 //	public String filtrador(ModelMap m, @RequestParam("idComodidades") List<Long> idComodidades) {
 //

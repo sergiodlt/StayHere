@@ -55,6 +55,9 @@ public class Apartamento {
 	@OneToMany(mappedBy = "apartamento")
 	private Collection<Reserva> reservas;
 	
+	@ManyToOne
+	private User user;
+	
 	@OneToMany(mappedBy = "apartamento")
 	private Collection<Foto> fotos;
 }

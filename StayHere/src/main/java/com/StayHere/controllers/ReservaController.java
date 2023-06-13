@@ -2,6 +2,7 @@ package com.StayHere.controllers;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,9 @@ import com.StayHere.exception.DangerException;
 import com.StayHere.helpers.PRG;
 import com.StayHere.repositories.UserRepository;
 import com.StayHere.services.ApartamentoService;
+import com.StayHere.services.EmailService;
 import com.StayHere.services.HabitacionService;
+import com.StayHere.services.HotelService;
 import com.StayHere.services.ReservaService;
 
 @Controller
@@ -44,6 +47,11 @@ public class ReservaController {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private EmailService emailService;
+	
+	
 	
 	@GetMapping("/reserva/r")
 	public String r(ModelMap m) {
@@ -74,10 +82,17 @@ public class ReservaController {
 	    if (alojamient.equals("hotel")) {
 	        Habitacion alojamiento = habitacionService.getHabitacionById(id);
 	        m.put("alojamiento", alojamiento);
+	        
+	        int precioTotal = alojamiento.getPrecio() * (int) ChronoUnit.DAYS.between(checkIn, checkOut);
+	        m.put("precioTotal",precioTotal);
 	    } else if (alojamient.equals("apartamento")) {
 	        Apartamento alojamiento = apartamentoService.getApartamentoById(id);
 	        m.put("alojamiento", alojamiento);
-	    }
+	        
+	        int precioTotal = alojamiento.getPrecio() * (int) ChronoUnit.DAYS.between(checkIn, checkOut);
+	        m.put("precioTotal",precioTotal);
+	    }  
+	   
 
 	    // Agregar los demás datos al ModelMap
 	    m.put("alojamient", alojamient);
@@ -103,6 +118,9 @@ public class ReservaController {
 			User user = userRepository.findByUsername(username);
 			if(alojamiento.equals("hotel")) {
 				reservaService.saveReservaHotel(fecha_inicio, fecha_fin,  user,  idAlojamiento,  huespedes, precio);	
+				
+			       
+			        
 			}
 			if(alojamiento.equals("apartamento")) {
 				reservaService.saveReservaApartamento(fecha_inicio, fecha_fin,  user, idAlojamiento,  huespedes, precio);	

@@ -2,12 +2,15 @@ package com.StayHere.repositories;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.StayHere.entities.Apartamento;
+import com.StayHere.entities.Comodidad;
+import com.StayHere.entities.Hotel;
 
 public interface ApartamentoRepository extends JpaRepository<Apartamento, Long>{
 	
@@ -19,4 +22,10 @@ public interface ApartamentoRepository extends JpaRepository<Apartamento, Long>{
 		    @Param("checkin") LocalDate checkin,
 		    @Param("checkout") LocalDate checkout,
 		    @Param("numHuespedes") int numHuespedes); 
+	 
+	
+
+	 
+	    Optional<Apartamento> findFirstByOrderByIdDesc();
+
 }

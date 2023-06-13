@@ -2,11 +2,14 @@
 
 package com.StayHere.controllers;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -82,32 +85,62 @@ public class UserController {
 
 		return "_t/frame"; 
 		 }
+  
     
-    @PostMapping("/usuarios/uPost")
+    @PostMapping("/usuario/uPost")
     public String u (@RequestParam ("idUser") Long idUser,
-    		@RequestParam("username") String username,
-    		@RequestParam(required=false,name="password") String password,
-    		@RequestParam("nombre") String nombre,
-    		@RequestParam("apellido") String apellido,
-    		@RequestParam("genero") String genero,
-    		@RequestParam("email") String email,
-    		@RequestParam("direccion") String direccion,
-    		@RequestParam("telefono") String telefono,
-    		ModelMap m) throws Exception {
-    	
-    	User user= userRepository.getById(idUser);
-        
-    	userImpl.updateUser(user, username,/* passwordEncoder.encode(password),*/ direccion, email, nombre, apellido, telefono, genero);
+            @RequestParam("username") String username,
+            @RequestParam(required=false,name="password") String password,
+            @RequestParam("nombre") String nombre,
+            @RequestParam("apellido") String apellido,
+            @RequestParam("genero") String genero,
+            @RequestParam("email") String email,
+            @RequestParam("direccion") String direccion,
+            @RequestParam("telefono") String telefono,
+            ModelMap m) throws Exception {
 
-		m.put("view", "/home");
-		return "_t/frame"; 
-		 }
-    
+        User user= userRepository.getById(idUser);
+
+        userImpl.updateUser(user, username,/* passwordEncoder.encode(password),*/ direccion, email, nombre, apellido, telefono, genero);
+
+        m.put("view", "/home");
+        return "_t/frame"; 
+         }
+
     @PostMapping("/verificar-email")
     public @ResponseBody boolean verificarEmailExistente(@RequestParam("email") String email) {
         User user = userRepository.findByEmail(email).orElse(null);
         return user != null;
     }
+
+    @GetMapping("/usuarios/uPerfil")
+    public String uPerfil (
+            ModelMap m) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username);
+        m.put("usuario", user);
+        m.put("view", "usuario/u");
+
+        return "_t/frame"; 
+         }
+    
+    @PostMapping("/verificar-user")
+    public @ResponseBody Map<String, Boolean> verificarEmailExistente(@RequestParam("email") String email,@RequestParam("username") String username,@RequestParam("tlf") String tlf) {
+        Boolean existEmail = userRepository.findByEmail(email).orElse(null) != null;
+        Boolean existUsername = userRepository.findByUsername(username) != null;
+        Boolean existTlf = userRepository.findByTelefono(tlf) != null;
+        
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("existTlf", existTlf);
+        response.put("existEmail", existEmail);
+        response.put("existUsername", existUsername);
+        
+        return response;
+    }
+    
+    
+    
+
 
     
     

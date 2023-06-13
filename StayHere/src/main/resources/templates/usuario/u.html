@@ -23,20 +23,23 @@
 	<div class="container container-form">
 		<div class="container-inner">
 			<h1>Actualizar Usuario</h1>
-			<h2>Modificar Usuario</h2>
-			<form th:object="${user}" th:action="@{/usuarios/uPost}" method="POST">
+			<form th:object="${user}" th:action="@{/usuario/uPost}" method="POST" onsubmit="return validarFormulario()">
 				<input type="hidden" th:value="${usuario.id}" name="idUser" class="form-control">
 				<div class="form-group">
 					<label>Nombre de Usuario:</label>
-					<input type="text" name="username" th:value="${usuario.username}" required class="form-control">
+					<input type="text" name="username" th:value="${usuario.username}"  class="form-control" readonly>
 				</div>
 				<div class="form-group">
 					<label>Nombre:</label>
-					<input type="text" name="nombre" th:value="${usuario.firstName}" required class="form-control">
+					<input type="text" name="nombre" th:value="${usuario.firstName}" required onkeyup="validateNombre()" class="form-control">
+				<div id="nombreError" class="invalid-feedback"></div>
+                
 				</div>
 				<div class="form-group">
 					<label>Apellido:</label>
-					<input type="text" name="apellido" th:value="${usuario.lastName}" required class="form-control">
+					<input type="text" name="apellido" th:value="${usuario.lastName}" onkeyup="validateApellido()" required class="form-control">
+				 <div id="apellidoError" class="invalid-feedback"></div>
+           
 				</div>
 				<div class="form-group">
 					<label>Género:</label>
@@ -48,22 +51,89 @@
 				</div>
 				<div class="form-group">
 					<label>Email:</label>
-					<input type="email" name="email" th:value="${usuario.email}" required class="form-control">
+					<input type="email" name="email" th:value="${usuario.email}"  class="form-control" readonly>
 				</div>
 				<div class="form-group">
 					<label>Dirección:</label>
-					<input type="text" name="direccion" th:value="${usuario.direccion}" class="form-control">
+					<input type="text" name="direccion" th:value="${usuario.direccion}" onkeyup="validateDireccion()" class="form-control">
+				<div id="direccionError" class="invalid-feedback"></div>
+           
 				</div>
 				<div class="form-group">
 					<label>Teléfono:</label>
-					<input type="text" name="telefono" th:value="${usuario.telefono}" class="form-control">
+					<input type="text" name="telefono" th:value="${usuario.telefono}" class="form-control" readonly>
+			
+                
 			</div>
 				<button type="submit" class="btn btn-primary">Guardar Cambios</button>
 			</form>
 			<br>
-			<form action="/usuarios/r">
+			<form action="/">
 				<input type="submit" value="Cancelar" class="btn btn-secondary" />
 			</form>
 		</div>
 	</div>
 	</section>
+	
+	<script>
+    function validateNombre() {
+        var nombreInput = document.getElementsByName("nombre")[0];
+        var nombreError = document.getElementById("nombreError");
+        var regex = /^[a-zA-ZÁÉÍÓÚáéíóú][a-zA-ZÁÉÍÓÚáéíóú]*( [a-zA-ZÁÉÍÓÚáéíóú]+)*$/;
+        if (!nombreInput.value.match(regex)) {
+            nombreInput.classList.add("is-invalid");
+            nombreError.textContent = "Nombre inválido";
+            return false;
+        } else {
+            nombreInput.classList.remove("is-invalid");
+            nombreError.textContent = "";
+            return true;
+        }
+    }
+
+    function validateApellido() {
+        var apellidoInput = document.getElementsByName("apellido")[0];
+        var apellidoError = document.getElementById("apellidoError");
+        var regex = /^[a-zA-ZÁÉÍÓÚáéíóú][a-zA-ZÁÉÍÓÚáéíóú]*( [a-zA-ZÁÉÍÓÚáéíóú]+)*$/;
+        if (!apellidoInput.value.match(regex)) {
+            apellidoInput.classList.add("is-invalid");
+            apellidoError.textContent = "Apellidos inválidos";
+            return false;
+        } else {
+            apellidoInput.classList.remove("is-invalid");
+            apellidoError.textContent = "";
+            return true;
+        }
+    }
+
+    function validateDireccion() {
+        var direccionInput = document.getElementsByName("direccion")[0];
+        var direccionError = document.getElementById("direccionError");
+        var regex = /^[a-zA-ZÁÉÍÓÚáéíóú][a-zA-ZÁÉÍÓÚáéíóú0-9]*( [a-zA-ZÁÉÍÓÚáéíóú0-9]+)*$/;
+        if (!direccionInput.value.match(regex)) {
+            direccionInput.classList.add("is-invalid");
+            direccionError.textContent = "La dirección no es válida";
+            return false;
+        } else {
+            direccionInput.classList.remove("is-invalid");
+            direccionError.textContent = "";
+            return true;
+        }
+    }
+
+ 
+
+    function validarFormulario(){
+		
+		 	var isValidNombre = validateNombre();
+            var isValidApellido = validateApellido();
+            var isValidDireccion = validateDireccion();
+            
+            if(isValidApellido == true && isValidNombre==true && isValidDireccion==true){
+				return true;
+			}else{
+				return false;
+			}
+
+	}
+</script>

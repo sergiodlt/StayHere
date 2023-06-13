@@ -14,14 +14,14 @@ import com.StayHere.entities.Habitacion;
 public interface HabitacionRepository extends JpaRepository<Habitacion, Long>{
 	Optional<Habitacion> findFirstByOrderByIdDesc();
 	   
-	   @Query("SELECT h FROM Habitacion h LEFT JOIN h.reservas r " +
-		       "WHERE (r IS NULL AND (h.capacidad IS NULL OR h.capacidad >= :numHuespedes)) " +
-		       "OR ((r.fecha_inicio > :checkout OR r.fecha_fin < :checkin) " +
-		       "AND (h.capacidad IS NULL OR h.capacidad >= :numHuespedes))")
+	@Query("SELECT h FROM Habitacion h WHERE NOT EXISTS " +
+		       "(SELECT r FROM h.reservas r WHERE (r.fecha_inicio <= :checkout AND r.fecha_fin >= :checkin)) " +
+		       "AND (h.capacidad IS NULL OR h.capacidad >= :numHuespedes)")
 		List<Habitacion> findHabitacionesDisponibles(
 		    @Param("checkin") LocalDate checkin,
 		    @Param("checkout") LocalDate checkout,
-		    @Param("numHuespedes") int numHuespedes); 
+		    @Param("numHuespedes") int numHuespedes);
+
 
 	   
 	
