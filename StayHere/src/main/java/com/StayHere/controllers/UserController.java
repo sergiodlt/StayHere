@@ -103,8 +103,7 @@ public class UserController {
 
         userImpl.updateUser(user, username,/* passwordEncoder.encode(password),*/ direccion, email, nombre, apellido, telefono, genero);
 
-        m.put("view", "/home");
-        return "_t/frame"; 
+        return "redirect:/"; 
          }
 
     @PostMapping("/verificar-email")
