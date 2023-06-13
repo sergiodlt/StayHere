@@ -75,18 +75,21 @@
 
 		<div class="container bg-light">
 			<h1>Modificar Apartamento</h1>
-			<form action="/apartamento/u" method="post" enctype="multipart/form-data">
+			<form action="/apartamento/u" method="post" enctype="multipart/form-data"
+				onsubmit="return validateFormulario()">
 
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="nombre">Nombre</label>
 						<input type="text" class="form-control" id="nombre" th:value="${apartamento.nombre}"
-							name="nombre" required autofocus />
+							name="nombre" required readonly onkeyup="validateName()" />
+						<small id="nombreError" class="form-text text-danger"></small>
 					</div>
 					<div class="form-group col-md-6">
 						<label for="direccion">Direccion</label>
 						<input type="text" class="form-control" id="direccion" th:value="${apartamento.direccion}"
-							name="direccion" required />
+							name="direccion" required onkeyup="validateDireccion()" />
+						<small id="direccionError" class="form-text text-danger"></small>
 					</div>
 				</div>
 
@@ -95,12 +98,14 @@
 					<div class="form-group col-md-6">
 						<label for="telefono">Telefono</label>
 						<input type="number" class="form-control" id="telefono" th:value="${apartamento.telefono}"
-							name="telefono" required />
+							name="telefono" required readonly onkeyup="validateTelefono()" />
+						<small id="telefonoError" class="form-text text-danger"></small>
 					</div>
 					<div class="form-group col-md-6">
 						<label for="correo">Correo</label>
 						<input type="email" class="form-control" id="correo" th:value="${apartamento.correo}"
-							name="correo" required />
+							name="correo" required readonly onkeyup="validateCorreo()" />
+						<small id="correoError" class="form-text text-danger"></small>
 					</div>
 				</div>
 
@@ -108,7 +113,8 @@
 					<div class="form-group col-md-6">
 						<label for="precio">Precio</label>
 						<input type="number" class="form-control" id="precio" th:value="${apartamento.precio}"
-							name="precio" required />
+							name="precio" required onkeyup="validatePrecio()" />
+						<small id="precioError" class="form-text text-danger"></small>
 					</div>
 					<div class="form-group col-md-6">
 						<label for="idCiudad">Ciudad</label>
@@ -123,7 +129,8 @@
 					<div class="form-group col-md-6">
 						<label for="capacidad">Capacidad</label>
 						<input type="number" class="form-control" id="capacidad" th:value="${apartamento.capacidad}"
-							name="capacidad" required />
+							name="capacidad" required onkeyup="validateCapacidad()" />
+						<small id="capacidadError" class="form-text text-danger"></small>
 					</div>
 
 					<div class="form-group col-md-6">
@@ -142,7 +149,8 @@
 				<div class="form-group">
 					<label for="descripcion">Descripcion</label>
 					<textarea class="form-control" id="descripcion" th:text="${apartamento.descripcion}"
-						name="descripcion" required></textarea>
+						name="descripcion" oninput="validateDescripcion()"></textarea>
+					<small id="descripcionError" class="form-text text-danger"></small>
 				</div>
 				<input type="hidden" name="idApartamento" th:value="${apartamento.id}" />
 
@@ -153,14 +161,16 @@
 					<div class="card-body">
 						<div class="form-group">
 							<label for="fotos">Imagenes</label>
-							<input class="form-control-file" type="file" id="fotos" name="fotos" multiple />
+							<input class="form-control-file" type="file" id="fotos" name="fotos" multiple required/>
 						</div>
 					</div>
 				</div>
 
 				<div class="text-left mt-3 buttons-container">
-				<a th:href="@{/apartamento/rAdmin}" class="btn btn-secondary" sec:authorize="hasRole('ROLE_ADMIN')">Cancelar</a>
-				<a th:href="@{/apartamento/r}" class="btn btn-secondary" sec:authorize="hasRole('ROLE_USER')">Cancelar</a>
+					<a th:href="@{/apartamento/rAdmin}" class="btn btn-secondary"
+						sec:authorize="hasRole('ROLE_ADMIN')">Cancelar</a>
+					<a th:href="@{/apartamento/r}" class="btn btn-secondary"
+						sec:authorize="hasRole('ROLE_USER')">Cancelar</a>
 					<button class="btn btn-primary" sec:authorize="isAuthenticated()">Modificar</button>
 				</div>
 			</form>
@@ -182,5 +192,142 @@
 	function goBack() {
 		window.history.back();
 	}
+
+</script>
+<script>
+
+	function validateName() {
+		var nameInput = document.getElementById('nombre');
+		var nameError = document.getElementById('nombreError');
+
+		var nameRegex = /^[a-zA-ZÁÉÍÓÚáéíóúÑñçÇ]+( [a-zA-ZÁÉÍÓÚáéíóúÑñçÇ]+)*$/; // Expresión regular para letras y un único espacio
+
+		if (!nameInput.value.trim() || !nameRegex.test(nameInput.value.trim()) || nameInput.value.trim().length !== nameInput.value.trim().replace(/ +(?= )/g, '').length) {
+			nameInput.classList.add('is-invalid');
+			nameError.textContent = 'Ingrese solo letras y un único espacio.';
+			return false;
+		} else {
+			nameInput.classList.remove('is-invalid');
+			nameError.textContent = '';
+			return true;
+
+		}
+	}
+
+	function validateDireccion() {
+		var direccionInput = document.getElementById('direccion');
+		var direccionError = document.getElementById('direccionError');
+
+		var direccionRegex = /^[a-zA-ZÁÉÍÓÚáéíóúÑñçÇ][a-zA-ZÁÉÍÓÚáéíóúÑñçÇ0-9]*( [a-zA-ZÁÉÍÓÚáéíóúÑñçÇ0-9]+)*$/; // Expresión regular para letras, números y un único espacio
+
+		if (!direccionInput.value.trim() || !direccionRegex.test(direccionInput.value.trim()) || direccionInput.value.trim().length !== direccionInput.value.trim().replace(/ +(?= )/g, '').length || !/^[a-zA-Z]/.test(direccionInput.value.trim())) {
+			direccionInput.classList.add('is-invalid');
+			direccionError.textContent = 'Ingrese una dirección válida que empiece con una letra y contenga solo letras, números y un único espacio.';
+			return false;
+		} else {
+			direccionInput.classList.remove('is-invalid');
+			direccionError.textContent = '';
+			return true;
+		}
+	}
+
+	function validateTelefono() {
+		var telefonoInput = document.getElementById('telefono');
+		var telefonoError = document.getElementById('telefonoError');
+
+		var telefonoRegex = /^[6-9]\d{8}$/; // Expresión regular para números de teléfono de 9 dígitos que empiezan con 6, 7, 8 o 9
+
+		if (!telefonoInput.value.trim() || !telefonoRegex.test(telefonoInput.value.trim())) {
+			telefonoInput.classList.add('is-invalid');
+			telefonoError.textContent = 'Ingrese un número de teléfono válido.';
+			return false;
+		} else {
+			telefonoInput.classList.remove('is-invalid');
+			telefonoError.textContent = '';
+			return true;
+		}
+	}
+
+	function validateCorreo() {
+		var correoInput = document.getElementById('correo');
+		var correoError = document.getElementById('correoError');
+
+		var correoRegex = /^[a-zA-Z0-9][a-zA-Z0-9._-]*@[a-zA-Z0-9]+(\.[a-zA-Z]{2,4})$/; // Expresión regular para correo electrónico
+
+		if (!correoInput.value.trim() || !correoRegex.test(correoInput.value.trim())) {
+			correoInput.classList.add('is-invalid');
+			correoError.textContent = 'Ingrese un correo electrónico válido.';
+			return false;
+		} else {
+			correoInput.classList.remove('is-invalid');
+			correoError.textContent = '';
+			return true;
+		}
+	}
+
+	function validateDescripcion() {
+		var descripcionInput = document.getElementById('descripcion');
+		var descripcionError = document.getElementById('descripcionError');
+
+		var descripcionRegex = /^[a-zA-ZÁÉÍÓÚáéíóúÑñçÇ][a-zA-ZÁÉÍÓÚáéíóúÑñçÇ0-9]*(?: [a-zA-ZÁÉÍÓÚáéíóú0ÑñçÇ-9]+)*$/; // Expresión regular para descripción: letra seguida de letras, números y espacios, con máximo un espacio seguido
+
+		if (!descripcionInput.value.trim() || !descripcionRegex.test(descripcionInput.value.trim())) {
+			descripcionInput.classList.add('is-invalid');
+			descripcionError.textContent = 'Ingrese una descripción válida.';
+			return false;
+		} else {
+			descripcionInput.classList.remove('is-invalid');
+			descripcionError.textContent = '';
+			return true;
+		}
+	}
+	function validateCapacidad() {
+		var capacidadInput = document.getElementById('capacidad');
+		var capacidadError = document.getElementById('capacidadError');
+
+		if (capacidadInput.value < 1) {
+			capacidadInput.classList.add('is-invalid');
+			capacidadError.textContent = 'La capacidad mínima es de 1 persona.';
+			return false;
+		} else {
+			capacidadInput.classList.remove('is-invalid');
+			capacidadError.textContent = '';
+			return true;
+		}
+	}
+
+	function validatePrecio() {
+		var precioInput = document.getElementById('precio');
+		var precioError = document.getElementById('precioError');
+
+		if (precioInput.value < 1) {
+			precioInput.classList.add('is-invalid');
+			precioError.textContent = 'El precio mínimo es de 1.';
+			return false;
+		} else {
+			precioInput.classList.remove('is-invalid');
+			precioError.textContent = '';
+			return true;
+		}
+	}
+
+
+
+	function validateFormulario() {
+		var isNombreValid = validateName();
+		var isDireccionValid = validateDireccion();
+		var isTelefonoValid = validateTelefono();
+		var isCorreoValid = validateCorreo();
+		var isCapacidadValid = validateCapacidad();
+		var isPrecioValid = validatePrecio();
+		var isDescripcionValid = validateDescripcion();
+
+		if ( isDireccionValid && isCapacidadValid && isPrecioValid && isDescripcionValid) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 
 </script>

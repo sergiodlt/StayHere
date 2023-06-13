@@ -1,4 +1,3 @@
-
 <div class="altura">
 	<section>
 		<style>
@@ -76,17 +75,19 @@
 
 		<div class="container bg-light">
 			<h1>Crear Apartamento</h1>
-			<form action="/apartamento/c" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+			<form action="/apartamento/c" method="post" enctype="multipart/form-data">
 
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="nombre">Nombre</label>
-						<input type="text" class="form-control" id="nombre" name="nombre" required autofocus onkeyup="validateName()" />
+						<input type="text" class="form-control" id="nombre" name="nombre" onkeyup="validateName()"
+							required autofocus />
 						<small id="nombreError" class="form-text text-danger"></small>
 					</div>
 					<div class="form-group col-md-6">
 						<label for="direccion">Direccion</label>
-						<input type="text" class="form-control" id="direccion" name="direccion" required  onkeyup="validateDireccion()" />
+						<input type="text" class="form-control" id="direccion" name="direccion" required
+							onkeyup="validateDireccion()" />
 						<small id="direccionError" class="form-text text-danger"></small>
 					</div>
 				</div>
@@ -95,12 +96,14 @@
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="telefono">Telefono</label>
-						<input type="number" class="form-control" id="telefono" name="telefono" required onkeyup="validateTelefono()"/>
+						<input type="number" class="form-control" id="telefono" name="telefono" required
+							onkeyup="validateTelefono()" />
 						<small id="telefonoError" class="form-text text-danger"></small>
 					</div>
 					<div class="form-group col-md-6">
 						<label for="correo">Correo</label>
-						<input type="email" class="form-control" id="correo" name="correo" required onkeyup="validateCorreo()" />
+						<input type="email" class="form-control" id="correo" name="correo" required
+							onkeyup="validateCorreo()" />
 						<small id="correoError" class="form-text text-danger"></small>
 					</div>
 				</div>
@@ -108,7 +111,8 @@
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="precio">Precio</label>
-						<input type="number" class="form-control" id="precio" name="precio" required onkeyup="validatePrecio()"/>
+						<input type="number" class="form-control" id="precio" name="precio" required
+							onkeyup="validatePrecio()" />
 						<small id="precioError" class="form-text text-danger"></small>
 					</div>
 					<div class="form-group col-md-6">
@@ -122,10 +126,11 @@
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="capacidad">Capacidad</label>
-						<input type="number" class="form-control" id="capacidad" name="capacidad" required onkeyup="validateCapacidad()" />
+						<input type="number" class="form-control" id="capacidad" name="capacidad" required
+							onkeyup="validateCapacidad()" />
 						<small id="capacidadError" class="form-text text-danger"></small>
 					</div>
-				
+
 					<div class="form-group col-md-6">
 						<div class="form-group">
 							<label for="idComodidad">Comodidades</label>
@@ -140,7 +145,8 @@
 
 				<div class="form-group">
 					<label for="descripcion">Descripcion</label>
-					<textarea class="form-control" id="descripcion" name="descripcion" required oninput="validateDescripcion()"></textarea>
+					<textarea class="form-control" id="descripcion" name="descripcion" required
+						oninput="validateDescripcion()"></textarea>
 					<small id="descripcionError" class="form-text text-danger"></small>
 				</div>
 
@@ -151,25 +157,25 @@
 					<div class="card-body">
 						<div class="form-group">
 							<label for="fotos">Imagenes</label>
-							<input class="form-control-file" type="file" id="fotos" name="fotos" multiple />
+							<input class="form-control-file" type="file" id="fotos" name="fotos" multiple required/>
 						</div>
 					</div>
 				</div>
 
 				<div class="text-left mt-3 buttons-container">
 					<a class="btn btn-secondary" href="/">Cancelar</a>
-					<button class="btn btn-primary" sec:authorize="isAuthenticated()" >Crear</button>
-					
+					<button class="btn btn-primary" sec:authorize="isAuthenticated()">Crear</button>
+
 
 				</div>
 			</form>
 			<form th:action="@{/login}">
-						<button class="btn btn-primary" sec:authorize="!isAuthenticated()">Crear</button>
-					</form>
-				</div>
-				
+				<button class="btn btn-primary" sec:authorize="!isAuthenticated()">Crear</button>
+			</form>
 		</div>
-	</section>
+
+</div>
+</section>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script>
@@ -178,120 +184,196 @@
 		$('#comodidades').select2();
 	});
 </script>
- <script>
-  function validateForm() {
-    // Validar campos requeridos
-    var requiredFields = document.querySelectorAll('input[required], select[required], textarea[required]');
-    for (var i = 0; i < requiredFields.length; i++) {
-      if (!requiredFields[i].value) {
-        alert('Por favor, complete todos los campos requeridos.');
-        return false; // Evitar el envío del formulario
-      }
-    }
+<script>
 
-    // Agregar aquí más validaciones según tus necesidades
+	function validateName() {
+		var nameInput = document.getElementById('nombre');
+		var nameError = document.getElementById('nombreError');
 
-    return true; // Permitir el envío del formulario
-  }
+		var nameRegex = /^[a-zA-ZÁÉÍÓÚáéíóúÑñçÇ]+( [a-zA-ZÁÉÍÓÚáéíóúÑñçÇ]+)*$/; // Expresión regular para letras y un único espacio
 
-  function validateName() {
-    var nameInput = document.getElementById('nombre');
-    var nameError = document.getElementById('nombreError');
+		if (!nameInput.value.trim() || !nameRegex.test(nameInput.value.trim()) || nameInput.value.trim().length !== nameInput.value.trim().replace(/ +(?= )/g, '').length) {
+			nameInput.classList.add('is-invalid');
+			nameError.textContent = 'Ingrese solo letras y un único espacio.';
+			return false;
+		} else {
+			nameInput.classList.remove('is-invalid');
+			nameError.textContent = '';
+			return true;
 
-    var nameRegex = /^[a-zA-ZÁÉÍÓÚáéíóú]+( [a-zA-ZÁÉÍÓÚáéíóú]+)*$/; // Expresión regular para letras y un único espacio
+		}
+	}
 
-    if (!nameInput.value.trim() || !nameRegex.test(nameInput.value.trim()) || nameInput.value.trim().length !== nameInput.value.trim().replace(/ +(?= )/g, '').length) {
-      nameInput.classList.add('is-invalid');
-      nameError.textContent = 'Ingrese solo letras y un único espacio.';
-    } else {
-      nameInput.classList.remove('is-invalid');
-      nameError.textContent = '';
-    }
-  }
+	function validateDireccion() {
+		var direccionInput = document.getElementById('direccion');
+		var direccionError = document.getElementById('direccionError');
 
-  function validateDireccion() {
-    var direccionInput = document.getElementById('direccion');
-    var direccionError = document.getElementById('direccionError');
+		var direccionRegex = /^[a-zA-ZÁÉÍÓÚáéíóúÑñçÇ][a-zA-ZÁÉÍÓÚáéíóúÑñçÇ0-9]*( [a-zA-ZÁÉÍÓÚáéíóúÑñçÇ0-9]+)*$/; // Expresión regular para letras, números y un único espacio
 
-    var direccionRegex = /^[a-zA-ZÁÉÍÓÚáéíóú][a-zA-ZÁÉÍÓÚáéíóú0-9]*( [a-zA-ZÁÉÍÓÚáéíóú0-9]+)*$/; // Expresión regular para letras, números y un único espacio
+		if (!direccionInput.value.trim() || !direccionRegex.test(direccionInput.value.trim()) || direccionInput.value.trim().length !== direccionInput.value.trim().replace(/ +(?= )/g, '').length || !/^[a-zA-Z]/.test(direccionInput.value.trim())) {
+			direccionInput.classList.add('is-invalid');
+			direccionError.textContent = 'Ingrese una dirección válida que empiece con una letra y contenga solo letras, números y un único espacio.';
+			return false;
+		} else {
+			direccionInput.classList.remove('is-invalid');
+			direccionError.textContent = '';
+			return true;
+		}
+	}
 
-    if (!direccionInput.value.trim() || !direccionRegex.test(direccionInput.value.trim()) || direccionInput.value.trim().length !== direccionInput.value.trim().replace(/ +(?= )/g, '').length || !/^[a-zA-Z]/.test(direccionInput.value.trim())) {
-      direccionInput.classList.add('is-invalid');
-      direccionError.textContent = 'Ingrese una dirección válida que empiece con una letra y contenga solo letras, números y un único espacio.';
-    } else {
-      direccionInput.classList.remove('is-invalid');
-      direccionError.textContent = '';
-    }
-  }
-  
-  function validateTelefono() {
-    var telefonoInput = document.getElementById('telefono');
-    var telefonoError = document.getElementById('telefonoError');
+	function validateTelefono() {
+		var telefonoInput = document.getElementById('telefono');
+		var telefonoError = document.getElementById('telefonoError');
 
-    var telefonoRegex = /^[6-9]\d{8}$/; // Expresión regular para números de teléfono de 9 dígitos que empiezan con 6, 7, 8 o 9
+		var telefonoRegex = /^[6-9]\d{8}$/; // Expresión regular para números de teléfono de 9 dígitos que empiezan con 6, 7, 8 o 9
 
-    if (!telefonoInput.value.trim() || !telefonoRegex.test(telefonoInput.value.trim())) {
-      telefonoInput.classList.add('is-invalid');
-      telefonoError.textContent = 'Ingrese un número de teléfono válido.';
-    } else {
-      telefonoInput.classList.remove('is-invalid');
-      telefonoError.textContent = '';
-    }
-  }
-  
-    function validateCorreo() {
-    var correoInput = document.getElementById('correo');
-    var correoError = document.getElementById('correoError');
+		if (!telefonoInput.value.trim() || !telefonoRegex.test(telefonoInput.value.trim())) {
+			telefonoInput.classList.add('is-invalid');
+			telefonoError.textContent = 'Ingrese un número de teléfono válido.';
+			return false;
+		} else {
+			telefonoInput.classList.remove('is-invalid');
+			telefonoError.textContent = '';
+			return true;
+		}
+	}
 
-    var correoRegex = /^[a-zA-Z0-9][a-zA-Z0-9._-]*@[a-zA-Z0-9]+(\.[a-zA-Z]{2,4})$/; // Expresión regular para correo electrónico
+	function validateCorreo() {
+		var correoInput = document.getElementById('correo');
+		var correoError = document.getElementById('correoError');
 
-    if (!correoInput.value.trim() || !correoRegex.test(correoInput.value.trim())) {
-      correoInput.classList.add('is-invalid');
-      correoError.textContent = 'Ingrese un correo electrónico válido.';
-    } else {
-      correoInput.classList.remove('is-invalid');
-      correoError.textContent = '';
-    }
-  }
-  
- function validateDescripcion() {
-  var descripcionInput = document.getElementById('descripcion');
-  var descripcionError = document.getElementById('descripcionError');
+		var correoRegex = /^[a-zA-Z0-9][a-zA-Z0-9._-]*@[a-zA-Z0-9]+(\.[a-zA-Z]{2,4})$/; // Expresión regular para correo electrónico
 
-  var descripcionRegex = /^[a-zA-ZÁÉÍÓÚáéíóú][a-zA-ZÁÉÍÓÚáéíóú0-9]*(?: [a-zA-ZÁÉÍÓÚáéíóú0-9]+)*$/; // Expresión regular para descripción: letra seguida de letras, números y espacios, con máximo un espacio seguido
+		if (!correoInput.value.trim() || !correoRegex.test(correoInput.value.trim())) {
+			correoInput.classList.add('is-invalid');
+			correoError.textContent = 'Ingrese un correo electrónico válido.';
+			return false;
+		} else {
+			correoInput.classList.remove('is-invalid');
+			correoError.textContent = '';
+			return true;
+		}
+	}
 
-  if (!descripcionInput.value.trim() || !descripcionRegex.test(descripcionInput.value.trim())) {
-    descripcionInput.classList.add('is-invalid');
-    descripcionError.textContent = 'Ingrese una descripción válida.';
-  } else {
-    descripcionInput.classList.remove('is-invalid');
-    descripcionError.textContent = '';
-  }
-}
-    function validateCapacidad() {
-    var capacidadInput = document.getElementById('capacidad');
-    var capacidadError = document.getElementById('capacidadError');
+	function validateDescripcion() {
+		var descripcionInput = document.getElementById('descripcion');
+		var descripcionError = document.getElementById('descripcionError');
 
-    if (capacidadInput.value < 1) {
-      capacidadInput.classList.add('is-invalid');
-      capacidadError.textContent = 'La capacidad mínima es de 1 persona.';
-    } else {
-      capacidadInput.classList.remove('is-invalid');
-      capacidadError.textContent = '';
-    }
-  }
-  
-   function validatePrecio() {
-    var precioInput = document.getElementById('precio');
-    var precioError = document.getElementById('precioError');
+		var descripcionRegex = /^[a-zA-ZÁÉÍÓÚáéíóúÑñçÇ][a-zA-ZÁÉÍÓÚáéíóúÑñçÇ0-9]*(?: [a-zA-ZÁÉÍÓÚáéíóúÑñçÇ0-9]+)*$/; // Expresión regular para descripción: letra seguida de letras, números y espacios, con máximo un espacio seguido
 
-    if (precioInput.value < 1) {
-      precioInput.classList.add('is-invalid');
-      precioError.textContent = 'El precio mínimo es de 1.';
-    } else {
-      precioInput.classList.remove('is-invalid');
-      precioError.textContent = '';
-    }
-  }
+		if (!descripcionInput.value.trim() || !descripcionRegex.test(descripcionInput.value.trim())) {
+			descripcionInput.classList.add('is-invalid');
+			descripcionError.textContent = 'Ingrese una descripción válida.';
+			return false;
+		} else {
+			descripcionInput.classList.remove('is-invalid');
+			descripcionError.textContent = '';
+			return true;
+		}
+	}
+	function validateCapacidad() {
+		var capacidadInput = document.getElementById('capacidad');
+		var capacidadError = document.getElementById('capacidadError');
 
-  </script>
+		if (capacidadInput.value < 1) {
+			capacidadInput.classList.add('is-invalid');
+			capacidadError.textContent = 'La capacidad mínima es de 1 persona.';
+			return false;
+		} else {
+			capacidadInput.classList.remove('is-invalid');
+			capacidadError.textContent = '';
+			return true;
+		}
+	}
+
+	function validatePrecio() {
+		var precioInput = document.getElementById('precio');
+		var precioError = document.getElementById('precioError');
+
+		if (precioInput.value < 1) {
+			precioInput.classList.add('is-invalid');
+			precioError.textContent = 'El precio mínimo es de 1.';
+			return false;
+		} else {
+			precioInput.classList.remove('is-invalid');
+			precioError.textContent = '';
+			return true;
+		}
+	}
+
+
+	$(document).ready(function () {
+		$('form').submit(function (event) {
+			event.preventDefault(); // Detiene el envío del formulario
+
+
+			var email = $('#correo').val();
+			var nombre = $('#nombre').val();
+			var tlf = $('#telefono').val();
+
+
+			var emailInput = document.getElementById("correo");
+			var emailError = document.getElementById("correoError");
+
+			var telefonoInput = document.getElementById("telefono");
+			var telefonoError = document.getElementById("telefonoError");
+
+			var nombreInput = document.getElementById("nombre");
+			var nombreError = document.getElementById('nombreError');
+
+			// Validación de los campos individuales
+			var isValidNombre = validateName();
+			var isValidDireccion = validateDireccion();
+			var isValidTelefono = validateTelefono();
+			var isValidCorreo = validateCorreo();
+			var isValidDescripcion = validateDescripcion();
+			var isValidCapacidad = validateCapacidad();
+			var isValidPrecio = validatePrecio();
+
+
+
+			// Si alguna de las validaciones no es válida, no se envía el formulario
+			if (!isValidNombre || !isValidDireccion || !isValidTelefono || !isValidCorreo || !isValidDescripcion || !isValidCapacidad || !isValidPrecio) {
+				return;
+			}
+
+			// Validación del correo electrónico y nombre de usuario en la base de datos
+
+			$.ajax({
+				url: '/apartamento/verificar-apartamento-correo-tlf',
+				type: 'POST',
+				data: {
+					email: email,
+					tlf: tlf,
+					nombre: nombre
+				},
+				success: function (response) {
+					console.log(response);
+					if (response.existTlf) {
+						telefonoInput.classList.add("is-invalid");
+						telefonoError.textContent = "El teléfono ya está registrado";
+					} else if (response.existEmail) {
+						emailInput.classList.add("is-invalid");
+						emailError.textContent = "El correo electrónico ya está registrado";
+					} else if (response.existNombre) {
+						nombreInput.classList.add("is-invalid");
+						nombreError.textContent = "El nombre ya está registrado";
+					} else {
+						emailInput.classList.remove("is-invalid");
+						emailError.textContent = "";
+						telefonoInput.classList.remove("is-invalid");
+						telefonoError.textContent = "";
+						nombreInput.classList.remove("is-invalid");
+						nombreError.textContent = "";
+						$('form').unbind('submit').submit(); // Permite el envío del formulario
+					}
+				},
+				error: function () {
+					alert('Error al verificar el correo electrónico y el telefono');
+				}
+			});
+		});
+	});
+
+
+</script>

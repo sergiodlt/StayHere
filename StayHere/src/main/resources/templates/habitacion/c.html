@@ -1,58 +1,155 @@
 <div class="container">
 	<h1>Crear Habitacion</h1>
-	<form action="/habitacion/cPost" method="post" enctype="multipart/form-data">
+	<form action="/habitacion/cPost" method="post" enctype="multipart/form-data" onsubmit="return validateFormulario()">
 		<h2>Habitaciones</h2>
 
-				<div class="form-row">
-					<div class="form-group col-md-6">
-						<label for="cantidad">¿Cuantas habitaciones desea crear igual que esta?</label>
-						<input type="number" class="form-control" id="cantidad" name="cantidad" />
-					</div>
-					<div class="form-group col-md-6">
-						<label for="capacidad">Capacidad</label>
-						<input type="number" class="form-control" id="capacidad" name="capacidad" required />
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="cantidad">¿Cuantas habitaciones desea crear igual que esta?</label>
+				<input type="number" class="form-control" id="cantidad" name="cantidad" oninput="validateCantidad()"
+					required />
+				<small id="cantidadError" class="form-text text-danger"></small>
+			</div>
+			<div class="form-group col-md-6">
+				<label for="capacidad">Capacidad</label>
+				<input type="number" class="form-control" id="capacidad" name="capacidad" required
+					oninput="validateCapacidad()" />
+				<small id="capacidadError" class="form-text text-danger"></small>
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="precio">Precio</label>
+				<input type="number" class="form-control" id="precio" name="precio" required
+					oninput="validatePrecio()" />
+				<small id="precioError" class="form-text text-danger"></small>
+			</div>
+			<div class="form-group col-md-6">
+				<label for="idComodidad">Comodidades</label>
+				<select class="form-control" type="checkbox" name='idComodidad' th:value="${comodidad?.id}"
+					id="comodidades" multiple>
+					<option th:each=" comodidad : ${comodidades} " th:value="${comodidad.id}"
+						th:text="${comodidad.nombre}">
+				</select>
+			</div>
+		</div>
+
+
+		<div class="form-group ">
+			<label for="descripcion">Descripción</label>
+			<textarea class="form-control" id="descripcion" name="descripcion" required oninput="validateDescripcion()"></textarea>
+					<small id="descripcionError" class="form-text text-danger"></small>
+		</div>
+
+
+
+		<div class="form-group ">
+			<div class="card">
+				<div class="card-header">
+					<p><i class="fa fa-camera"></i> Fotos de las habitaciones</p>
+				</div>
+				<div class="card-body">
+					<div class="form-group">
+						<label for="fotos">Imágenes</label>
+						<input class="form-control-file" type="file" id="fotos" name="fotos" multiple required />
 					</div>
 				</div>
-
-				<div class="form-row">
-					<div class="form-group col-md-6">
-						<label for="precio">Precio</label>
-						<input type="number" class="form-control" id="precio" name="precio" required />
-					</div>
-					<div class="form-group col-md-6">
-						<label for="idComodidad">Comodidades</label>
-						<select class="form-control" type="checkbox" name='idComodidad' th:value="${comodidad?.id}"
-							id="comodidades" multiple>
-							<option th:each=" comodidad : ${comodidades} " th:value="${comodidad.id}"
-								th:text="${comodidad.nombre}">
-						</select>
-					</div>
-				</div>
-
-
-				<div class="form-group ">
-					<label for="descripcion">Descripción</label>
-					<textarea class="form-control" id="descripcion" name="descripcion" required></textarea>
-				</div>
-
-
-
-				<div class="form-group ">
-					<div class="card">
-						<div class="card-header">
-							<p><i class="fa fa-camera"></i> Fotos de las habitaciones</p>
-						</div>
-						<div class="card-body">
-							<div class="form-group">
-								<label for="fotos">Imágenes</label>
-								<input class="form-control-file" type="file" id="fotos" name="fotos" multiple />
-							</div>
-						</div>
-					</div>
-				</div>
-<input type="hidden" name="id" th:value="${hotel.id}" />
-				<div class="text-left mt-3">
-					<a class="btn btn-secondary" href="/">Cancelar</a>
-	<button class="btn btn-primary" sec:authorize="isAuthenticated()" >Crear</button>
-				</div></form>
+			</div>
+		</div>
+		<input type="hidden" name="id" th:value="${hotel.id}" />
+		<div class="text-left mt-3">
+			<a class="btn btn-secondary" href="/">Cancelar</a>
+			<button class="btn btn-primary" sec:authorize="isAuthenticated()">Crear</button>
+		</div>
+	</form>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script>
+
+
+	$(document).ready(function () {
+		// Inicializar Select2
+		$('#comodidades').select2();
+	});
+
+</script>
+<script>
+	function goBack() {
+		window.history.back();
+	}
+</script>
+<script>
+
+	function validateDescripcion() {
+		var descripcionInput = document.getElementById('descripcion');
+		var descripcionError = document.getElementById('descripcionError');
+
+		var descripcionRegex = /^[a-zA-ZÁÉÍÓÚáéíóúÑñÇç][a-zA-ZÁÉÍÓÚáéíóúÑñÇç0-9]*(?: [a-zA-ZÁÉÍÓÚáéíóúÑñÇç0-9]+)*$/; // Expresión regular para descripción: letra seguida de letras, números y espacios, con máximo un espacio seguido
+
+		if (!descripcionInput.value.trim() || !descripcionRegex.test(descripcionInput.value.trim())) {
+			descripcionInput.classList.add('is-invalid');
+			descripcionError.textContent = 'Ingrese una descripción válida.';
+			return false;
+		} else {
+			descripcionInput.classList.remove('is-invalid');
+			descripcionError.textContent = '';
+			return true;
+		}
+	}
+	function validateCapacidad() {
+		var capacidadInput = document.getElementById('capacidad');
+		var capacidadError = document.getElementById('capacidadError');
+
+		if (capacidadInput.value < 1) {
+			capacidadInput.classList.add('is-invalid');
+			capacidadError.textContent = 'La capacidad mínima es de 1 persona.';
+			return false;
+		} else {
+			capacidadInput.classList.remove('is-invalid');
+			capacidadError.textContent = '';
+			return true;
+		}
+	}
+
+	function validateCantidad() {
+		var cantidadInput = document.getElementById('cantidad');
+		var cantidadError = document.getElementById('cantidadError');
+
+		if (cantidadInput.value < 1) {
+			cantidadInput.classList.add('is-invalid');
+			cantidadError.textContent = 'La cantidad mínima es de 1 habitación.';
+			return false;
+		} else {
+			cantidadInput.classList.remove('is-invalid');
+			cantidadError.textContent = '';
+			return true;
+		}
+	}
+
+	function validatePrecio() {
+		var precioInput = document.getElementById('precio');
+		var precioError = document.getElementById('precioError');
+
+		if (precioInput.value < 1) {
+			precioInput.classList.add('is-invalid');
+			precioError.textContent = 'El precio mínimo es de 1.';
+			return false;
+		} else {
+			precioInput.classList.remove('is-invalid');
+			precioError.textContent = '';
+			return true;
+		}
+	}
+
+	function validateFormulario() {
+
+		if (validateDescripcion() && validateCapacidad() && validateCantidad() && validatePrecio()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
+</script>

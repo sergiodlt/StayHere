@@ -7,13 +7,15 @@
 			<div class="form-group col-md-6">
 				<label for="capacidad">Capacidad</label>
 				<input type="number" class="form-control" th:value="${habitacion.capacidad}" id="capacidad"
-					name="capacidad" required />
+					name="capacidad" required oninput="validateCapacidad()" />
+				<small id="capacidadError" class="form-text text-danger"></small>
 			</div>
 
 			<div class="form-group col-md-6">
 				<label for="precio">Precio</label>
 				<input type="number" class="form-control" th:value="${habitacion.precio}" id="precio" name="precio"
-					required />
+					required oninput="validatePrecio()" />
+				<small id="precioError" class="form-text text-danger"></small>
 			</div>
 		</div>
 		<div class="form-row">
@@ -33,7 +35,8 @@
 			<div class="form-group col-md-12">
 				<label for="descripcion">Descripción</label>
 				<textarea class="form-control" id="descripcion" th:text="${habitacion.descripcion}" name="descripcion"
-					required></textarea>
+					required oninput="validateDescripcion()"></textarea>
+					<small id="descripcionError" class="form-text text-danger"></small>
 			</div>
 
 		</div>
@@ -47,7 +50,7 @@
 					<div class="card-body">
 						<div class="form-group">
 							<label for="fotos">Imágenes</label>
-							<input class="form-control-file" type="file" id="fotos" name="fotos" multiple />
+							<input class="form-control-file" type="file" id="fotos" name="fotos" multiple required/>
 						</div>
 					</div>
 				</div>
@@ -60,3 +63,91 @@
 		</div>
 	</form>
 </div>
+<script>
+
+
+	$(document).ready(function () {
+		// Inicializar Select2
+		$('#comodidades').select2();
+	});
+
+</script>
+<script>
+	function goBack() {
+		window.history.back();
+	}
+</script>
+<script>
+
+	function validateDescripcion() {
+		var descripcionInput = document.getElementById('descripcion');
+		var descripcionError = document.getElementById('descripcionError');
+
+		var descripcionRegex = /^[a-zA-ZÁÉÍÓÚáéíóúÑñÇç][a-zA-ZÁÉÍÓÚáéíóúÑñÇç0-9]*(?: [a-zA-ZÁÉÍÓÚáéíóúÑñÇç0-9]+)*$/; // Expresión regular para descripción: letra seguida de letras, números y espacios, con máximo un espacio seguido
+
+		if (!descripcionInput.value.trim() || !descripcionRegex.test(descripcionInput.value.trim())) {
+			descripcionInput.classList.add('is-invalid');
+			descripcionError.textContent = 'Ingrese una descripción válida.';
+			return false;
+		} else {
+			descripcionInput.classList.remove('is-invalid');
+			descripcionError.textContent = '';
+			return true;
+		}
+	}
+	function validateCapacidad() {
+		var capacidadInput = document.getElementById('capacidad');
+		var capacidadError = document.getElementById('capacidadError');
+
+		if (capacidadInput.value < 1) {
+			capacidadInput.classList.add('is-invalid');
+			capacidadError.textContent = 'La capacidad mínima es de 1 persona.';
+			return false;
+		} else {
+			capacidadInput.classList.remove('is-invalid');
+			capacidadError.textContent = '';
+			return true;
+		}
+	}
+
+	function validateCantidad() {
+		var cantidadInput = document.getElementById('cantidad');
+		var cantidadError = document.getElementById('cantidadError');
+
+		if (cantidadInput.value < 1) {
+			cantidadInput.classList.add('is-invalid');
+			cantidadError.textContent = 'La cantidad mínima es de 1 habitación.';
+			return false;
+		} else {
+			cantidadInput.classList.remove('is-invalid');
+			cantidadError.textContent = '';
+			return true;
+		}
+	}
+
+	function validatePrecio() {
+		var precioInput = document.getElementById('precio');
+		var precioError = document.getElementById('precioError');
+
+		if (precioInput.value < 1) {
+			precioInput.classList.add('is-invalid');
+			precioError.textContent = 'El precio mínimo es de 1.';
+			return false;
+		} else {
+			precioInput.classList.remove('is-invalid');
+			precioError.textContent = '';
+			return true;
+		}
+	}
+
+	function validateFormulario() {
+
+		if (validateDescripcion() && validateCapacidad() && validateCantidad() && validatePrecio()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
+</script>

@@ -10,5 +10,11 @@ import com.StayHere.entities.Hotel;
 @Repository
 public interface HotelRepository extends JpaRepository<Hotel, Long> {
     Optional<Hotel> findFirstByOrderByIdDesc();
+
+	Hotel findByCorreo(String email);
+
+	Hotel findByTelefono(String tlf);
+
+	Hotel findByNombre(String nombre);
 }
 

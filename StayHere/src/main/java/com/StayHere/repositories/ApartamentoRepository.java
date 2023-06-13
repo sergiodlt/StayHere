@@ -28,4 +28,19 @@ public interface ApartamentoRepository extends JpaRepository<Apartamento, Long>{
 	 
 	    Optional<Apartamento> findFirstByOrderByIdDesc();
 
+
+
+
+		Apartamento findByCorreo(String email);
+
+
+
+
+		Apartamento findByTelefono(int tlf);
+
+
+
+
+		Apartamento findByNombre(String nombre);
+
 }

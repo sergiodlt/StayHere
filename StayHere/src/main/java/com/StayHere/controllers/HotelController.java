@@ -5,7 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.StayHere.entities.Ciudad;
 import com.StayHere.entities.Comodidad;
@@ -31,7 +33,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -40,6 +42,9 @@ public class HotelController {
 
 	@Autowired
 	private HotelService hotelService;
+
+	@Autowired
+	private HotelRepository hotelRepository;
 
 	@Autowired
 	private HabitacionService habitacionService;
@@ -221,7 +226,20 @@ public class HotelController {
 	 * 
 	 * 
 	 */
-
+	   
+    @PostMapping("/verificar-hotel-correo-tlf")
+    public @ResponseBody Map<String, Boolean> verificarEmailExistente(@RequestParam("email") String email,@RequestParam("tlf") String tlf, @RequestParam("nombre") String nombre) {
+        Boolean existEmail = hotelRepository.findByCorreo(email) != null;
+        Boolean existTlf = hotelRepository.findByTelefono(tlf) != null;
+        Boolean existNombre = hotelRepository.findByNombre(nombre) != null;
+        
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("existTlf", existTlf);
+        response.put("existEmail", existEmail);
+        response.put("existNombre", existNombre);
+        
+        return response;
+    }
 }
 
 // ...
