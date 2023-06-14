@@ -157,7 +157,7 @@
 					<div class="card-body">
 						<div class="form-group">
 							<label for="fotos">Imagenes</label>
-							<input class="form-control-file" type="file" id="fotos" name="fotos" multiple required/>
+							<input class="form-control-file" type="file" id="fotos" name="fotos" multiple required />
 						</div>
 					</div>
 				</div>
@@ -168,9 +168,9 @@
 
 
 				</div>
-			</form>
-			<form th:action="@{/login}">
-				<button class="btn btn-primary" sec:authorize="!isAuthenticated()">Crear</button>
+				<form th:action="@{/login}">
+					<button class="btn btn-primary" sec:authorize="!isAuthenticated()">Crear</button>
+				</form>
 			</form>
 		</div>
 
@@ -259,7 +259,7 @@
 		var descripcionInput = document.getElementById('descripcion');
 		var descripcionError = document.getElementById('descripcionError');
 
-		var descripcionRegex = /^[a-zA-ZÁÉÍÓÚáéíóúÑñçÇ][a-zA-ZÁÉÍÓÚáéíóúÑñçÇ0-9,.]*(?: [a-zA-ZÁÉÍÓÚáéíóúÑñçÇ0-9.,]+)*$/; // Expresión regular para descripción: letra seguida de letras, números y espacios, con máximo un espacio seguido
+		var descripcionRegex = /^[a-zA-ZÁÉÍÓÚáéíóúÑñçÇ][a-zA-ZÁÉÍÓÚáéíóúÑñçÇ0-9,. -]*(?: [a-zA-ZÁÉÍÓÚáéíóúÑñçÇ0-9.,  -]+)*$/; // Expresión regular para descripción: letra seguida de letras, números y espacios, con máximo un espacio seguido
 
 		if (!descripcionInput.value.trim() || !descripcionRegex.test(descripcionInput.value.trim())) {
 			descripcionInput.classList.add('is-invalid');

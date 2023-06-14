@@ -85,7 +85,7 @@
 		var descripcionInput = document.getElementById('descripcion');
 		var descripcionError = document.getElementById('descripcionError');
 
-		var descripcionRegex = /^[a-zA-ZÁÉÍÓÚáéíóúÑñÇç][a-zA-ZÁÉÍÓÚáéíóúÑñÇç,.0-9]*(?: [a-zA-ZÁÉÍÓÚáéíóúÑñÇç,.0-9]+)*$/; // Expresión regular para descripción: letra seguida de letras, números y espacios, con máximo un espacio seguido
+		var descripcionRegex = /^[a-zA-ZÁÉÍÓÚáéíóúÑñÇç][a-zA-ZÁÉÍÓÚáéíóúÑñÇç,.0-9 -]*(?: [a-zA-ZÁÉÍÓÚáéíóúÑñÇç,.0-9 -]+)*$/; // Expresión regular para descripción: letra seguida de letras, números y espacios, con máximo un espacio seguido
 
 		if (!descripcionInput.value.trim() || !descripcionRegex.test(descripcionInput.value.trim())) {
 			descripcionInput.classList.add('is-invalid');

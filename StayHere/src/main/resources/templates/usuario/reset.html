@@ -69,37 +69,40 @@
 						<div class="m-sm-4">
 							<form action="/reset-password/confirm" method="post" onsubmit="return validarContraseñas()">
 								<input type="hidden" name="token" th:value="${token}">
-																															<label for="txtPassword">Contraseña</label>
+								<label for="txtPassword">Contraseña</label>
 
 								<div class="row">
-																		<div class="col-12">
+									<div class="col-12">
 
-									<div class="form-floating mb-3 mb-md-0">
-										<div class="input-group">
+										<div class="form-floating mb-3 mb-md-0">
+											<div class="input-group">
 												<input class="form-control" id="txtPassword" type="password"
-													name="password" placeholder="Crear contraseña" required />
+													name="password" placeholder="Crear contraseña" required
+													onkeyup="validatePassword()" />
+												<div class="input-group-append">
+													<button id="show_password" class="btn " type="button"
+														onclick="mostrarPassword()" />
 
-											<div class="input-group-append">
-												<button id="show_password" class="btn " type="button"
-													onclick="mostrarPassword()">
 													<span id="icon_password" class="fa fa-eye-slash icon"></span>
-												</button>
-											</div>
+													</button>
+												</div>
 
+											</div>
 										</div>
-									</div>
+
 									</div>
 								</div>
+								<small id="passwordError" class="form-text text-danger"></small>
 
-													<label for="txtConfirmPassword">Confirmar Contraseña</label>
+								<label for="txtConfirmPassword">Confirmar Contraseña</label>
 
 								<div class="row">
 									<div class="col-12">
 										<div class="form-floating mb-3 mb-md-0">
 											<div class="input-group">
 
-													<input class="form-control" id="txtConfirmPassword" type="password"
-														placeholder="Confirmar contraseña" required />
+												<input class="form-control" id="txtConfirmPassword" type="password"
+													placeholder="Confirmar contraseña" required />
 
 												<div class="input-group-append">
 													<button id="show_confirm_password" class="btn " type="button"
@@ -129,6 +132,8 @@
 	</div>
 	</div>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 	<script type="text/javascript">
 		function mostrarPassword() {
 			var cambio = document.getElementById("txtPassword");
@@ -160,12 +165,25 @@
 				icon.classList.add('fa-eye-slash');
 			}
 		}
-
+		function validatePassword() {
+			var password = document.getElementById("txtPassword");
+			var passwordError = document.getElementById("passwordError");
+			var regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+			if (!regex.test(password.value)) {
+				password.classList.add("is-invalid");
+				passwordError.textContent = "La contraseña no es válida";
+				return false;
+			} else {
+				password.classList.remove("is-invalid");
+				passwordError.textContent = "";
+				return true;
+			}
+		}
 		function validarContraseñas() {
 			var password = document.getElementById("txtPassword").value;
 			var confirmPassword = document.getElementById("txtConfirmPassword").value;
 
-			if (password !== confirmPassword) {
+			if (password !== confirmPassword || validatePassword() != true) {
 				document.getElementById("mensajeError").style.display = "block";
 				return false; // Prevent form submission
 			} else {

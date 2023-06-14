@@ -72,13 +72,14 @@
                 <div class="card-header text-center">Olvidé mi contraseña</div>
                 <div class="card-body">
                     <div class="m-sm-4">
-                        <form id="formu" action="/reset-password" method="post">
+                        <form action="/reset-password" method="post">
                             <div class="form-group">
                                 <label for="email">Correo electrónico:</label>
                             </div>
                             <div class="form-group">
                                 <input type="email" id="email" name="email" class="form-control form-control-lg"
-                                    required>
+                                    required onkeyup="validateCorreo()" />
+						<small id="emailError" class="form-text text-danger"></small>
                             </div>
                             	<p id="error-message"></p>
 
@@ -97,14 +98,38 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script>
+	function validateCorreo() {
+	var correoInput = document.getElementById('email');
+	var correoError = document.getElementById('emailError');
+
+	var correoRegex = /^[a-zA-Z0-9][a-zA-Z0-9._-]*@[a-zA-Z0-9]+(\.[a-zA-Z]{2,4})$/; // Expresión regular para correo electrónico
+
+	if (!correoInput.value.trim() || !correoRegex.test(correoInput.value.trim())) {
+		correoInput.classList.add('is-invalid');
+		correoError.textContent = 'Ingrese un correo electrónico válido.';
+		return false;
+	} else {
+		correoInput.classList.remove('is-invalid');
+		correoError.textContent = '';
+		return true;
+	}
+}
+
+	
 		$(document).ready(function () {
 			// Escucha el evento de envío del formulario
-			$('#formu').submit(function (event) {
+			
+			var emailInput = document.getElementById("email");
+			var emailError = document.getElementById("emailError");
+			$('form').submit(function (event) {
 				event.preventDefault(); // Evita el envío del formulario por defecto
 
 				// Obtén el valor del correo electrónico ingresado
 				var email = $('#email').val();
-
+				
+				if (validateCorreo() != true) {
+				return;
+			}
 				// Realiza la petición AJAX
 				$.ajax({
 					url: '/verificar-email', // Ruta a tu script de verificación del correo
@@ -112,13 +137,13 @@
 					data: {email: email}, // Envía el correo electrónico como datos POST
 					success: function (response) {
 						if (response == true) {
-							$("#error-message").text("");
+							$("#emailError").text("");
 
 							// El correo existe, puedes enviar el formulario
-							$('#formu')[0].submit(); // Envía el formulario
+						$('form').unbind('submit').submit(); // Permite el envío del formulario
 						} else {
 							// El correo no existe, muestra un mensaje de error o realiza alguna acción adicional
-							$("#error-message").text("El correo electrónico no está registrado.");
+							$("#emailError").text("El correo electrónico no está registrado.");
 						}
 					},
 					error: function () {
