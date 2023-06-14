@@ -1,3 +1,10 @@
+<style>
+.custom-carousel-image {
+    height: 280px;
+    width: 420px;
+    object-fit: contain; /* Ajusta la imagen dentro del tamaño especificado */
+}
+</style>
 <section>
 	<div class="alturaBusq">
 		<div class="container containerBusq">
@@ -85,9 +92,10 @@
 															<th:block th:each="foto, status : ${alojamiento.fotos}">
 																<div
 																	th:class="${status.index == 0 ? 'carousel-item active' : 'carousel-item'}">
-																	<img class="img-fluid" th:src="${foto.ruta}"
-																		alt="Imagen 1"
-																		style="max-height: 280px; max-width: 420px;">
+																	<div class="carousel-image-container">
+																		<img class="img-fluid custom-carousel-image"
+																			th:src="${foto.ruta}" alt="Imagen 1">
+																	</div>
 																</div>
 															</th:block>
 														</div>
@@ -108,38 +116,38 @@
 															</a>
 														</th:block>
 													</div>
+												</div>
 
+												<div class="col-md-6">
+													<div class="card-body">
+														<b>
+															<h3 th:if="${alojamient == 'hotel'}"
+																th:text="${alojamiento.hotel?.nombre}" />
+														</b>
+														<h5 th:if="${alojamient == 'hotel'}"
+															th:text="|Habitacion número ${alojamiento?.id}|" />
+														<b>
+															<h3 th:if="${alojamient == 'apartamento'}"
+																th:text="${alojamiento?.nombre}" />
+														</b>
+														<h5 th:if="${alojamient == 'apartamento'}"
+															th:text="|${alojamiento?.direccion}, ${alojamiento?.ciudad?.nombre}|" />
+														<p th:text="${alojamiento?.descripcion}" />
 
-													<div class="col-md-6">
-														<div class="card-body">
-															<b>
-																<h3 th:if="${alojamient == 'hotel'}"
-																	th:text="${alojamiento.hotel?.nombre}" />
-															</b>
-															<h5 th:if="${alojamient == 'hotel'}"
-																th:text="|Habitacion número ${alojamiento?.id}|" />
-															<b>
-																<h3 th:if="${alojamient == 'apartamento'}"
-																	th:text="${alojamiento?.nombre}" />
-															</b>
-															<h5 th:if="${alojamient == 'apartamento'}"
-																th:text="|${alojamiento?.direccion}, ${alojamiento?.ciudad?.nombre}|" />
-															<p th:text="${alojamiento?.descripcion}" />
-
-															<p th:if="${alojamient == 'hotel'}">
-																<span
-																	th:each="i : ${#numbers.sequence(1, alojamiento.hotel?.estrellas)}">
-																	<i class="fas fa-star"></i>
-																</span>
-															</p>
-															<b>
-																<p th:text="|${alojamiento?.precio}€ /Noche|" />
-															</b>
-														</div>
+														<p th:if="${alojamient == 'hotel'}">
+															<span
+																th:each="i : ${#numbers.sequence(1, alojamiento.hotel?.estrellas)}">
+																<i class="fas fa-star"></i>
+															</span>
+														</p>
+														<b>
+															<p th:text="|${alojamiento?.precio}€ /Noche|" />
+														</b>
 													</div>
 												</div>
 											</div>
 										</div>
+									</div>
 								</a>
 							</div>
 						</div>
