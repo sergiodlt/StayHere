@@ -84,20 +84,6 @@ body {
 	box-shadow: 0 0 0 2px #0a66c2;
 	outline: none;
 }
-
-.btn-primary {
-	background-color: #0a66c2;
-	border-color: #0a66c2;
-	border-radius: 4px;
-	box-shadow: none;
-	color: #fff;
-	font-size: 16px;
-	font-weight: 500;
-	padding: 14px 30px;
-	transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out,
-		box-shadow 0.2s ease-in-out;
-}
-
 .btn-primary:hover,
 .btn-primary:focus {
 	background-color: #0a5ca9;

@@ -98,8 +98,8 @@ public class HomeController {
 	
 	@PostMapping("/home/buscador/filtro")
 	public String filtroComodidades(@RequestParam("alojamiento") String alojamiento, @RequestParam("checkIn") LocalDate checkIn, @RequestParam("checkOut") LocalDate checkOut,
-			@RequestParam("huespedes") int numHuespedes, @RequestParam("IdCiudad") Long ciudad, @RequestParam("idComodidades") List <Long>idComodiades, ModelMap m) {
-		
+			@RequestParam("huespedes") int numHuespedes, @RequestParam("IdCiudad") Long ciudad, @RequestParam(required=false, name="idComodidades") List <Long>idComodiades, ModelMap m) {
+		if(idComodiades != null) {
 		List<Comodidad> comodidades = new ArrayList<Comodidad>();
 		for(Long idComodidad: idComodiades) {
 			comodidades.add(comodidadService.getComodidadById(idComodidad));
@@ -134,6 +134,36 @@ public class HomeController {
 			}
 			m.put("alojamientos", apartamentosFilt);
 		}
+
+		m.put("comodidadesSelect", comodidades);
+		}else {
+			if(alojamiento.equals("hotel")) {
+				List<Habitacion> habitaciones = habitacionRepository.findHabitacionesDisponibles(checkIn, checkOut, numHuespedes);
+				List<Habitacion> habitacionesFilt = new ArrayList<Habitacion>();
+				
+				for(Habitacion hab : habitaciones) {
+					if(hab.getHotel().getCiudad().getId() == ciudad) {
+						habitacionesFilt.add(hab);
+					}
+				}
+				m.put("alojamientos", habitacionesFilt);
+				
+			}
+				if(alojamiento.equals("apartamento")) {
+				List<Apartamento> apartamentos = apartamentoRepository.findApartamentosDisponibles(checkIn, checkOut, numHuespedes);
+				List<Apartamento> apartamentosFilt = new ArrayList<Apartamento>();
+				
+					for(Apartamento apart : apartamentos) {
+						if(apart.getCiudad().getId() == ciudad) {
+							apartamentosFilt.add(apart);
+						}
+					}
+					m.put("alojamientos", apartamentosFilt);
+				}
+				List<Comodidad> comodidadesSelect = new ArrayList<Comodidad>();
+
+				m.put("comodidadesSelect", comodidadesSelect);
+		}
 		List<Comodidad> comodidadesBBDD = comodidadService.getComodidades();
 		m.put("alojamient", alojamiento);
 		m.put("ciudades", ciudadService.getCiudades());
@@ -141,7 +171,6 @@ public class HomeController {
 		m.put("checkout", checkOut);
 		m.put("capacidad", numHuespedes);
 		m.put("ciudad", ciudadService.getCiudadById(ciudad));
-		m.put("comodidadesSelect", comodidades);
 		m.put("comodidades", comodidadesBBDD);
 		m.put("view", "buscador");
 		return "_t/frame";

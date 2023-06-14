@@ -68,5 +68,8 @@ public class User implements Serializable {
     @ManyToMany
 	private Collection<Role> roles;
 
+    @OneToMany
+    private Collection<Reserva> reservas;
+
     // getters and setters
 }

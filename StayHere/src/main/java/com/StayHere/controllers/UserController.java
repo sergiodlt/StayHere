@@ -22,8 +22,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.StayHere.entities.Apartamento;
+import com.StayHere.entities.Hotel;
+import com.StayHere.entities.Reserva;
 import com.StayHere.entities.Role;
 import com.StayHere.entities.User;
+import com.StayHere.repositories.ApartamentoRepository;
+import com.StayHere.repositories.HotelRepository;
+import com.StayHere.repositories.ReservaRepository;
 import com.StayHere.repositories.UserRepository;
 import com.StayHere.services.RoleService;
 import com.StayHere.services.UserService;
@@ -38,6 +44,15 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private HotelRepository hotelRepository;
+
+    @Autowired
+    private ApartamentoRepository apartamentoRepository;
+
+    @Autowired
+    private ReservaRepository reservaRepository;
     
     @Autowired
     private RoleService roleService;
@@ -101,10 +116,30 @@ public class UserController {
 
         User user= userRepository.getById(idUser);
 
-        userImpl.updateUser(user, username,/* passwordEncoder.encode(password),*/ direccion, email, nombre, apellido, telefono, genero);
+        userImpl.updateUser(user, username, direccion, email, nombre, apellido, telefono, genero);
 
         return "redirect:/"; 
          }
+
+    @PostMapping("/usuario/d")
+    public String uPost (@RequestParam ("id") Long idUser) throws Exception {
+    	User user=userRepository.getById(idUser);
+    	
+    	for(Hotel hotel : user.getHoteles()) {
+    		hotelRepository.delete(hotel);
+    	}
+    	
+    	for(Apartamento apartamento : user.getApartamentos()) {
+    		apartamentoRepository.delete(apartamento);
+    	}
+    	for(Reserva reserva : user.getReservas()) {
+    		reservaRepository.delete(reserva);
+    	}
+    	userRepository.deleteById(idUser);
+    	return "redirect:/usuarios/r"; 
+    }
+    
+    
 
     @PostMapping("/verificar-email")
     public @ResponseBody boolean verificarEmailExistente(@RequestParam("email") String email) {

@@ -44,9 +44,9 @@
 				<div class="form-group">
 					<label>Género:</label>
 					<select name="genero" class="form-control">
-						<option value="Masculino">Masculino</option>
-						<option value="Femenino">Femenino</option>
-						<option value="Otro">Otro</option>
+						<option th:selected="${usuario.genero == 'Masculino'}" value="Masculino">Masculino</option>
+						<option th:selected="${usuario.genero == 'Femenino'}" value="Femenino">Femenino</option>
+						<option th:selected="${usuario.genero == 'Otro'}" value="Otro">Otro</option>
 					</select>
 				</div>
 				<div class="form-group">

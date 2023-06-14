@@ -47,7 +47,7 @@
 								<div class="form-group">
 									<label for="idComodidad">Comodidades</label>
 									<select class="form-control" type="checkbox" name='idComodidades'
-										th:value="${comodidad?.id}" id="comodidades" multiple required>
+										th:value="${comodidad?.id}" id="comodidades" multiple>
 										<option th:each=" comodidad : ${comodidades} " th:value="${comodidad.id}"
 											th:text="${comodidad.nombre}"
 											th:selected="${comodidadesSelect.contains(comodidad)}">
@@ -85,7 +85,7 @@
 															<th:block th:each="foto, status : ${alojamiento.fotos}">
 																<div
 																	th:class="${status.index == 0 ? 'carousel-item active' : 'carousel-item'}">
-																	<img height="225px" class="img-fluid"
+																	<img height="280px" width="420px" class="img-fluid"
 																		th:src="${foto.ruta}" alt="Imagen 1">
 																</div>
 															</th:block>
@@ -130,7 +130,7 @@
 																<i class="fas fa-star"></i>
 															</span>
 														</p>
-														<p th:text="|${alojamiento?.precio}€ /Noche|" />
+														<b><p th:text="|${alojamiento?.precio}€ /Noche|" /></b>
 													</div>
 												</div>
 											</div>
