@@ -40,6 +40,7 @@ public class Apartamento {
 
 	private int telefono;
 	
+	@Column(length = 1500)
 	private String descripcion;
 	
 	private int precio;

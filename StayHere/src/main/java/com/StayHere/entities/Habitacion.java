@@ -29,6 +29,7 @@ public class Habitacion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(length = 1500)
 	private String descripcion;
 	
 	private int capacidad;
