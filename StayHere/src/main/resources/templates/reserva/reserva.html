@@ -1,3 +1,10 @@
+<style>
+.custom-carousel-image {
+    height: 280px;
+    width: 420px;
+    object-fit: contain; /* Ajusta la imagen dentro del tamaño especificado */
+}
+</style>
 <div class="altura">
 	<section class="content">
 		<div class="container">
@@ -12,7 +19,7 @@
 											<th:block th:each="foto, status : ${alojamiento.fotos}">
 												<div
 													th:class="${status.index == 0 ? 'carousel-item active' : 'carousel-item'}">
-													<img class="img-fluid mx-auto d-block" height="280px" width="420px" th:src="${foto.ruta}"
+													<img class="img-fluid custom-carousel-image"  th:src="${foto.ruta}"
 														alt="Imagen 1">
 												</div>
 											</th:block>

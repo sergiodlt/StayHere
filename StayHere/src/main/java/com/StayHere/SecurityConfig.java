@@ -68,20 +68,6 @@ public class SecurityConfig {
           .accessDeniedPage("/error") // Página a la que se redirigirá en caso de acceso denegado
           .and()
           .build();
-	     
-	    /* return http
-	    		 .authorizeRequests()
-	                .requestMatchers("/", "/home").permitAll()
-	                .anyRequest().authenticated()
-	                .and()
-	            .formLogin()
-	                .loginPage("/login")
-	                .permitAll()
-	                .and()
-	            .logout()
-	                .permitAll();
-	    		 
-	             */
 	}
 	
 	@Bean
