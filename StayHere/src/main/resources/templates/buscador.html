@@ -87,7 +87,7 @@
 																	th:class="${status.index == 0 ? 'carousel-item active' : 'carousel-item'}">
 																	<img class="img-fluid" th:src="${foto.ruta}"
 																		alt="Imagen 1"
-																		style="height: 280px; width: 420px;">
+																		style="max-height: 280px; max-width: 420px;">
 																</div>
 															</th:block>
 														</div>
@@ -108,38 +108,38 @@
 															</a>
 														</th:block>
 													</div>
-												</div>
 
-												<div class="col-md-6">
-													<div class="card-body">
-														<b>
-															<h3 th:if="${alojamient == 'hotel'}"
-																th:text="${alojamiento.hotel?.nombre}" />
-														</b>
-														<h5 th:if="${alojamient == 'hotel'}"
-															th:text="|Habitacion número ${alojamiento?.id}|" />
-														<b>
-															<h3 th:if="${alojamient == 'apartamento'}"
-																th:text="${alojamiento?.nombre}" />
-														</b>
-														<h5 th:if="${alojamient == 'apartamento'}"
-															th:text="|${alojamiento?.direccion}, ${alojamiento?.ciudad?.nombre}|" />
-														<p th:text="${alojamiento?.descripcion}" />
 
-														<p th:if="${alojamient == 'hotel'}">
-															<span
-																th:each="i : ${#numbers.sequence(1, alojamiento.hotel?.estrellas)}">
-																<i class="fas fa-star"></i>
-															</span>
-														</p>
-														<b>
-															<p th:text="|${alojamiento?.precio}€ /Noche|" />
-														</b>
+													<div class="col-md-6">
+														<div class="card-body">
+															<b>
+																<h3 th:if="${alojamient == 'hotel'}"
+																	th:text="${alojamiento.hotel?.nombre}" />
+															</b>
+															<h5 th:if="${alojamient == 'hotel'}"
+																th:text="|Habitacion número ${alojamiento?.id}|" />
+															<b>
+																<h3 th:if="${alojamient == 'apartamento'}"
+																	th:text="${alojamiento?.nombre}" />
+															</b>
+															<h5 th:if="${alojamient == 'apartamento'}"
+																th:text="|${alojamiento?.direccion}, ${alojamiento?.ciudad?.nombre}|" />
+															<p th:text="${alojamiento?.descripcion}" />
+
+															<p th:if="${alojamient == 'hotel'}">
+																<span
+																	th:each="i : ${#numbers.sequence(1, alojamiento.hotel?.estrellas)}">
+																	<i class="fas fa-star"></i>
+																</span>
+															</p>
+															<b>
+																<p th:text="|${alojamiento?.precio}€ /Noche|" />
+															</b>
+														</div>
 													</div>
 												</div>
 											</div>
 										</div>
-									</div>
 								</a>
 							</div>
 						</div>
