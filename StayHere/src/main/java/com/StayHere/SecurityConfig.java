@@ -43,39 +43,35 @@ public class SecurityConfig {
 	    }
 		
 	  	
-	@Bean
-	DefaultSecurityFilterChain filterChain (HttpSecurity http, AuthenticationManager authManager) throws Exception {
-	     return http
-	             .csrf().disable()
-	             .authorizeHttpRequests()
-	     		.anyRequest().permitAll()
-	             .and() 
-	             .formLogin()
-	             .loginPage("/login").permitAll()
-	             .and()
-	     		.logout()
-	     		.invalidateHttpSession(true)
-	     		.clearAuthentication(true)
-	     		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-	     		.logoutSuccessUrl("/")
-	     		.permitAll()
-	             .and() 
-	             .build();
-	     
-	    /* return http
-	    		 .authorizeRequests()
-	                .requestMatchers("/", "/home").permitAll()
-	                .anyRequest().authenticated()
-	                .and()
-	            .formLogin()
-	                .loginPage("/login")
-	                .permitAll()
-	                .and()
-	            .logout()
-	                .permitAll();
-	    		 
-	             */
-	}
+		@Bean
+		DefaultSecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authManager) throws Exception {
+		    return http
+		            .csrf().disable()
+		            .authorizeHttpRequests()
+		            .requestMatchers("/reservasAdmin/r").hasRole("ADMIN") // Restringir acceso a la URL solo para usuarios con rol ADMIN
+		            .requestMatchers("/hoteles/rAdmin").hasRole("ADMIN") // Restringir acceso a la URL solo para usuarios con rol ADMIN
+		            .requestMatchers("/apartamento/rAdmin").hasRole("ADMIN") // Restringir acceso a la URL solo para usuarios con rol ADMIN
+		            .requestMatchers("/usuarios/r").hasRole("ADMIN") // Restringir acceso a la URL solo para usuarios con rol ADMIN
+		            .anyRequest().permitAll()
+		            .and() 
+		            .formLogin()
+		            .loginPage("/login").permitAll()
+		            .defaultSuccessUrl("/otraPagina")
+		            .and()
+		            .logout()
+		            .invalidateHttpSession(true)
+		            .clearAuthentication(true)
+		            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+		            .logoutSuccessUrl("/")
+		            .permitAll()
+		            .and()
+		            .exceptionHandling()
+		            .accessDeniedPage("/error") // Página a la que se redirigirá en caso de acceso denegado
+		            .and()
+		            .build();
+
+		}
+
 	
 	@Bean
 	UserDetailsService userDetailsService() {

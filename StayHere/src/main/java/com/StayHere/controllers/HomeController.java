@@ -175,4 +175,9 @@ public class HomeController {
 		m.put("view", "buscador");
 		return "_t/frame";
 	}
+	
+	@GetMapping("/error")
+	public String error(){
+		return "error";
+	}
 }
