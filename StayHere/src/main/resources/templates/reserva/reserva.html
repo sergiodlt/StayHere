@@ -135,8 +135,10 @@ $(document).ready(function () {
             },
             success: function (response) {
                 console.log(response);
+
                 if (response == true) {
-                    $('formBueno').unbind('submit').submit(); // Permite el envío del formulario
+                    //$('formBueno').unbind('submit').submit(); // Permite el envío del formulario
+               
                 } else {
                     // Mostrar el popup aquí
                     $('#popupModal').modal('show');
