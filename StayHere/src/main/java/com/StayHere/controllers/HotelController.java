@@ -160,6 +160,9 @@ public class HotelController {
 	@PostMapping("d") public String d(@RequestParam("id") Long id) {
 		  hotelService.deleteHotel(id); return "redirect:/"; 
 		  }
+	@PostMapping("dAdmin") public String dAdmin(@RequestParam("id") Long id) {
+		hotelService.deleteHotel(id); return "redirect:/hoteles/rAdmin"; 
+	}
 		 
 	
 //	@PostMapping("/filtrados")

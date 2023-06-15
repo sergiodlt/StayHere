@@ -65,7 +65,15 @@
 													</form>
 												</div>
 												<div class="col-md-6">
-													<form action="/hoteles/d" method="post">
+													<form action="/hoteles/d" sec:authorize="hasRole('ROLE_USER')" method="post">
+														<input type="hidden" th:value="${ hotel.id }" name="id" />
+														<button class="btn btn-danger btn-block" onclick="submit()">
+															<i class="fa-solid fa-trash"></i>Eliminar
+														</button>
+													</form>
+												</div>
+												<div class="col-md-6">
+													<form action="/hoteles/dAdmin" sec:authorize="hasRole('ROLE_ADMIN')" method="post">
 														<input type="hidden" th:value="${ hotel.id }" name="id" />
 														<button class="btn btn-danger btn-block" onclick="submit()">
 															<i class="fa-solid fa-trash"></i>Eliminar

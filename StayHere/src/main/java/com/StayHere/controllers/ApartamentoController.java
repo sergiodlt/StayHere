@@ -151,6 +151,12 @@ public class ApartamentoController {
 		apartamentoService.deleteApartamento(id);
 		return "redirect:/";
 	}
+	@PostMapping("dAdmin")
+	public String dAdmin(@RequestParam("id") Long id) {
+		apartamentoService.deleteApartamento(id);
+		return "redirect:/apartamento/rAdmin";
+	}
+	
 	
 	@PostMapping("/verificar-apartamento-correo-tlf")
     public @ResponseBody Map<String, Boolean> verificarEmailExistente(@RequestParam("email") String email,@RequestParam("tlf") int tlf, @RequestParam("nombre") String nombre) {

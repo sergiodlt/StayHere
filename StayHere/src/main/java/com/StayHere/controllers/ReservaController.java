@@ -162,6 +162,12 @@ public class ReservaController {
 
 		return "redirect:/reserva/r";
 	}
+	@PostMapping("reserva/dAdmin")
+	public String deleteReservAdmin(@RequestParam("id") Long idReserva, ModelMap m) {
+		reservaService.deleteReserva(idReserva);
+		
+		return "redirect:/reservasAdmin/r";
+	}
 
 	/*
 	 * @PostMapping("u") public String uPost(

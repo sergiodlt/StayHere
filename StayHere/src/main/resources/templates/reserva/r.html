@@ -185,12 +185,19 @@
 								</div>
 								<div class="card-footer">
 									<div class="text-right">
-										<form action="/reserva/d" method="post">
+										<form action="/reserva/d" sec:authorize="hasRole('ROLE_USER')" method="post">
 											<input type="hidden" th:value="${reserva.id}" name="id" />
 											<button class="btn btn-danger">
 												<i class="fa-solid fa-trash"></i></i> Eliminar
 											</button>
 										</form>
+										<form action="reserva/dAdmin" sec:authorize="hasRole('ROLE_ADMIN')" method="post">
+											<input type="hidden" th:value="${reserva.id}" name="id" />
+											<button class="btn btn-danger">
+												<i class="fa-solid fa-trash"></i></i> Eliminar
+											</button>
+										</form>
+										
 									</div>
 								</div>
 							</div>

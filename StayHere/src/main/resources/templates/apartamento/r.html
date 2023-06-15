@@ -175,8 +175,15 @@
 															<i class="fa-solid fa-pen-to-square"></i>Modificar</button>
 													</form>
 												</div>
-												<div class="col-6 text-center">
+												<div class="col-6 text-center" sec:authorize="hasRole('ROLE_USER')">
 													<form action="/apartamento/d" method="post">
+														<input type="hidden" th:value="${ apartamento.id }" name="id" />
+														<button class="btn btn-sm btn-danger" onclick="submit()">
+															<i class="fa-solid fa-trash"></i>Eliminar</button>
+													</form>
+												</div>
+												<div class="col-6 text-center" sec:authorize="hasRole('ROLE_ADMIN')">
+													<form action="/apartamento/dAdmin" method="post">
 														<input type="hidden" th:value="${ apartamento.id }" name="id" />
 														<button class="btn btn-sm btn-danger" onclick="submit()">
 															<i class="fa-solid fa-trash"></i>Eliminar</button>
