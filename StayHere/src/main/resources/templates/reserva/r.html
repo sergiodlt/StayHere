@@ -97,7 +97,7 @@
 								<div class="card-body">
 									<div class="row">
 										<div class="col-12 align-right">
-											
+
 											<p class="text-muted text-sm">Fecha Inicio: <span
 													th:text="${ reserva.fecha_inicio }"></span></p>
 											<p class="text-muted text-sm">Fecha fin: <span
@@ -108,10 +108,11 @@
 													<span th:text="|Hotel: ${ reserva.habitacion?.hotel?.nombre }|">
 													</span>
 												</li>
-											
+
 												<li class="small">
 													<span class="fa-li"><i class="fa-solid fa-door-open"></i></span>
-													<span th:text="|Nº de habitación: ${reserva.habitacion?.id}|"></span>
+													<span
+														th:text="|Nº de habitación: ${reserva.habitacion?.id}|"></span>
 												</li>
 												<li class="small">
 													<span class="fa-li"><i class="fa-solid fa-list-ol"></i></span>
@@ -156,7 +157,7 @@
 								<div class="card-body">
 									<div class="row">
 										<div class="col-8 align-right">
-										
+
 											<p class="text-muted text-sm">Fecha Inicio: <span
 													th:text="${ reserva.fecha_inicio }"></span></p>
 											<p class="text-muted text-sm">Fecha fin: <span
@@ -184,20 +185,23 @@
 									</div>
 								</div>
 								<div class="card-footer">
-									<div class="text-right">
-										<form action="/reserva/d" sec:authorize="hasRole('ROLE_USER')" method="post">
+									<div class="text-right" sec:authorize="hasRole('ROLE_USER')">
+										<form action="/reserva/d"  method="post">
 											<input type="hidden" th:value="${reserva.id}" name="id" />
 											<button class="btn btn-danger">
 												<i class="fa-solid fa-trash"></i></i> Eliminar
 											</button>
 										</form>
-										<form action="reserva/dAdmin" sec:authorize="hasRole('ROLE_ADMIN')" method="post">
+									</div>
+									<div class="text-right" sec:authorize="hasRole('ROLE_ADMIN')">
+
+										<form action="/reserva/dAdmin" 
+											method="post">
 											<input type="hidden" th:value="${reserva.id}" name="id" />
 											<button class="btn btn-danger">
 												<i class="fa-solid fa-trash"></i></i> Eliminar
 											</button>
 										</form>
-										
 									</div>
 								</div>
 							</div>
@@ -206,5 +210,6 @@
 				</div>
 			</div>
 		</div>
-	</section>
+</div>
+</section>
 </div>
