@@ -113,7 +113,7 @@
 </div>
 
 <script>
-$(document).ready(function () {
+/*$(document).ready(function () {
     $('formBueno').submit(function (event) {
         event.preventDefault(); // Detiene el envío del formulario
 
@@ -149,5 +149,35 @@ $(document).ready(function () {
             }
         });
     });
+});*/
+$(document).ready(function () {
+    $('#formBueno').submit(function (event) {
+        event.preventDefault(); // Detiene el envío del formulario
+
+        var fechaInicio = $('#fecha_inicio').val();
+        var fechaFin = $('#fecha_fin').val();
+        var huespedes = $('#huespedes').val();
+        var precio = $('#precio').val();
+        var alojamiento = $('#alojamiento').val();
+        var idAlojamiento = $('#idAlojamiento').val();
+
+        $.ajax({
+            url: '/verificar-reserva',
+            type: 'POST',
+            data: {
+                fechaInicio: fechaInicio,
+                fechaFin: fechaFin,
+                alojamiento: alojamiento,
+                idAlojamiento: idAlojamiento
+            },
+            success: function (response) {
+                console.log(response);
+            },
+            error: function () {
+                console.error('Error al verificar la reserva');
+            }
+        });
+    });
 });
+
 </script>
