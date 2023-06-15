@@ -105,7 +105,8 @@ public class ApartamentoService {
 			apartamento.setCiudad(ciudad);
 			
 		}
-		
+	    if (fotos != null && !fotos.isEmpty()) {
+
 		List<Foto> fotosAntiguas= fotoRepository.findByApartamentoId(id);
 		for (Foto foto : fotosAntiguas) {
 			fotoRepository.delete(foto);
@@ -130,7 +131,7 @@ public class ApartamentoService {
 		        }
 		    }
 		}
-
+	    }
 
 		try {
 			apartamentoRepository.saveAndFlush(apartamento);

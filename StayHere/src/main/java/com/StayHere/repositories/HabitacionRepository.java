@@ -22,6 +22,16 @@ public interface HabitacionRepository extends JpaRepository<Habitacion, Long>{
 		    @Param("checkout") LocalDate checkout,
 		    @Param("numHuespedes") int numHuespedes);
 
+	@Query("SELECT COUNT(h) FROM Habitacion h LEFT JOIN h.reservas r " +
+		       "WHERE (r IS NULL OR (r.fecha_inicio > :checkout OR r.fecha_fin < :checkin)) " +
+		       "AND h.id = :idHabitacion")
+		int countHabitacionesDisponiblesAjax(
+		    @Param("checkin") LocalDate checkin,
+		    @Param("checkout") LocalDate checkout,
+		    @Param("idHabitacion") Long idHabitacion);
+
+
+
 
 	   
 	

@@ -132,7 +132,7 @@ public class ApartamentoController {
 			@RequestParam("capacidad") int capacidad,
 			@RequestParam(required=false, name="idComodidad") List<Long> idComodidades,
 			@RequestParam(required=false, name="idCiudad") Long idCiudad,
-			@RequestParam("fotos") List<MultipartFile> fotos
+			@RequestParam(required=false, name="fotos") List<MultipartFile> fotos
 			
 			) throws DangerException {
 		String retorno = "redirect:/apartamento/r";

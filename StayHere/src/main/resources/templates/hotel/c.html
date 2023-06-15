@@ -150,8 +150,7 @@
 
 				<div class="form-group ">
 					<label for="descripcion">Descripción</label>
-					<textarea class="form-control" id="descripcion" name="descripcion" required
-						oninput="validateDescripcion()"></textarea>
+					<textarea class="form-control" id="descripcion" name="descripcion" maxlength="1499" required></textarea>
 					<small id="descripcionError" class="form-text text-danger"></small>
 				</div>
 
@@ -263,22 +262,7 @@
 				}
 			}
 
-			function validateDescripcion() {
-				var descripcionInput = document.getElementById('descripcion');
-				var descripcionError = document.getElementById('descripcionError');
-
-				var descripcionRegex = /^[a-zA-ZÁÉÍÓÚáéíóúÑñÇç][a-zA-ZÁÉÍÓÚáéíóúÑñÇç,.0-9 -]*(?: [a-zA-ZÁÉÍÓÚáéíóúÑñÇç,.0-9 -]+)*$/; // Expresión regular para descripción: letra seguida de letras, números y espacios, con máximo un espacio seguido
-
-				if (!descripcionInput.value.trim() || !descripcionRegex.test(descripcionInput.value.trim())) {
-					descripcionInput.classList.add('is-invalid');
-					descripcionError.textContent = 'Ingrese una descripción válida.';
-					return false;
-				} else {
-					descripcionInput.classList.remove('is-invalid');
-					descripcionError.textContent = '';
-					return true;
-				}
-			}
+		
 			function validateCapacidad() {
 				var capacidadInput = document.getElementById('capacidad');
 				var capacidadError = document.getElementById('capacidadError');
@@ -365,7 +349,6 @@
 					var isValidDireccion = validateDireccion();
 					var isValidTelefono = validateTelefono();
 					var isValidCorreo = validateCorreo();
-					var isValidDescripcion = validateDescripcion();
 					var isValidCapacidad = validateCapacidad();
 					var isValidCantidad = validateCantidad();
 					var isValidPrecio = validatePrecio();
@@ -374,7 +357,7 @@
 
 
 					// Si alguna de las validaciones no es válida, no se envía el formulario
-					if (!isValidNombre || !isValidDireccion || !isValidTelefono || !isValidCorreo || !isValidDescripcion || !isValidCapacidad || !isValidCantidad || !isValidPrecio || !isValidEstrellas) {
+					if (!isValidNombre || !isValidDireccion || !isValidTelefono || !isValidCorreo || !isValidCapacidad || !isValidCantidad || !isValidPrecio || !isValidEstrellas) {
 						return;
 					}
 

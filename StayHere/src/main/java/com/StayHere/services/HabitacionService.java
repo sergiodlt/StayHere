@@ -70,42 +70,48 @@ public class HabitacionService {
 	}
 
 	public void updateHabitacion(Long id, String descripcion, int capacidad, int precio, List<MultipartFile> fotos) throws Exception {
-		Habitacion habitacion = habitacionRepository.findById(id).get();
-		habitacion.setDescripcion(descripcion);
-		habitacion.setCapacidad(capacidad);
-		habitacion.setPrecio(precio);
-		
-		List<Foto> fotosAntiguas= fotoRepository.findByHabitacionId(id);
-		for (Foto foto : fotosAntiguas) {
-			fotoRepository.delete(foto);
-		}
-		
-			for (MultipartFile foto : fotos) {
-			    if (!foto.isEmpty()) {
-			        try {
-			            String nombreArchivo = foto.getOriginalFilename();
+	    Habitacion habitacion = habitacionRepository.findById(id).orElseThrow(() -> new Exception("La habitación no existe"));
 
-			            // Guardar la imagen en la carpeta resources/static/img/
-			            Path rutaArchivo = Paths.get("images/" + nombreArchivo);
-			            Files.write(rutaArchivo, foto.getBytes());
-			            Foto fotoBDD = new Foto();
-			            fotoBDD.setRuta("/images/" + nombreArchivo);
-			            fotoBDD.setHabitacion(habitacion);
-			            fotoRepository.save(fotoBDD);
+	    habitacion.setDescripcion(descripcion);
+	    habitacion.setCapacidad(capacidad);
+	    habitacion.setPrecio(precio);
 
-			        } catch (IOException e) {
-			            e.printStackTrace();
-			        }
-			    }
-			}
+	    if (fotos != null && !fotos.isEmpty()) {
+	        // Eliminar las fotos antiguas solo si se proporcionan nuevas fotos
+	        List<Foto> fotosAntiguas = fotoRepository.findByHabitacionId(id);
+	        for (Foto foto : fotosAntiguas) {
+	            fotoRepository.delete(foto);
+	        }
 
-						
-		try {
-			habitacionRepository.saveAndFlush(habitacion);
-		} catch (Exception e) {
-			throw new Exception("El/la habitacion " + " ya existe");
-		}
+	        // Agregar las nuevas fotos
+	        for (MultipartFile foto : fotos) {
+	            if (!foto.isEmpty()) {
+	                try {
+	                    String nombreArchivo = foto.getOriginalFilename();
+
+	                    // Guardar la imagen en la carpeta resources/static/img/
+	                    Path rutaArchivo = Paths.get("images/" + nombreArchivo);
+	                    Files.write(rutaArchivo, foto.getBytes());
+
+	                    Foto fotoBDD = new Foto();
+	                    fotoBDD.setRuta("/images/" + nombreArchivo);
+	                    fotoBDD.setHabitacion(habitacion);
+	                    fotoRepository.save(fotoBDD);
+	                } catch (IOException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	        }
+	    }
+
+	    try {
+	        habitacionRepository.saveAndFlush(habitacion);
+	    } catch (Exception e) {
+	        throw new Exception("La habitación ya existe");
+	    }
 	}
+
+
 
 	public void deleteHabitacion(Long id) {
 		Habitacion habitacion = habitacionRepository.findById(id).get();

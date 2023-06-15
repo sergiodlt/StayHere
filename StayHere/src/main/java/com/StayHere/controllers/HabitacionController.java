@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -74,7 +75,7 @@ public class HabitacionController {
 	@PostMapping("cPost")
 	public String cPost( @RequestParam(required = false, name = "cantidad") int cantidad,
 			@RequestParam("capacidad") int capacidad,@RequestParam("precio") int precio, @RequestParam("descripcion") String descripcion,
-			@RequestParam("id") Long idHotel, @RequestParam("fotos") List<MultipartFile> fotos, @RequestParam(required = false, name = "idComodidad") List<Long> idComodidades) throws DangerException {
+			@RequestParam("id") Long idHotel, @RequestParam(required = false, name = "fotos") List<MultipartFile> fotos, @RequestParam(required = false, name = "idComodidad") List<Long> idComodidades) throws DangerException {
 		try {
 
 			for (int i = 1; i <= cantidad; i++) {
@@ -173,21 +174,21 @@ public class HabitacionController {
 
 	@PostMapping("u")
 	public String uPost(
-			@RequestParam("idHabitacion") Long idHabitacion,
-			@RequestParam("descripcion") String descripcion,
-			@RequestParam("capacidad") int capacidad,
-			@RequestParam("precio") int precio,
-			@RequestParam("fotos") List<MultipartFile> fotos
-			
-			) throws DangerException {
-		String retorno = "redirect:/";
-		try {
-			habitacionService.updateHabitacion(idHabitacion, descripcion, capacidad, precio, fotos);
-		} catch (Exception e) {
-			PRG.error(e.getMessage(), "/");
-		}
-		return retorno;
+	        @RequestParam("idHabitacion") Long idHabitacion,
+	        @RequestParam("descripcion") String descripcion,
+	        @RequestParam("capacidad") int capacidad,
+	        @RequestParam("precio") int precio,
+	        @RequestPart(required = false, name = "fotos") List<MultipartFile> fotos
+	) throws DangerException {
+	    String retorno = "redirect:/";
+	    try {
+	        habitacionService.updateHabitacion(idHabitacion, descripcion, capacidad, precio, fotos);
+	    } catch (Exception e) {
+	        PRG.error(e.getMessage(), "/");
+	    }
+	    return retorno;
 	}
+
 
 	@PostMapping("d")
 	public String d(@RequestParam("id") Long id) {

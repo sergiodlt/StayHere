@@ -39,7 +39,7 @@
 
 		<div class="form-group ">
 			<label for="descripcion">Descripción</label>
-			<textarea class="form-control" id="descripcion" name="descripcion" required oninput="validateDescripcion()"></textarea>
+			<textarea class="form-control" id="descripcion" name="descripcion" required maxlength="1499"></textarea>
 					<small id="descripcionError" class="form-text text-danger"></small>
 		</div>
 
@@ -82,22 +82,7 @@
 </script>
 <script>
 
-	function validateDescripcion() {
-		var descripcionInput = document.getElementById('descripcion');
-		var descripcionError = document.getElementById('descripcionError');
-
-		var descripcionRegex = /^[a-zA-ZÁÉÍÓÚáéíóúÑñÇç][a-zA-ZÁÉÍÓÚáéíóúÑñÇç,.0-9 -]*(?: [a-zA-ZÁÉÍÓÚáéíóúÑñÇç,.0-9 -]+)*$/; // Expresión regular para descripción: letra seguida de letras, números y espacios, con máximo un espacio seguido
-
-		if (!descripcionInput.value.trim() || !descripcionRegex.test(descripcionInput.value.trim())) {
-			descripcionInput.classList.add('is-invalid');
-			descripcionError.textContent = 'Ingrese una descripción válida.';
-			return false;
-		} else {
-			descripcionInput.classList.remove('is-invalid');
-			descripcionError.textContent = '';
-			return true;
-		}
-	}
+	
 	function validateCapacidad() {
 		var capacidadInput = document.getElementById('capacidad');
 		var capacidadError = document.getElementById('capacidadError');
@@ -145,7 +130,7 @@
 
 	function validateFormulario() {
 
-		if (validateDescripcion() && validateCapacidad() && validateCantidad() && validatePrecio()) {
+		if (validateCapacidad() && validateCantidad() && validatePrecio()) {
 			return true;
 		} else {
 			return false;

@@ -106,7 +106,7 @@
 
 
 											<p class="text-muted text-sm">Nombre: <b><span
-													th:text="${apartamento.nombre}"></span></b></p>
+														th:text="${apartamento.nombre}"></span></b></p>
 											<ul class="ml-4 mb-0 fa-ul text-muted">
 												<li class="small">
 													<p>
@@ -124,21 +124,38 @@
 												</li>
 
 												<li class="small">
-													<span class="fa-li"><i class="fa-solid fa-dollar-sign"></i></span>
-													<span th:text="|Precio: ${apartamento.precio}€|"></span>
+													<p>
+
+														<span class="fa-li"><i
+																class="fa-solid fa-dollar-sign"></i></span>
+														<span th:text="|Precio: ${apartamento.precio}€|"></span>
+												</li>
+												</p>
+
+												<li class="small">
+													<p>
+
+														<span class="fa-li"><i class="fa-solid fa-list-ol"></i></span>
+														<span th:text="|Capacidad: ${apartamento.capacidad}|"></span>
+													</p>
+
 												</li>
 												<li class="small">
-													<span class="fa-li"><i class="fa-solid fa-list-ol"></i></span>
-													<span th:text="|Capacidad: ${apartamento.capacidad}|"></span>
-												</li>
-												<li class="small">
+													</p>
+
 													<span class="fa-li"><i class="fas fa-phone"></i></span>
 													<span th:text="|Teléfono: ${apartamento.telefono}|"></span>
+													</p>
+
 												</li>
 												<li class="small" style="white-space: nowrap;">
-													<span class="fa-li"><i
-															class="fa-solid fa-map-location-dot"></i></span>
-													<span th:text="|Ciudad: ${apartamento.ciudad?.nombre}|"></span>
+													<p>
+
+														<span class="fa-li"><i
+																class="fa-solid fa-map-location-dot"></i></span>
+														<span th:text="|Ciudad: ${apartamento.ciudad?.nombre}|"></span>
+													</p>
+
 												</li>
 
 
