@@ -154,6 +154,7 @@ public class HabitacionController {
 		Hotel hotel= hotelService.getHotelById(id);
 		Collection<Habitacion> habitaciones = hotel.getHabitaciones();
 		m.put("habitaciones", habitaciones);
+		m.put("hotel", hotel);
 		m.put("view", "habitacion/r");
 		return "_t/frame";
 	}

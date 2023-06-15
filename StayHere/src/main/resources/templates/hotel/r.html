@@ -1,128 +1,3 @@
-<style>
-	.card {
-		border-radius: 10px;
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	}
-
-	.card-header {
-		background-color: #f8f9fa;
-		padding: 10px;
-		border-bottom: 1px solid #ddd;
-	}
-
-	.card-body {
-		padding: 15px;
-	}
-
-	.card-body h2.lead {
-		font-size: 20px;
-		margin-bottom: 10px;
-	}
-
-	.card-body p.text-muted {
-		margin-bottom: 5px;
-	}
-
-	.card-body ul.ml-4 {
-		margin-top: 15px;
-	}
-
-	.card-body ul.ml-4 li.small {
-		margin-bottom: 5px;
-	}
-
-	.card-body .email-label {
-		display: inline-block;
-		width: 60px;
-	}
-
-	.card-footer {
-		background-color: #f8f9fa;
-		padding: 10px;
-		border-top: 1px solid #ddd;
-	}
-
-	.card-footer .btn {
-		margin-left: 5px;
-	}
-
-	.img-circle {
-		border-radius: 50%;
-	}
-
-	.card-header h3 {
-		text-align: center;
-		margin-top: 50px;
-	}
-
-	.altura {
-		margin-top: 50px;
-	}
-
-	.user-avatar {
-		position: relative;
-		display: inline-block;
-	}
-
-	.user-icon {
-		position: absolute;
-		bottom: 0;
-		right: 0;
-		transform: translate(50%, 50%);
-		font-size: 30px;
-	}
-
-	.fa-stack {
-		margin-right: 5px;
-		vertical-align: middle;
-	}
-
-	.fa-stack-2x {
-		font-size: 24px;
-	}
-
-	.btn {
-		border: none;
-		padding: 6px 12px;
-		border-radius: 4px;
-		margin-bottom: 10px;
-	}
-
-	.btn-modificar {
-		width: 100%;
-	}
-
-	.btn-eliminar {
-		width: 100%;
-	}
-
-	.btn-primary {
-		background-color: #007bff;
-		color: #fff;
-		border: none;
-		padding: 10px 20px;
-		border-radius: 4px;
-	}
-
-	.btn-secondary {
-		background-color: #6c757d;
-		color: #fff;
-		border: none;
-		padding: 10px 20px;
-		border-radius: 4px;
-	}
-
-	.btn-primary:hover,
-	.btn-secondary:hover {
-		opacity: 0.8;
-	}
-
-	.buttons-container {
-		margin-bottom: 20px;
-		margin-left:10px ;
-	}
-</style>
-
 <div class="altura">
 	<section>
 		<div class="container">
@@ -137,8 +12,8 @@
 								<div class="card-body">
 									<div class="row">
 										<div class="col-12 align-right">
-											<p class="text-muted text-sm">Nombre: <span
-													th:text="${hotel.nombre}"></span></p>
+											<p class="text-muted text-sm">Nombre: <b><span
+													th:text="${hotel.nombre}"></span></b></p>
 											<ul class="ml-4 mb-0 fa-ul text-muted">
 												<li class="small">
 													<p>
@@ -155,47 +30,36 @@
 													</p>
 												</li>
 												<li class="small" style="white-space: nowrap;">
-													<span class="fa-li"><i class="fa-solid fa-star"></i></span>
-													<span th:text="|Estrellas: ${hotel.estrellas}|"></span>
+													<p>
+
+														<span class="fa-li"><i class="fa-solid fa-star"></i></span>
+														<span th:text="|Estrellas: ${hotel.estrellas}|"></span>
+													</p>
 												</li>
 												<li class="small">
-													<span class="fa-li"><i class="fas fa-phone"></i></span>
-													<span th:text="|Teléfono: ${hotel.telefono}|"></span>
+													<p>
+														<span class="fa-li"><i class="fas fa-phone"></i></span>
+														<span th:text="|Teléfono: ${hotel.telefono}|"></span>
+													</p>
 												</li>
 												<li class="small" style="white-space: nowrap;">
-													<span class="fa-li"><i
-															class="fa-solid fa-map-location-dot"></i></span>
-													<span th:text="|Ciudad: ${hotel.ciudad?.nombre}|"></span>
+													<p>
+														<span class="fa-li"><i
+																class="fa-solid fa-map-location-dot"></i></span>
+														<span th:text="|Ciudad: ${hotel.ciudad?.nombre}|"></span>
+													</p>
 												</li>
 											</ul>
 										</div>
 									</div>
 									<div class="card-footer">
 										<div class="text-right">
-											<div class="row">
-												<div class="col-md-6">
-													<form action="/habitacion/r">
-														<input type="hidden" th:value="${ hotel.id }" name="id" />
-														<button class="btn btn-sm btn-secondary" onclick="submit()">
-															Mostrar Habitaciones
-														</button>
-													</form>
-												</div>
-												<div class="col-md-6">
-													<form action="/habitacion/c">
-														<input type="hidden" th:value="${ hotel.id }" name="id" />
-														<button class="btn btn-sm btn-secondary" onclick="submit()">
-															Agregar Habitaciones
-														</button>
-													</form>
-												</div>
-											</div>
+
 											<div class="row">
 												<div class="col-md-6">
 													<form action="/hoteles/u" method="post">
 														<input type="hidden" th:value="${ hotel.id }" name="id" />
-														<button class="btn btn-sm btn-primary btn-modificar"
-															onclick="submit()">
+														<button class="btn btn-primary btn-block" onclick="submit()">
 															<i class="fa-solid fa-pen-to-square"></i>Modificar
 														</button>
 													</form>
@@ -203,12 +67,24 @@
 												<div class="col-md-6">
 													<form action="/hoteles/d" method="post">
 														<input type="hidden" th:value="${ hotel.id }" name="id" />
-														<button class="btn btn-sm btn-danger btn-eliminar"
-															onclick="submit()">
+														<button class="btn btn-danger btn-block" onclick="submit()">
 															<i class="fa-solid fa-trash"></i>Eliminar
 														</button>
 													</form>
 												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-1"></div>
+
+												<div class="col-md-10 mt-1">
+													<form action="/habitacion/r">
+														<input type="hidden" th:value="${ hotel.id }" name="id" />
+														<button class="btn btn-secondary btn-block" onclick="submit()">
+															Mostrar Habitaciones
+														</button>
+													</form>
+												</div>
+
 											</div>
 										</div>
 									</div>
@@ -218,7 +94,7 @@
 					</div>
 				</div>
 
-				<div class="text-left mt-3 buttons-container">
+				<div class="text-left mt-3 mb-2 ml-2 buttons-container">
 					<a class="btn btn-secondary" href="javascript:history.back()">Cancelar</a>
 				</div>
 			</div>

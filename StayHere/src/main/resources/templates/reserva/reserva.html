@@ -1,9 +1,10 @@
 <style>
-.custom-carousel-image {
-    height: 280px;
-    width: 420px;
-    object-fit: contain; /* Ajusta la imagen dentro del tamaño especificado */
-}
+	.custom-carousel-image {
+		height: 280px;
+		width: 420px;
+		object-fit: contain;
+		/* Ajusta la imagen dentro del tamaño especificado */
+	}
 </style>
 <div class="altura">
 	<section class="content">
@@ -19,7 +20,7 @@
 											<th:block th:each="foto, status : ${alojamiento.fotos}">
 												<div
 													th:class="${status.index == 0 ? 'carousel-item active' : 'carousel-item'}">
-													<img class="img-fluid custom-carousel-image"  th:src="${foto.ruta}"
+													<img class="img-fluid custom-carousel-image" th:src="${foto.ruta}"
 														alt="Imagen 1">
 												</div>
 											</th:block>
@@ -55,8 +56,11 @@
 						</div>
 
 						<div class="col-12 col-sm-6">
-							<h3 class="my-3"  th:if="${alojamient == 'hotel'}" th:text="|Habitacion nº${alojamiento.id}|" />
-							<h3 class="my-3"  th:if="${alojamient == 'apartamento'}" th:text="${alojamiento.nombre}|" />
+							<h3 class="my-3" th:if="${alojamient == 'hotel'}"
+								th:text="|Habitacion nº${alojamiento.id}|" />
+							<h5 class="my-3" th:if="${alojamient == 'hotel'}"
+								th:text="|Direccion: ${alojamiento.hotel.direccion}|" />
+							<h3 class="my-3" th:if="${alojamient == 'apartamento'}" th:text="${alojamiento.nombre}|" />
 							<hr>
 
 							<small>Descripcion</small>
@@ -68,13 +72,14 @@
 
 							</div>
 							<div class="mt-4">
-								<form method="post" action="/reservaPost">
-									<input type="hidden" name="fecha_inicio" th:value="${checkin}" />
-									<input type="hidden" name="fecha_fin" th:value="${checkout}" />
-									<input type="hidden" name="huespedes" th:value="${capacidad}" />
-									<input type="hidden" name="precio" th:value="${alojamiento.precio}" />
-									<input type="hidden" name="alojamiento" th:value="${alojamient}" />
-									<input type="hidden" name="idAlojamiento" th:value="${alojamiento.id}" />
+								<form id="formBueno" method="post" action="/reservaPost">
+									<input type="hidden" name="fecha_inicio" id="fecha_inicio" th:value="${checkin}" />
+									<input type="hidden" name="fecha_fin" id="fecha_fin" th:value="${checkout}" />
+									<input type="hidden" name="huespedes" id="huespedes" th:value="${capacidad}" />
+									<input type="hidden" name="precio" id="precio" th:value="${alojamiento.precio}" />
+									<input type="hidden" name="alojamiento" id="alojamiento" th:value="${alojamient}" />
+									<input type="hidden" name="idAlojamiento" id="idAlojamiento"
+										th:value="${alojamiento.id}" />
 									<button class="btn btn-primary" sec:authorize="isAuthenticated()">Reservar</button>
 								</form>
 								<form th:action="@{/login}">
@@ -82,10 +87,67 @@
 								</form>
 							</div>
 						</div>
-						
+
 					</div>
 
 				</div>
 			</div>
+			<div class="modal fade" id="popupModal" tabindex="-1" role="dialog" aria-labelledby="popupModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="popupModalLabel">¡Upps! Parece que alguien se te ha adelantado</h5>
+            </div>
+            <div class="modal-body">
+                Has sido redirigido al inicio. ¡Intenta ser más rápido la próxima vez!
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" href="/">Ir al inicio</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 	</section>
 </div>
+
+<script>
+$(document).ready(function () {
+    $('formBueno').submit(function (event) {
+        event.preventDefault(); // Detiene el envío del formulario
+
+        var fechaInicio = $('#fecha_inicio').val();
+        var fechaFin = $('#fecha_fin').val();
+        var huespedes = $('#huespedes').val();
+        var precio = $('#precio').val();
+        var alojamiento = $('#alojamiento').val();
+        var idAlojamiento = $('#idAlojamiento').val();
+
+        $.ajax({
+            url: '/verificar-reserva',
+            type: 'POST',
+            data: {
+                fechaIncio: fechaInicio,
+                fechaFin: fechaFin,
+                huespedes: huespedes,
+                precio: precio,
+                alojamiento: alojamiento,
+                idAlojamiento: idAlojamiento
+            },
+            success: function (response) {
+                console.log(response);
+                if (response == true) {
+                    $('formBueno').unbind('submit').submit(); // Permite el envío del formulario
+                } else {
+                    // Mostrar el popup aquí
+                    $('#popupModal').modal('show');
+                }
+            },
+            error: function () {
+                alert('Error al verificar el correo electrónico y nombre de usuario');
+            }
+        });
+    });
+});
+</script>

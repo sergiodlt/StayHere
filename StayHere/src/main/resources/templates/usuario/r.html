@@ -124,13 +124,21 @@
 													</p>
 												</li>
 												<li class="small">
-													<span class="fa-li"><i class="fas fa-phone"></i></span>
-													<span th:text="|Teléfono: ${user.telefono}|"></span>
+													<p>
+
+														<span class="fa-li"><i class="fas fa-phone"></i></span>
+														<span th:text="|Teléfono: ${user.telefono}|"></span>
+													</p>
+
 												</li>
 												<li class="small">
-													<span class="fa-li"><i class="fas fa-map-marker-alt"></i></span>
-													<span th:text="|Dirección: ${user.direccion}|"></span>
-												</li>
+													<p>
+
+														<span class="fa-li"><i class="fas fa-map-marker-alt"></i></span>
+														<span th:text="|Dirección: ${user.direccion}|"></span>
+													</p>
+
+													</li>
 
 
 											</ul>
@@ -141,14 +149,14 @@
 									<div class="card-footer">
 										<div class="text-right">
 											<div class="row">
-												<div class="col-4">
+												<div class="col-6 text-center">
 													<form action="/usuarios/u" method="post">
 														<input type="hidden" th:value="${ user.id }" name="idUser" />
 														<button class="btn btn-sm btn-primary" onclick="submit()">
 															<i class="fas fa-user"></i>Modificar</button>
 													</form>
 												</div>
-												<div class="col-4">
+												<div class="col-6 text-center">
 													<form action="/usuario/d" method="post"
 														th:if="${user.username != 'admin'}">
 														<input type="hidden" th:value="${ user.id }" name="id" />

@@ -4,8 +4,9 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -18,13 +19,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.StayHere.entities.Apartamento;
 import com.StayHere.entities.Habitacion;
+import com.StayHere.entities.Hotel;
 import com.StayHere.entities.Reserva;
 import com.StayHere.entities.User;
 import com.StayHere.exception.DangerException;
 import com.StayHere.helpers.PRG;
+import com.StayHere.repositories.ReservaRepository;
 import com.StayHere.repositories.UserRepository;
 import com.StayHere.services.ApartamentoService;
 import com.StayHere.services.EmailService;
@@ -38,12 +42,18 @@ public class ReservaController {
 	@Autowired
 	private ReservaService reservaService;
 	
+	@Autowired
+	private ReservaRepository reservaRepository;
+	
 
 	@Autowired
 	private ApartamentoService apartamentoService;
 	
 	@Autowired
 	private HabitacionService habitacionService;
+
+	@Autowired
+	private HotelService hotelService;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -186,6 +196,51 @@ public class ReservaController {
 		reservaService.deleteReserva(id);
 		return "redirect:/reserva/r";
 	}
+	
+	@PostMapping("/verificar-reserva")
+	public @ResponseBody Boolean verificarEmailExistente(
+	        @RequestParam("fechaIncio") LocalDate fechaIncio,
+	        @RequestParam("fechaFin") LocalDate fechaFin,
+	        @RequestParam("huespedes") int huespedes,
+	        @RequestParam("precio") int precio,
+	        @RequestParam("alojamiento") String alojamiento,
+	        @RequestParam("idAlojamiento") Long idAlojamiento) {
+
+	    boolean isAvailable = true;
+
+	    if (alojamiento.equals("hotel")) {
+	        for (Reserva reserva : reservaService.getReservas()) {
+	            Habitacion habitacion = reserva.getHabitacion();
+	            if (habitacion != null && habitacion.getId() == idAlojamiento) {
+	                LocalDate reservaFechaInicio = reserva.getFecha_inicio();
+	                LocalDate reservaFechaFin = reserva.getFecha_fin();
+
+	                // Check if the given dates overlap with any existing reservation
+	                if (!(fechaFin.isBefore(reservaFechaInicio) || fechaIncio.isAfter(reservaFechaFin))) {
+	                    isAvailable = false;
+	                    break; // Stop checking further reservations
+	                }
+	            }
+	        }
+	    } else {
+	        for (Reserva reserva : reservaService.getReservas()) {
+	            Apartamento apartamento = reserva.getApartamento();
+	            if (apartamento != null && apartamento.getId() == idAlojamiento) {
+	                LocalDate reservaFechaInicio = reserva.getFecha_inicio();
+	                LocalDate reservaFechaFin = reserva.getFecha_fin();
+
+	                // Check if the given dates overlap with any existing reservation
+	                if (!(fechaFin.isBefore(reservaFechaInicio) || fechaIncio.isAfter(reservaFechaFin))) {
+	                    isAvailable = false;
+	                    break; // Stop checking further reservations
+	                }
+	            }
+	        }
+	    }
+
+	    return isAvailable;
+	}
+
 
 }
 

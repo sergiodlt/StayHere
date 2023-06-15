@@ -23,8 +23,7 @@
 
 				<div class="form-group col-md-6">
 					<label for="idComodidad">Comodidades</label>
-					<select class="form-control" type="checkbox" name='idComodidad' id="comodidades" th:value="${comodidad?.id}"
-						id="comodidades" multiple>
+					<select class="form-control" type="checkbox" name='idComodidad' id="comodidades" multiple>
 						<option th:each=" comodidad : ${comodidades} " th:value="${comodidad.id}"
 							th:text="${comodidad.nombre}" th:selected="${habitacion.comodidades.contains(comodidad)}">
 					</select>

@@ -57,7 +57,7 @@
 	}
 
 	.altura {
-		margin-top: 50px;
+		margin-top: 76px;
 	}
 
 	.user-avatar {
@@ -81,11 +81,12 @@
 	.fa-stack-2x {
 		font-size: 24px;
 	}
-		.btn{
-				border: none;
-				padding: 10px 20px;
-				border-radius: 4px;
-			}
+
+	.btn {
+		border: none;
+		padding: 10px 20px;
+		border-radius: 4px;
+	}
 </style>
 
 <div class="altura">
@@ -96,30 +97,39 @@
 					<h3>LISTA DE HABITACIONES</h3>
 				</div>
 				<div class="card-body">
+					<div class="row mb-3 ml-2">
+							<form action="/habitacion/c">
+								<input type="hidden" th:value="${ hotel.id }" name="id" />
+								<button class="btn btn-secondary btn-block" onclick="submit()">
+									Agregar Habitaciones
+								</button>
+							</form>
+					</div>
 					<div class="row">
 						<div th:each="habitacion : ${habitaciones}" class="col-12 col-sm-6 col-md-4">
 							<div class="card bg-light mb-4">
 								<div class="card-body">
 									<div class="row">
 										<div class="col-12 align-right">
-											
+
 
 											<p class="text-muted text-sm">Numero: <span
 													th:text="${habitacion.id}"></span></p>
 											<ul class="ml-4 mb-0 fa-ul text-muted">
 												<li class="small">
 													<p>
-														<span class="fa-li"><i class="fa-solid fa-location-dot"></i></span>
-														<span th:text="|Capacidad: ${habitacion.capacidad}|"></span>
+														<span class="fa-li"><i
+																class="fa-solid fa-location-dot"></i></span>
+														<span th:text="|Capacidad: ${habitacion?.capacidad}|"></span>
 													</p>
 												</li>
 												<li class="small">
 													<p>
 														<span class="fa-li"><i class="fas fa-envelope"></i></span>
-														<span th:text="|Precio: ${habitacion.precio}€| "
+														<span th:text="|Precio: ${habitacion?.precio}€| "
 															style="margin-right: 0.5em;"></span>
-													</p>	
-												</li>									
+													</p>
+												</li>
 											</ul>
 										</div>
 
@@ -128,20 +138,24 @@
 									<div class="card-footer">
 										<div class="text-right">
 											<div class="row">
-										
-											<form action="/habitacion/u">
-												<input type="hidden" th:value="${ habitacion.id }" name="id" />
-												<button class="btn btn-sm btn-primary" onclick="submit()">
-													<i class="fa-solid fa-pen-to-square"></i>Modificar</button>
-											</form>
-												
-											<form action="/habitacion/d" method="post">
-												<input type="hidden" th:value="${ habitacion.id }" name="id" />
-												<button class="btn btn-sm btn-danger" onclick="submit()">
-													<i class="fa-solid fa-trash"></i>Eliminar</button>
-
-											</form>
+												<div class="col-6 text-center">
+													<form action="/habitacion/u">
+														<input type="hidden" th:value="${ habitacion?.id }" name="id" />
+														<button class="btn btn-sm btn-primary" onclick="submit()">
+															<i class="fa-solid fa-pen-to-square"></i>Modificar
+														</button>
+													</form>
+												</div>
+												<div class="col-6 text-center">
+													<form action="/habitacion/d" method="post">
+														<input type="hidden" th:value="${ habitacion?.id }" name="id" />
+														<button class="btn btn-sm btn-danger" onclick="submit()">
+															<i class="fa-solid fa-trash"></i>Eliminar
+														</button>
+													</form>
+												</div>
 											</div>
+
 										</div>
 									</div>
 								</div>
