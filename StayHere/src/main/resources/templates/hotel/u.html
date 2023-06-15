@@ -64,7 +64,7 @@
 			}
 		</style>
 
-		<div class="container bg-light">
+		<div class="container bg-light" sec:authorize="hasRole('ROLE_USER')">
 			<h1 class="text-center">Modificar Hotel</h1>
 			<form action="/hoteles/uPost" method="post" enctype="multipart/form-data"
 				onsubmit="return validateFormulario()">
@@ -117,13 +117,72 @@
 
 				<div class="text-left mt-3">
 					<button class="btn btn-secondary" onclick="goBack()">Cancelar</button>
-					<button class="btn btn-primary" sec:authorize="isAuthenticated()">Modificar</button>
+					<button class="btn btn-primary">Modificar</button>
 
 
 				</div>
-				<form th:action="@{/login}">
-					<button class="btn btn-primary" sec:authorize="!isAuthenticated()">Modificar</button>
-				</form>
+				
+			</form>
+
+		</div>
+		<div class="container bg-light" sec:authorize="hasRole('ROLE_ADMIN')">
+			<h1 class="text-center">Modificar Hotel</h1>
+			<form action="/hoteles/uPostAdmin" method="post" enctype="multipart/form-data"
+				onsubmit="return validateFormulario()">
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="nombre">Nombre</label>
+						<input type="text" class="form-control" id="nombre" th:value="${hotel.nombre}" name="nombre"
+							required oninput="validateName()" readonly />
+						<small id="nombreError" class="form-text text-danger"></small>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="direccion">Dirección</label>
+						<input type="text" class="form-control" id="direccion" th:value="${hotel.direccion}"
+							name="direccion" required oninput="validateDireccion()" />
+						<small id="direccionError" class="form-text text-danger"></small>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="telefono">Teléfono</label>
+						<input type="number" class="form-control" id="telefono" th:value="${hotel.telefono}"
+							name="telefono" required oninput="validateTelefono()" readonly />
+						<small id="telefonoError" class="form-text text-danger"></small>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="correo">Correo</label>
+						<input type="email" class="form-control" id="correo" th:value="${hotel.correo}" name="correo"
+							required oninput="validateCorreo()" readonly />
+						<small id="correoError" class="form-text text-danger"></small>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="estrellas">Estrellas</label>
+						<input type="number" class="form-control" id="estrellas" th:value="${hotel.estrellas}"
+							name="estrellas" required oninput="validateEstrellas()" />
+						<small id="estrellasError" class="form-text text-danger"></small>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="idCiudades">Ciudad</label>
+						<select name="ciudad" class="form-control" id="ciudad" required>
+							<option th:each="ciudad : ${ciudades}" th:value="${ciudad.id}"
+								th:selected="${hotel.ciudad?.nombre == ciudad.nombre}" th:text="${ciudad.nombre}" />
+						</select>
+					</div>
+				</div>
+				<input type="hidden" name="id" th:value="${hotel.id}" />
+
+				<div class="text-left mt-3">
+					<button class="btn btn-secondary" onclick="goBack()">Cancelar</button>
+					<button class="btn btn-primary">Modificar</button>
+
+
+				</div>
+				
 			</form>
 
 		</div>

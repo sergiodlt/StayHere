@@ -189,6 +189,23 @@ public class HabitacionController {
 	    return retorno;
 	}
 
+	@PostMapping("uAdmin")
+	public String uPostAdmin(
+			@RequestParam("idHabitacion") Long idHabitacion,
+			@RequestParam("descripcion") String descripcion,
+			@RequestParam("capacidad") int capacidad,
+			@RequestParam("precio") int precio,
+			@RequestPart(required = false, name = "fotos") List<MultipartFile> fotos
+			) throws DangerException {
+		String retorno = "redirect:/habitacion/r?id="+idHabitacion;
+		try {
+			habitacionService.updateHabitacion(idHabitacion, descripcion, capacidad, precio, fotos);
+		} catch (Exception e) {
+			PRG.error(e.getMessage(), "/");
+		}
+		return retorno;
+	}
+
 
 	@PostMapping("d")
 	public String d(@RequestParam("id") Long id) {

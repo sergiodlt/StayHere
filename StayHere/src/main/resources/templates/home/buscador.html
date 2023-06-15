@@ -47,7 +47,7 @@
 						<div class="row">
 							<div class="col-md-5">
 								<label for="num-huespedes">Número de huéspedes:</label>
-								<input type="number" th:value="${capacidad}" name="huespedes" class="form-control"
+								<input type="number" th:value="${capacidad}" min="0" name="huespedes" class="form-control"
 									id="num-huespedes" required>
 							</div>
 							<div class="col-md-5">

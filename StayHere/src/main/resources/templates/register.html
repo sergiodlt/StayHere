@@ -361,6 +361,9 @@
 				$('#mensajeError').show();			
 		return;
 				}
+				if (password1 == password2) {
+				$('#mensajeError').hide();			
+				}
 
 				// Validación de los campos individuales
 				var isValidNombre = validateNombre();

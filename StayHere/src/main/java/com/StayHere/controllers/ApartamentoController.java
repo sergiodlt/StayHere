@@ -145,6 +145,31 @@ public class ApartamentoController {
 		}
 		return retorno;
 	}
+	@PostMapping("uAdmin")
+	public String uPostAdmin(
+			@RequestParam("idApartamento") Long idApartamento,
+			@RequestParam("nombre") String nombre,
+			@RequestParam("direccion") String direccion,
+			@RequestParam("telefono") int telefono,
+			@RequestParam("correo") String correo,
+			@RequestParam("descripcion") String descripcion,
+			@RequestParam("precio") int precio,
+			@RequestParam("capacidad") int capacidad,
+			@RequestParam(required=false, name="idComodidad") List<Long> idComodidades,
+			@RequestParam(required=false, name="idCiudad") Long idCiudad,
+			@RequestParam(required=false, name="fotos") List<MultipartFile> fotos
+			
+			) throws DangerException {
+		String retorno = "redirect:/apartamento/rAdmin";
+		try {
+			apartamentoService.updateApartamento(idApartamento, nombre, direccion, telefono, correo,  descripcion, precio, idCiudad, capacidad, fotos);
+			
+			
+		} catch (Exception e) {
+			PRG.error(e.getMessage(), "/apartamento/rAdmin");
+		}
+		return retorno;
+	}
 
 	@PostMapping("d")
 	public String d(@RequestParam("id") Long id) {

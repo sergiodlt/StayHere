@@ -86,11 +86,6 @@ public class HotelController {
 		return "_t/frame";
 	}
 
-	@GetMapping("prueba")
-	public String prueba(ModelMap m) {
-		m.put("view", "home/prueba");
-		return "_t/frame";
-	}
 
 	@PostMapping("c")
 	public String cPost(@RequestParam("nombre") String nombre, @RequestParam("direccion") String direccion,
@@ -155,6 +150,17 @@ public class HotelController {
 		hotelService.updateHotel(idHotel, nombre, direccion, telefono, correo, correo, estrellas, ciudad);
 		
 		return "redirect:/";
+	}
+	
+	@PostMapping("uPostAdmin")
+	public String uPostAdmin(@RequestParam("nombre") String nombre, @RequestParam("direccion") String direccion,
+			@RequestParam("telefono") int telefono, @RequestParam("correo") String correo,
+			@RequestParam("estrellas") int estrellas, @RequestParam("ciudad") Long idCiudad, @RequestParam("id") Long idHotel
+			) throws Exception {
+		Ciudad ciudad=ciudadService.getCiudadById(idCiudad);
+		hotelService.updateHotel(idHotel, nombre, direccion, telefono, correo, correo, estrellas, ciudad);
+		
+		return "redirect:/hoteles/rAdmin";
 	}
 	
 	@PostMapping("d") public String d(@RequestParam("id") Long id) {

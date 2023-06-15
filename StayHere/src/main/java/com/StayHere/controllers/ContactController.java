@@ -22,7 +22,7 @@ public class ContactController {
 	 @GetMapping("/contacto")
 	    public String contacto(
 	    		ModelMap m) {
-		 m.put("view", "contacto");
+		 m.put("view", "contacto/contacto");
 	        return "_t/frame";
 	    }
 	    
@@ -40,7 +40,7 @@ public class ContactController {
 	                + "Mensaje: " + msj;
 
 	        emailService.enviarCorreo(asunto, destinatario, mensaje);
-	        m.put("view", "home");
+	        m.put("view", "home/home");
 	        return "_t/frame";
 	    }
 	    

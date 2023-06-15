@@ -50,7 +50,7 @@ public class HomeController {
 		List<Ciudad> ciudades = ciudadService.getCiudades();
 		m.put("ciudades", ciudades);
 
-		m.put("view", "home");
+		m.put("view", "home/home");
 		return "_t/frame";
 	}
 
@@ -92,7 +92,7 @@ public class HomeController {
 		m.put("capacidad", numHuespedes);
 		m.put("ciudad", ciudadService.getCiudadById(ciudad));
 		m.put("comodidades", comodidades);
-		m.put("view", "buscador");
+		m.put("view", "home/buscador");
 		return "_t/frame";
 	}
 	
@@ -172,12 +172,12 @@ public class HomeController {
 		m.put("capacidad", numHuespedes);
 		m.put("ciudad", ciudadService.getCiudadById(ciudad));
 		m.put("comodidades", comodidadesBBDD);
-		m.put("view", "buscador");
+		m.put("view", "home/buscador");
 		return "_t/frame";
 	}
 	
 	@GetMapping("/error")
 	public String error(){
-		return "error";
+		return "home/error";
 	}
 }
