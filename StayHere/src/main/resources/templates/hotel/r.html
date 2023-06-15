@@ -89,11 +89,11 @@
 											</div>
 										</div>
 									</div>
-									<div class="card-footer">
+									<div class="card-footer" sec:authorize="hasRole('ROLE_ADMIN')">
 										<div class="text-right">
 
 											<div class="row">
-												<div class="col-md-6" sec:authorize="hasRole('ROLE_ADMIN')">
+												<div class="col-md-6">
 													<form action="/hoteles/u" method="post">
 														<input type="hidden" th:value="${ hotel.id }" name="id" />
 														<button class="btn btn-primary btn-block" onclick="submit()">
@@ -103,7 +103,7 @@
 												</div>
 												
 												<div class="col-md-6">
-													<form action="/hoteles/dAdmin" sec:authorize="hasRole('ROLE_ADMIN')" method="post">
+													<form action="/hoteles/dAdmin" method="post">
 														<input type="hidden" th:value="${ hotel.id }" name="id" />
 														<button class="btn btn-danger btn-block" onclick="submit()">
 															<i class="fa-solid fa-trash"></i>Eliminar
