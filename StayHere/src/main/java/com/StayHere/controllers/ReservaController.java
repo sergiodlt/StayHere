@@ -70,20 +70,21 @@ public class ReservaController {
 
 	@GetMapping("/reserva/r")
 	public String r(ModelMap m) {
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		User user = userRepository.findByUsername(username);
-		List<Reserva> reservas = reservaService.getReservas();
-		List<Reserva> reservasUser = new ArrayList<Reserva>();
-		for (Reserva reserv : reservas) {
-			if (reserv.getUser().getId() == user.getId()) {
-				reservasUser.add(reserv);
-			}
-		}
+	    String username = SecurityContextHolder.getContext().getAuthentication().getName();
+	    User user = userRepository.findByUsername(username);
+	    List<Reserva> reservas = reservaService.getReservas();
+	    List<Reserva> reservasUser = new ArrayList<Reserva>();
+	    for (Reserva reserv : reservas) {
+	        if (reserv.getUser() != null && reserv.getUser().getId() == user.getId()) {
+	            reservasUser.add(reserv);
+	        }
+	    }
 
-		m.put("reservas", reservasUser);
-		m.put("view", "reserva/r");
-		return "_t/frame";
+	    m.put("reservas", reservasUser);
+	    m.put("view", "reserva/r");
+	    return "_t/frame";
 	}
+
 
 	@GetMapping("/reserva/{id}")
 	public String reserva(@PathVariable("id") Long id, @RequestParam("alojamiento") String alojamient,

@@ -19,7 +19,7 @@
 													<p>
 														<span class="fa-li"><i
 																class="fa-solid fa-location-dot"></i></span>
-														<span th:text="|Direccion: ${hotel.direccion}|"></span>
+														<span th:text="|Dirección: ${hotel.direccion}|"></span>
 													</p>
 												</li>
 												<li class="small">
@@ -52,7 +52,7 @@
 											</ul>
 										</div>
 									</div>
-									<div class="card-footer">
+									<div class="card-footer" sec:authorize="hasRole('ROLE_USER')">
 										<div class="text-right">
 
 											<div class="row">
@@ -65,13 +65,43 @@
 													</form>
 												</div>
 												<div class="col-md-6">
-													<form action="/hoteles/d" sec:authorize="hasRole('ROLE_USER')" method="post">
+													<form action="/hoteles/d"  method="post">
 														<input type="hidden" th:value="${ hotel.id }" name="id" />
 														<button class="btn btn-danger btn-block" onclick="submit()">
 															<i class="fa-solid fa-trash"></i>Eliminar
 														</button>
 													</form>
 												</div>
+												
+											</div>
+											<div class="row">
+												<div class="col-md-1"></div>
+
+												<div class="col-md-10 mt-1">
+													<form action="/habitacion/r">
+														<input type="hidden" th:value="${ hotel.id }" name="id" />
+														<button class="btn btn-secondary btn-block" onclick="submit()">
+															Mostrar Habitaciones
+														</button>
+													</form>
+												</div>
+
+											</div>
+										</div>
+									</div>
+									<div class="card-footer">
+										<div class="text-right">
+
+											<div class="row">
+												<div class="col-md-6" sec:authorize="hasRole('ROLE_ADMIN')">
+													<form action="/hoteles/u" method="post">
+														<input type="hidden" th:value="${ hotel.id }" name="id" />
+														<button class="btn btn-primary btn-block" onclick="submit()">
+															<i class="fa-solid fa-pen-to-square"></i>Modificar
+														</button>
+													</form>
+												</div>
+												
 												<div class="col-md-6">
 													<form action="/hoteles/dAdmin" sec:authorize="hasRole('ROLE_ADMIN')" method="post">
 														<input type="hidden" th:value="${ hotel.id }" name="id" />

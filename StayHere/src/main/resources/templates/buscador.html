@@ -63,9 +63,9 @@
 							</div>
 							<div class="col-md-2 align-self-end">
 								<div class="form-group">
-									<label class="invisible">Botón de filtrar</label>
+									<label class="invisible">Botón de Buscar</label>
 									<input type="submit" class="btn btn-secondary float-right" id="btn-filtrar"
-										value="Filtrar" />
+										value="Buscar" />
 								</div>
 							</div>
 						</div>
@@ -76,7 +76,8 @@
 				<div class="col-12">
 					<div id="hoteles-container"></div>
 
-					<div id="listaAlojamiento">
+					<div id="listaAlojamiento" >
+
 						<div th:each="alojamiento, alojamientoIndex : ${alojamientos}" id="lista"
 							class="row row-spacing">
 							<div class="col-md-12">
@@ -92,7 +93,7 @@
 															<th:block th:each="foto, status : ${alojamiento.fotos}">
 																<div
 																	th:class="${status.index == 0 ? 'carousel-item active' : 'carousel-item'}">
-																	<div class="carousel-image-container">
+																	<div class="carousel-image-container text-center">
 																		<img class="img-fluid custom-carousel-image"
 																			th:src="${foto.ruta}" alt="Imagen 1">
 																	</div>
@@ -125,7 +126,7 @@
 																th:text="${alojamiento.hotel?.nombre}" />
 														</b>
 														<h5 th:if="${alojamient == 'hotel'}"
-															th:text="|Habitacion número ${alojamiento?.id}|" />
+															th:text="|Habitación número ${alojamiento?.id}|" />
 														<b>
 															<h3 th:if="${alojamient == 'apartamento'}"
 																th:text="${alojamiento?.nombre}" />
@@ -152,6 +153,8 @@
 							</div>
 						</div>
 					</div>
+					<div th:if="${alojamientos.size() == 0}" class="text-center"><h5>No se encontraron resultados en su búsqueda.</h5></div>
+
 				</div>
 			</div>
 		</div>

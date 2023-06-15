@@ -19,7 +19,7 @@
 										<div class="carousel-inner">
 											<th:block th:each="foto, status : ${alojamiento.fotos}">
 												<div
-													th:class="${status.index == 0 ? 'carousel-item active' : 'carousel-item'}">
+													th:class="${status.index == 0 ? 'carousel-item active text-center' : 'carousel-item text-center'}">
 													<img class="img-fluid custom-carousel-image" th:src="${foto.ruta}"
 														alt="Imagen 1">
 												</div>
@@ -57,19 +57,18 @@
 
 						<div class="col-12 col-sm-6">
 							<h3 class="my-3" th:if="${alojamient == 'hotel'}"
-								th:text="|Habitacion nº${alojamiento.id}|" />
+								th:text="|Habitación nº${alojamiento.id}|" />
 							<h5 class="my-3" th:if="${alojamient == 'hotel'}"
-								th:text="|Direccion: ${alojamiento.hotel.direccion}|" />
+								th:text="|Dirección: ${alojamiento.hotel.direccion}|" />
 							<h3 class="my-3" th:if="${alojamient == 'apartamento'}" th:text="${alojamiento.nombre}|" />
 							<hr>
 
-							<small>Descripcion</small>
+							<small>Descripción</small>
 							<p th:text="|${alojamiento.descripcion}|" />
 
 							<div class="bg-gray py-2 px-3 mt-4">
 								<h4 th:text="|${alojamiento.precio}€ /Noche|" class="mb-0" />
 								<h6 th:text="|${precioTotal}€ (Precio total)|" class="mb-0" />
-
 							</div>
 							<div class="mt-4">
 								<form id="formBueno" method="post" action="/reservaPost">
@@ -114,104 +113,6 @@
 </div>
 
 <script>
-/*	
-$(document).ready(function () {
-	$('formBueno').submit(function (event) {
-		event.preventDefault(); // Detiene el envío del formulario
-
-		var fechaInicio = $('#fecha_inicio').val();
-		var fechaFin = $('#fecha_fin').val();
-		var huespedes = $('#huespedes').val();
-		var precio = $('#precio').val();
-		var alojamiento = $('#alojamiento').val();
-		var idAlojamiento = $('#idAlojamiento').val();
-
-		$.ajax({
-			url: '/verificar-reserva',
-			type: 'POST',
-			data: {
-				fechaInicio: fechaInicio,
-				fechaFin: fechaFin,
-				alojamiento: alojamiento,
-				idAlojamiento: idAlojamiento
-			},
-			success: function (response) {
-				console.log(response);
-
-			
-			},
-			error: function () {
-				alert('Error al verificar el correo electrónico y nombre de usuario');
-			}
-		});
-	});
-});*/
-	/*$(document).ready(function () {
-    $('#formBueno').submit(function (event) {
-        event.preventDefault(); // Detiene el envío del formulario
-
-        var fechaInicio = $('#fecha_inicio').val();
-        var fechaFin = $('#fecha_fin').val();
-        var huespedes = $('#huespedes').val();
-        var precio = $('#precio').val();
-        var alojamiento = $('#alojamiento').val();
-        var idAlojamiento = $('#idAlojamiento').val();
-
-        $.ajax({
-            url: '/verificar-reserva',
-            type: 'POST',
-            data: {
-                fechaInicio: fechaInicio,
-                fechaFin: fechaFin,
-                alojamiento: alojamiento,
-                idAlojamiento: idAlojamiento
-            },
-            success: function (response) {
-                console.log(response);
-                if (response == true) {
-                    $('#popupModal').modal('show');
-                } else if (response == false) {
-                    // Enviar el formulario
-                    event.currentTarget.submit();
-                }
-            },
-            error: function () {
-                console.error('Error al verificar la reserva');
-            }
-        });
-    });
-});*/
-/*
-$(document).ready(function () {
-    $('#formBueno').submit(function (event) {
-        event.preventDefault(); // Detiene el envío del formulario
-
-        var fechaInicio = $('#fecha_inicio').val();
-        var fechaFin = $('#fecha_fin').val();
-        var huespedes = $('#huespedes').val();
-        var precio = $('#precio').val();
-        var alojamiento = $('#alojamiento').val();
-        var idAlojamiento = $('#idAlojamiento').val();
-
-        $.ajax({
-            url: '/verificar-reserva',
-            type: 'POST',
-            data: {
-                fechaInicio: fechaInicio,
-                fechaFin: fechaFin,
-                alojamiento: alojamiento,
-                idAlojamiento: idAlojamiento
-            },
-            success: function (response) {
-                console.log(response);
-               
-            },
-            error: function () {
-                console.error('Error al verificar la reserva');
-            }
-        });
-    });
-});*/
 $(document).ready(function () {
     $('#formBueno').submit(function (event) {
         event.preventDefault(); // Detiene el envío del formulario
