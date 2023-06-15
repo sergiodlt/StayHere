@@ -93,28 +93,61 @@
 				</div>
 			</div>
 			<div class="modal fade" id="popupModal" tabindex="-1" role="dialog" aria-labelledby="popupModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="popupModalLabel">¡Upps! Parece que alguien se te ha adelantado</h5>
-            </div>
-            <div class="modal-body">
-                Has sido redirigido al inicio. ¡Intenta ser más rápido la próxima vez!
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-primary" href="/">Ir al inicio</a>
-            </div>
-        </div>
-    </div>
-</div>
+				aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="popupModalLabel">¡Upps! Parece que alguien se te ha adelantado
+							</h5>
+						</div>
+						<div class="modal-body">
+							Has sido redirigido al inicio. ¡Intenta ser más rápido la próxima vez!
+						</div>
+						<div class="modal-footer">
+							<a class="btn btn-primary" href="/">Ir al inicio</a>
+						</div>
+					</div>
+				</div>
+			</div>
 
 	</section>
 </div>
 
 <script>
+/*	
 $(document).ready(function () {
-    $('formBueno').submit(function (event) {
+	$('formBueno').submit(function (event) {
+		event.preventDefault(); // Detiene el envío del formulario
+
+		var fechaInicio = $('#fecha_inicio').val();
+		var fechaFin = $('#fecha_fin').val();
+		var huespedes = $('#huespedes').val();
+		var precio = $('#precio').val();
+		var alojamiento = $('#alojamiento').val();
+		var idAlojamiento = $('#idAlojamiento').val();
+
+		$.ajax({
+			url: '/verificar-reserva',
+			type: 'POST',
+			data: {
+				fechaInicio: fechaInicio,
+				fechaFin: fechaFin,
+				alojamiento: alojamiento,
+				idAlojamiento: idAlojamiento
+			},
+			success: function (response) {
+				console.log(response);
+
+			
+			},
+			error: function () {
+				alert('Error al verificar el correo electrónico y nombre de usuario');
+			}
+		});
+	});
+});*/
+	/*$(document).ready(function () {
+    $('#formBueno').submit(function (event) {
         event.preventDefault(); // Detiene el envío del formulario
 
         var fechaInicio = $('#fecha_inicio').val();
@@ -135,19 +168,87 @@ $(document).ready(function () {
             },
             success: function (response) {
                 console.log(response);
+                if (response == true) {
+                    $('#popupModal').modal('show');
+                } else if (response == false) {
+                    // Enviar el formulario
+                    event.currentTarget.submit();
+                }
+            },
+            error: function () {
+                console.error('Error al verificar la reserva');
+            }
+        });
+    });
+});*/
+/*
+$(document).ready(function () {
+    $('#formBueno').submit(function (event) {
+        event.preventDefault(); // Detiene el envío del formulario
 
-                if (response == false) {
-                    $('formBueno').unbind('submit').submit(); // Permite el envío del formulario
+        var fechaInicio = $('#fecha_inicio').val();
+        var fechaFin = $('#fecha_fin').val();
+        var huespedes = $('#huespedes').val();
+        var precio = $('#precio').val();
+        var alojamiento = $('#alojamiento').val();
+        var idAlojamiento = $('#idAlojamiento').val();
+
+        $.ajax({
+            url: '/verificar-reserva',
+            type: 'POST',
+            data: {
+                fechaInicio: fechaInicio,
+                fechaFin: fechaFin,
+                alojamiento: alojamiento,
+                idAlojamiento: idAlojamiento
+            },
+            success: function (response) {
+                console.log(response);
                
+            },
+            error: function () {
+                console.error('Error al verificar la reserva');
+            }
+        });
+    });
+});*/
+$(document).ready(function () {
+    $('#formBueno').submit(function (event) {
+        event.preventDefault(); // Detiene el envío del formulario
+
+        var fechaInicio = $('#fecha_inicio').val();
+        var fechaFin = $('#fecha_fin').val();
+        var huespedes = $('#huespedes').val();
+        var precio = $('#precio').val();
+        var alojamiento = $('#alojamiento').val();
+        var idAlojamiento = $('#idAlojamiento').val();
+
+        $.ajax({
+            url: '/verificar-reserva',
+            type: 'POST',
+            data: {
+                fechaInicio: fechaInicio,
+                fechaFin: fechaFin,
+                alojamiento: alojamiento,
+                idAlojamiento: idAlojamiento
+            },
+            success: function (response) {
+                console.log(response);
+                if (response === true) {
+                    // Enviar el formulario
+                    event.currentTarget.submit();
                 } else {
-                    // Mostrar el popup aquí
+                    // Mostrar el popup
                     $('#popupModal').modal('show');
                 }
             },
             error: function () {
-                alert('Error al verificar el correo electrónico y nombre de usuario');
+                console.error('Error al verificar la reserva');
             }
         });
     });
 });
+
+
+
 </script>
