@@ -24,8 +24,8 @@ public interface ApartamentoRepository extends JpaRepository<Apartamento, Long>{
 		    @Param("numHuespedes") int numHuespedes); 
 	 
 	 @Query("SELECT COUNT(r) FROM Apartamento a LEFT JOIN a.reservas r " +
-		       "WHERE (r IS NULL OR (r.fecha_inicio > :checkout OR r.fecha_fin < :checkin)) " +
-		       "AND a.id = :idApartamento")
+			 "WHERE (r.fecha_inicio <= :checkout AND r.fecha_fin >= :checkin) " +
+			 "AND a.id = :idApartamento")
 		int countApartamentosDisponiblesAjax(
 		    @Param("checkin") LocalDate checkin,
 		    @Param("checkout") LocalDate checkout,

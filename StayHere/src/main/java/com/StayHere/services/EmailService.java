@@ -34,7 +34,7 @@ public class EmailService {
 				+ "    <div class=\"content\">\n"
 				+ "        <p>Gracias por registrarte en nuestra aplicación StayHere. Estamos encantados de tenerte como parte de nuestra comunidad.</p>\n"
 				+ "        <p>Te invitamos a comenzar a explorar todas las increíbles características que ofrecemos. ¡No te lo pierdas!</p>\n"
-				+ "        <a href=\"https:stayhere-production.up.railway.app/login\" class=\"button\">Iniciar sesión</a>\n"
+				+ "        <a href=\"https://stayhere-production.up.railway.app/login\" class=\"button\">Iniciar sesión</a>\n"
 				+ "    </div>\n" + "</div>\n" + "</body>\n" + "</html>";
 
 		MimeMessage message = mailSender.createMimeMessage();

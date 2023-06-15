@@ -207,7 +207,7 @@
 										</form>
 									</div>
 									<div class="text-right" sec:authorize="hasRole('ROLE_ADMIN')">
-+										<form action="/reserva/dAdmin" 
+										<form action="/reserva/dAdmin" 
 											method="post">
 											<input type="hidden" th:value="${reserva.id}" name="id" />
 											<button class="btn btn-danger">
