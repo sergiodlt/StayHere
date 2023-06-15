@@ -31,6 +31,8 @@ import com.StayHere.repositories.ApartamentoRepository;
 import com.StayHere.repositories.HotelRepository;
 import com.StayHere.repositories.ReservaRepository;
 import com.StayHere.repositories.UserRepository;
+import com.StayHere.services.ApartamentoService;
+import com.StayHere.services.HotelService;
 import com.StayHere.services.RoleService;
 import com.StayHere.services.UserService;
 import com.StayHere.services.UserServiceImpl;
@@ -45,8 +47,12 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+  
     @Autowired
-    private HotelRepository hotelRepository;
+    private HotelService hotelService;
+
+    @Autowired
+    private ApartamentoService apartamentoService;
 
     @Autowired
     private ApartamentoRepository apartamentoRepository;
@@ -126,11 +132,11 @@ public class UserController {
     	User user=userRepository.getById(idUser);
     	
     	for(Hotel hotel : user.getHoteles()) {
-    		hotelRepository.delete(hotel);
+    		hotelService.deleteHotel(hotel.getId());
     	}
     	
     	for(Apartamento apartamento : user.getApartamentos()) {
-    		apartamentoRepository.delete(apartamento);
+    		apartamentoService.deleteApartamento(apartamento.getId());
     	}
     	for(Reserva reserva : user.getReservas()) {
     		reservaRepository.delete(reserva);
